@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.3.2 (Python 3.11.0 on win32)" generated="2026-03-15T17:00:37.301026" rpa="false" schemaversion="5">
+<suite id="s1" name="Tests" source="C:\Users\GENIUS\IdeaProjects\EnterpriseRobotMonetique\tests">
+<suite id="s1-s1" name="Database" source="C:\Users\GENIUS\IdeaProjects\EnterpriseRobotMonetique\tests\database">
+<suite id="s1-s1-s1" name="Accounts" source="C:\Users\GENIUS\IdeaProjects\EnterpriseRobotMonetique\tests\database\accounts.robot">
+<test id="s1-s1-s1-t1" name="Test Database" line="7">
+<kw name="tcheck data" owner="accounts">
+<kw name="Connect To Database" owner="DatabaseLibrary">
+<msg time="2026-03-15T17:00:37.371343" level="INFO">Looking for configuration file: 'resources\db.cfg'</msg>
+<msg time="2026-03-15T17:00:37.371343" level="INFO">Configuration file doesn't exist</msg>
+<msg time="2026-03-15T17:00:37.427287" level="INFO">Connect to DB using : pymysql.connect(db='payment_system', user='root', passwd=***, host='localhost', port=3306, charset='utf8mb4')</msg>
+<arg>${pysql}</arg>
+<arg>${db_name}</arg>
+<arg>${db_user}</arg>
+<arg>${db_pass}</arg>
+<arg>${db_host}</arg>
+<arg>${db_port}</arg>
+<doc>Creates a database connection using the DB API 2.0 ``db_module`` and the parameters provided.
+Along with listed commonly used arguments (`db_name`, `db_host` etc.)
+you can set any other DB module specific parameters as key/value pairs.</doc>
+<status status="PASS" start="2026-03-15T17:00:37.371343" elapsed="0.085277"/>
+</kw>
+<kw name="Query" owner="DatabaseLibrary">
+<msg time="2026-03-15T17:00:37.456620" level="INFO" html="true">Executing sql:&lt;br&gt;&lt;code style="font-weight: bold;"&gt;select * from transactions where transaction_id='TX10001' and amount=150.0&lt;/code&gt;</msg>
+<msg time="2026-03-15T17:00:37.485843" level="INFO">Commit the transaction</msg>
+<msg time="2026-03-15T17:00:37.487887" level="INFO" html="true">&lt;div style="max-width: 100%; overflow-x: auto; max-height: 500px; overflow-y: auto;"&gt;&lt;table style="width: auto; border-collapse: collapse; border: 2px solid rgb(140 140 140)"&gt;&lt;caption style="text-align: left; font-weight: bold; padding: 5px;"&gt;Query returned 1 rows&lt;/caption&gt;&lt;tr&gt;&lt;th scope="col" style="position: sticky; top: 0; color:black; background-color: #d6ecd4; border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;Row&lt;/th&gt;&lt;th scope="col" style="position: sticky; top: 0; background-color: #505050; color: #fff;border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;id&lt;/th&gt;&lt;th scope="col" style="position: sticky; top: 0; background-color: #505050; color: #fff;border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;transaction_id&lt;/th&gt;&lt;th scope="col" style="position: sticky; top: 0; background-color: #505050; color: #fff;border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;account_id&lt;/th&gt;&lt;th scope="col" style="position: sticky; top: 0; background-color: #505050; color: #fff;border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;amount&lt;/th&gt;&lt;th scope="col" style="position: sticky; top: 0; background-color: #505050; color: #fff;border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;currency&lt;/th&gt;&lt;th scope="col" style="position: sticky; top: 0; background-color: #505050; color: #fff;border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;type&lt;/th&gt;&lt;th scope="col" style="position: sticky; top: 0; background-color: #505050; color: #fff;border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;status&lt;/th&gt;&lt;th scope="col" style="position: sticky; top: 0; background-color: #505050; color: #fff;border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;reason&lt;/th&gt;&lt;th scope="col" style="position: sticky; top: 0; background-color: #505050; color: #fff;border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;created_at&lt;/th&gt;&lt;/tr&gt;&lt;tr style="background-color: var(--secondary-color, #eee)"&gt;&lt;th scope="row" style="color:black; background-color: #d6ecd4;border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;0&lt;/th&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;1&lt;/td&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;TX10001&lt;/td&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;1&lt;/td&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;150.00&lt;/td&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;EUR&lt;/td&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;AUTHORIZATION&lt;/td&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;APPROVED&lt;/td&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;GOOD&lt;/td&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;2026-03-01 10:44:53&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</msg>
+<msg time="2026-03-15T17:00:37.487887" level="INFO">${connexion} = ((1, 'TX10001', 1, Decimal('150.00'), 'EUR', 'AUTHORIZATION', 'APPROVED', 'GOOD', datetime.datetime(2026, 3, 1, 10, 44, 53)),)</msg>
+<var>${connexion}</var>
+<arg>select * from transactions where transaction_id=${transaction_id} and amount=150.0</arg>
+<doc>Runs a query with the ``select_statement`` and returns the result as list of rows.
+The type of row values depends on the database module -
+usually they are tuples or tuple-like objects.</doc>
+<status status="PASS" start="2026-03-15T17:00:37.456620" elapsed="0.031267"/>
+</kw>
+<kw name="Should Not Be Empty" owner="BuiltIn">
+<msg time="2026-03-15T17:00:37.487887" level="INFO">Length is 1.</msg>
+<arg>${connexion}</arg>
+<doc>Verifies that the given item is not empty.</doc>
+<status status="PASS" start="2026-03-15T17:00:37.487887" elapsed="0.000000"/>
+</kw>
+<kw name="Length Should Be" owner="BuiltIn">
+<msg time="2026-03-15T17:00:37.488885" level="INFO">Length is 1.</msg>
+<arg>${connexion}</arg>
+<arg>1</arg>
+<doc>Verifies that the length of the given item is correct.</doc>
+<status status="PASS" start="2026-03-15T17:00:37.487887" elapsed="0.000998"/>
+</kw>
+<status status="PASS" start="2026-03-15T17:00:37.370342" elapsed="0.118543"/>
+</kw>
+<status status="PASS" start="2026-03-15T17:00:37.369346" elapsed="0.119539"/>
+</test>
+<status status="PASS" start="2026-03-15T17:00:37.326049" elapsed="0.162836"/>
+</suite>
+<status status="PASS" start="2026-03-15T17:00:37.324031" elapsed="0.166270"/>
+</suite>
+<suite id="s1-s2" name="File" source="C:\Users\GENIUS\IdeaProjects\EnterpriseRobotMonetique\tests\file">
+<suite id="s1-s2-s1" name="Transactionstxt" source="C:\Users\GENIUS\IdeaProjects\EnterpriseRobotMonetique\tests\file\transactionstxt.robot">
+<test id="s1-s2-s1-t1" name="Verify the File" line="11">
+<kw name="Verify File" owner="transactions">
+<kw name="Get File" owner="OperatingSystem">
+<msg time="2026-03-15T17:00:37.587214" level="INFO" html="true">Getting file '&lt;a href="file://C:\Users\GENIUS\IdeaProjects\EnterpriseRobotMonetique\data\transactions.txt"&gt;C:\Users\GENIUS\IdeaProjects\EnterpriseRobotMonetique\data\transactions.txt&lt;/a&gt;'.</msg>
+<msg time="2026-03-15T17:00:37.587214" level="INFO">${myfile} = PAYMENT_ID:12345;STATUS:OK;AMOUNT:50
+PAYMENT_ID:12346;STATUS:FAILED;AMOUNT:70
+PAYMENT_ID:12347;STATUS:OK;AMOUNT:20</msg>
+<var>${myfile}</var>
+<arg>${myfiletransactionstxt}</arg>
+<doc>Returns the contents of a specified file.</doc>
+<status status="PASS" start="2026-03-15T17:00:37.587214" elapsed="0.000000"/>
+</kw>
+<kw name="File Should Exist" owner="OperatingSystem">
+<msg time="2026-03-15T17:00:37.588215" level="INFO" html="true">File '&lt;a href="file://C:\Users\GENIUS\IdeaProjects\EnterpriseRobotMonetique\data\transactions.txt"&gt;C:\Users\GENIUS\IdeaProjects\EnterpriseRobotMonetique\data\transactions.txt&lt;/a&gt;' exists.</msg>
+<arg>${myfiletransactionstxt}</arg>
+<doc>Fails unless the given ``path`` points to an existing file.</doc>
+<status status="PASS" start="2026-03-15T17:00:37.588215" elapsed="0.000000"/>
+</kw>
+<status status="PASS" start="2026-03-15T17:00:37.587214" elapsed="0.001001"/>
+</kw>
+<status status="PASS" start="2026-03-15T17:00:37.586216" elapsed="0.001999"/>
+</test>
+<test id="s1-s2-s1-t2" name="verify failed" line="14">
+<kw name="Verify File Failed" owner="transactions">
+<kw name="Get File" owner="OperatingSystem">
+<msg time="2026-03-15T17:00:37.590214" level="INFO" html="true">Getting file '&lt;a href="file://C:\Users\GENIUS\IdeaProjects\EnterpriseRobotMonetique\data\transactions.txt"&gt;C:\Users\GENIUS\IdeaProjects\EnterpriseRobotMonetique\data\transactions.txt&lt;/a&gt;'.</msg>
+<msg time="2026-03-15T17:00:37.590214" level="INFO">${myfilefailed} = PAYMENT_ID:12345;STATUS:OK;AMOUNT:50
+PAYMENT_ID:12346;STATUS:FAILED;AMOUNT:70
+PAYMENT_ID:12347;STATUS:OK;AMOUNT:20</msg>
+<var>${myfilefailed}</var>
+<arg>${myfiletransactionstxt}</arg>
+<doc>Returns the contents of a specified file.</doc>
+<status status="PASS" start="2026-03-15T17:00:37.590214" elapsed="0.000000"/>
+</kw>
+<kw name="File Should Exist" owner="OperatingSystem">
+<msg time="2026-03-15T17:00:37.591216" level="INFO" html="true">File '&lt;a href="file://C:\Users\GENIUS\IdeaProjects\EnterpriseRobotMonetique\data\transactions.txt"&gt;C:\Users\GENIUS\IdeaProjects\EnterpriseRobotMonetique\data\transactions.txt&lt;/a&gt;' exists.</msg>
+<arg>${myfiletransactionstxt}</arg>
+<doc>Fails unless the given ``path`` points to an existing file.</doc>
+<status status="PASS" start="2026-03-15T17:00:37.591216" elapsed="0.000000"/>
+</kw>
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${myfilefailed}</arg>
+<arg>FAILED</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2026-03-15T17:00:37.591216" elapsed="0.000000"/>
+</kw>
+<kw name="Should Not Contain" owner="BuiltIn">
+<arg>${myfilefailed}</arg>
+<arg>900</arg>
+<doc>Fails if ``container`` contains ``item`` one or more times.</doc>
+<status status="PASS" start="2026-03-15T17:00:37.591216" elapsed="0.000000"/>
+</kw>
+<status status="PASS" start="2026-03-15T17:00:37.590214" elapsed="0.001002"/>
+</kw>
+<status status="PASS" start="2026-03-15T17:00:37.589216" elapsed="0.002999"/>
+</test>
+<test id="s1-s2-s1-t3" name="Verify file CSV" line="18">
+<kw name="verify file for csv" owner="transactions">
+<kw name="Get File" owner="OperatingSystem">
+<msg time="2026-03-15T17:00:37.594362" level="INFO" html="true">Getting file '&lt;a href="file://C:\Users\GENIUS\IdeaProjects\EnterpriseRobotMonetique\data\transactions.csv"&gt;C:\Users\GENIUS\IdeaProjects\EnterpriseRobotMonetique\data\transactions.csv&lt;/a&gt;'.</msg>
+<msg time="2026-03-15T17:00:37.594362" level="INFO">${myfilecsv} = id,status,amount
+1001,OK,50
+1002,FAILED,70
+1003,OK,20
+1004,OK,100
+1005,FAILED,35
+</msg>
+<var>${myfilecsv}</var>
+<arg>${myfiletransactionscsv}</arg>
+<doc>Returns the contents of a specified file.</doc>
+<status status="PASS" start="2026-03-15T17:00:37.594362" elapsed="0.000000"/>
+</kw>
+<kw name="File Should Exist" owner="OperatingSystem">
+<msg time="2026-03-15T17:00:37.595437" level="INFO" html="true">File '&lt;a href="file://C:\Users\GENIUS\IdeaProjects\EnterpriseRobotMonetique\data\transactions.csv"&gt;C:\Users\GENIUS\IdeaProjects\EnterpriseRobotMonetique\data\transactions.csv&lt;/a&gt;' exists.</msg>
+<arg>${myfiletransactionscsv}</arg>
+<doc>Fails unless the given ``path`` points to an existing file.</doc>
+<status status="PASS" start="2026-03-15T17:00:37.594362" elapsed="0.001075"/>
+</kw>
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${myfilecsv}</arg>
+<arg>FAILED</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2026-03-15T17:00:37.595437" elapsed="0.000000"/>
+</kw>
+<status status="PASS" start="2026-03-15T17:00:37.594362" elapsed="0.001075"/>
+</kw>
+<status status="PASS" start="2026-03-15T17:00:37.593334" elapsed="0.003012"/>
+</test>
+<status status="PASS" start="2026-03-15T17:00:37.493712" elapsed="0.103628"/>
+</suite>
+<status status="PASS" start="2026-03-15T17:00:37.491703" elapsed="0.106639"/>
+</suite>
+<status status="PASS" start="2026-03-15T17:00:37.303053" elapsed="0.296288"/>
+</suite>
+<statistics>
+<total>
+<stat pass="4" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="Tests" id="s1" pass="4" fail="0" skip="0">Tests</stat>
+<stat name="Database" id="s1-s1" pass="1" fail="0" skip="0">Tests.Database</stat>
+<stat name="Accounts" id="s1-s1-s1" pass="1" fail="0" skip="0">Tests.Database.Accounts</stat>
+<stat name="File" id="s1-s2" pass="3" fail="0" skip="0">Tests.File</stat>
+<stat name="Transactionstxt" id="s1-s2-s1" pass="3" fail="0" skip="0">Tests.File.Transactionstxt</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.3.2 (Python 3.11.0 on win32)" generated="2026-03-16T13:47:58.812641" rpa="false" schemaversion="5">
+<suite id="s1" name="App" source="C:\Users\GENIUS\IdeaProjects\EnterpriseRobotMonetique\tests\file\app.robot">
+<test id="s1-t1" name="command to linux" line="18">
+<kw name="Get File" owner="OperatingSystem">
+<msg time="2026-03-16T13:47:58.895639" level="INFO" html="true">Getting file '&lt;a href="file://\\wsl.localhost\Ubuntu\home\genius\app.log"&gt;\\wsl.localhost\Ubuntu\home\genius\app.log&lt;/a&gt;'.</msg>
+<msg time="2026-03-16T13:47:58.909638" level="INFO">${result} = INFO Starting payment batch
+INFO Loading transactions
+ERROR Transaction 2003 failed
+INFO Processing transaction 2004
+INFO Batch finished
+</msg>
+<var>${result}</var>
+<arg>${variabletolinux}</arg>
+<doc>Returns the contents of a specified file.</doc>
+<status status="PASS" start="2026-03-16T13:47:58.895639" elapsed="0.013999"/>
+</kw>
+<kw name="File Should Exist" owner="OperatingSystem">
+<msg time="2026-03-16T13:47:58.911638" level="INFO" html="true">File '&lt;a href="file://\\wsl.localhost\Ubuntu\home\genius\app.log"&gt;\\wsl.localhost\Ubuntu\home\genius\app.log&lt;/a&gt;' exists.</msg>
+<arg>${variabletolinux}</arg>
+<doc>Fails unless the given ``path`` points to an existing file.</doc>
+<status status="PASS" start="2026-03-16T13:47:58.909638" elapsed="0.002000"/>
+</kw>
+<kw name="Should Not Contain" owner="BuiltIn">
+<arg>${result}</arg>
+<arg>FAILED</arg>
+<doc>Fails if ``container`` contains ``item`` one or more times.</doc>
+<status status="PASS" start="2026-03-16T13:47:58.912648" elapsed="0.000000"/>
+</kw>
+<kw name="Split To Lines" owner="String">
+<msg time="2026-03-16T13:47:58.912648" level="INFO">5 lines returned.</msg>
+<msg time="2026-03-16T13:47:58.913639" level="INFO">${line} = ['INFO Starting payment batch', 'INFO Loading transactions', 'ERROR Transaction 2003 failed', 'INFO Processing transaction 2004', 'INFO Batch finished']</msg>
+<var>${line}</var>
+<arg>${result}</arg>
+<doc>Splits the given string to lines.</doc>
+<status status="PASS" start="2026-03-16T13:47:58.912648" elapsed="0.000991"/>
+</kw>
+<kw name="Get Length" owner="BuiltIn">
+<msg time="2026-03-16T13:47:58.913639" level="INFO">Length is 5.</msg>
+<msg time="2026-03-16T13:47:58.913639" level="INFO">${count} = 5</msg>
+<var>${count}</var>
+<arg>${line}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<status status="PASS" start="2026-03-16T13:47:58.913639" elapsed="0.000000"/>
+</kw>
+<status status="PASS" start="2026-03-16T13:47:58.894638" elapsed="0.019001"/>
+</test>
+<status status="PASS" start="2026-03-16T13:47:58.815641" elapsed="0.097998"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="App" id="s1" pass="1" fail="0" skip="0">App</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

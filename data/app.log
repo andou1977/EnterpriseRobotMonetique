@@ -1,0 +1,5 @@
+INFO Starting payment batch
+INFO Loading transactions
+ERROR Transaction 2003 failed
+INFO Processing transaction 2004
+INFO Batch finished

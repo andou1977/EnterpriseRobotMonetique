@@ -1,51 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 7.3.2 (Python 3.11.0 on win32)" generated="2026-03-16T13:47:58.812641" rpa="false" schemaversion="5">
+<robot generator="Robot 7.3.2 (Python 3.11.0 on win32)" generated="2026-03-20T08:17:36.357452" rpa="false" schemaversion="5">
 <suite id="s1" name="App" source="C:\Users\GENIUS\IdeaProjects\EnterpriseRobotMonetique\tests\file\app.robot">
-<test id="s1-t1" name="command to linux" line="18">
-<kw name="Get File" owner="OperatingSystem">
-<msg time="2026-03-16T13:47:58.895639" level="INFO" html="true">Getting file '&lt;a href="file://\\wsl.localhost\Ubuntu\home\genius\app.log"&gt;\\wsl.localhost\Ubuntu\home\genius\app.log&lt;/a&gt;'.</msg>
-<msg time="2026-03-16T13:47:58.909638" level="INFO">${result} = INFO Starting payment batch
-INFO Loading transactions
-ERROR Transaction 2003 failed
-INFO Processing transaction 2004
-INFO Batch finished
-</msg>
+<test id="s1-t1" name="hello" line="65">
+<kw name="Run Process" owner="Process">
+<msg time="2026-03-20T08:17:38.367155" level="INFO">Starting process:
+wsl sh -c "grep FAILED /home/genius/andoufile2.csv | wc -l"</msg>
+<msg time="2026-03-20T08:17:38.378827" level="INFO">Waiting for process to complete.</msg>
+<msg time="2026-03-20T08:17:44.226353" level="INFO">Process completed.</msg>
+<msg time="2026-03-20T08:17:44.226353" level="INFO">${result} = &lt;result object with rc 0&gt;</msg>
 <var>${result}</var>
-<arg>${variabletolinux}</arg>
-<doc>Returns the contents of a specified file.</doc>
-<status status="PASS" start="2026-03-16T13:47:58.895639" elapsed="0.013999"/>
+<arg>wsl</arg>
+<arg>sh</arg>
+<arg>-c</arg>
+<arg>grep FAILED ${appcsvlinux} | wc -l</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<status status="PASS" start="2026-03-20T08:17:38.365162" elapsed="5.861191"/>
 </kw>
-<kw name="File Should Exist" owner="OperatingSystem">
-<msg time="2026-03-16T13:47:58.911638" level="INFO" html="true">File '&lt;a href="file://\\wsl.localhost\Ubuntu\home\genius\app.log"&gt;\\wsl.localhost\Ubuntu\home\genius\app.log&lt;/a&gt;' exists.</msg>
-<arg>${variabletolinux}</arg>
-<doc>Fails unless the given ``path`` points to an existing file.</doc>
-<status status="PASS" start="2026-03-16T13:47:58.909638" elapsed="0.002000"/>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>qandtité = ${result.stdout}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-03-20T08:17:44.226353" elapsed="0.000000"/>
 </kw>
-<kw name="Should Not Contain" owner="BuiltIn">
-<arg>${result}</arg>
-<arg>FAILED</arg>
-<doc>Fails if ``container`` contains ``item`` one or more times.</doc>
-<status status="PASS" start="2026-03-16T13:47:58.912648" elapsed="0.000000"/>
-</kw>
-<kw name="Split To Lines" owner="String">
-<msg time="2026-03-16T13:47:58.912648" level="INFO">5 lines returned.</msg>
-<msg time="2026-03-16T13:47:58.913639" level="INFO">${line} = ['INFO Starting payment batch', 'INFO Loading transactions', 'ERROR Transaction 2003 failed', 'INFO Processing transaction 2004', 'INFO Batch finished']</msg>
-<var>${line}</var>
-<arg>${result}</arg>
-<doc>Splits the given string to lines.</doc>
-<status status="PASS" start="2026-03-16T13:47:58.912648" elapsed="0.000991"/>
-</kw>
-<kw name="Get Length" owner="BuiltIn">
-<msg time="2026-03-16T13:47:58.913639" level="INFO">Length is 5.</msg>
-<msg time="2026-03-16T13:47:58.913639" level="INFO">${count} = 5</msg>
-<var>${count}</var>
-<arg>${line}</arg>
-<doc>Returns and logs the length of the given item as an integer.</doc>
-<status status="PASS" start="2026-03-16T13:47:58.913639" elapsed="0.000000"/>
-</kw>
-<status status="PASS" start="2026-03-16T13:47:58.894638" elapsed="0.019001"/>
+<status status="PASS" start="2026-03-20T08:17:38.356653" elapsed="5.873289"/>
 </test>
-<status status="PASS" start="2026-03-16T13:47:58.815641" elapsed="0.097998"/>
+<status status="PASS" start="2026-03-20T08:17:36.357452" elapsed="7.872490"/>
 </suite>
 <statistics>
 <total>

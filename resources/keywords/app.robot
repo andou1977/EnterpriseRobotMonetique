@@ -5,6 +5,6 @@ Library    OperatingSystem
 
 *** Keywords ***
 To Linux
-     ${getfileapptolinux}=   Get File   ${variabletolinux}
+     ${getfileapptolinux}=   Get File   ${fileapp}
       Log    ${getfileapptolinux}
 

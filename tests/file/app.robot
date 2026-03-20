@@ -10,6 +10,7 @@ Library    Collections
 Library    RPA.JSON
 Library    RequestsLibrary
 Library    XML
+Library    RPA.RobotLogListener
 
 
 
@@ -35,8 +36,8 @@ Fichier.json
 
 
 fichier.xml
-    ${xml}=    Parse Xml   ${filexml}
-    Log    ${xml}
+    ${xml}=    Parse Xml    ${filexml}
+    Log   ${xml}
 
 batch.txt
    ${batchtxt}=   Get File    ${filebatchtxt}
@@ -51,20 +52,44 @@ fixed.txt
 
    END
 
-myfile.xml
-     ${content}=    Get File    ${fileapp}
-     @{lines}=    Split To Lines    ${content}
-     ${count}=    Set Variable    0
 
-     FOR    ${line}    IN    @{lines}
-         Run Keyword If    'INFO' in '${line}'    Set Test Variable    ${count}    ${count + 1}
-     END
-
-     Log    ${count}
 
 hello
      ${result}=    Run Process    wsl    sh    -c    grep FAILED ${appcsvlinux} | wc -l
      Log To Console    qandtité = ${result.stdout}
+
+hello2
+     ${result}=    Run Process    wsl    sh    -c    cat ${apploglinux}
+     Log To Console    \n${result.stdout}
+     Should Not Contain    ${result.stdout}    FAILED
+     Should Start With    ${result.stdout}    INFO Start batch
+     Should Contain    ${result.stdout}    INFO End batch
+
+testing
+   ${result}=    Run Process    wsl    sh    -c    grep FAILED ${appcsvlinux}
+   Log To Console   \n${result.stdout}
+   Should Contain    ${result.stdout}    FAILED
+   
+do with get file
+    ${content}=    Get File    ${filecsv}
+    @{lines}=    Split To Lines    ${content}
+    ${count}=    Set Variable    0
+    FOR    ${line}    IN    @{lines}
+         IF    'FAILED' in '${line}'
+          ${count}=    Evaluate    ${count} + 1
+        END
+    END
+
+        Log To Console    FAILED COUNT = ${count}
+        Should Be Equal As Integers    ${count}    4
+
+ 
+
+
+
+
+
+
 
 
 

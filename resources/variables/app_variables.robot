@@ -12,3 +12,6 @@ ${filebatchtxt}   //wsl.localhost/Ubuntu/home/genius/batch.txt
 ${filefixedtxt}   //wsl.localhost/Ubuntu/home/genius/fixed.txt
 ${apploglinux}   /home/genius/app.log
 ${appcsvlinux}   /home/genius/andoufile2.csv
+${pou}     //wsl.localhost/Ubuntu/home/genius/result.csv
+${pou2}    /home/genius/result.csv
+

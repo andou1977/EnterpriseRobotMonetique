@@ -11,6 +11,10 @@ Library    RPA.JSON
 Library    RequestsLibrary
 Library    XML
 Library    RPA.RobotLogListener
+Library    ../../python/countfailed.py
+
+
+
 
 
 
@@ -85,27 +89,21 @@ do with get file
 
  
 
+test Failed
+     ${count}=   Check Failed Payments    ${pou}
+     Should Be Equal As Integers    ${count}   1
+
+#     ou
+
+
+
+#     ${result}=    Run Process    wsl    sh    -c    grep FAILED ${pou2} | wc -l
+#     Log To Console    \nquantité = ${result.stdout}
+#     Should Be Equal As Integers    ${result.stdout}    1
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-#    ${verifypaiement}=   Split To Lines    ${myfilexml24}
-#    FOR    ${element}    IN    @{verifypaiement}
-#    Should Contain    ${element}    OK
-#
-#    END
 
 
 

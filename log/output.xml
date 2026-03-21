@@ -1,80 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 7.3.2 (Python 3.11.0 on win32)" generated="2026-03-20T12:55:32.864149" rpa="false" schemaversion="5">
+<robot generator="Robot 7.3.2 (Python 3.11.0 on win32)" generated="2026-03-21T16:58:40.383836" rpa="false" schemaversion="5">
 <suite id="s1" name="App" source="C:\Users\GENIUS\IdeaProjects\EnterpriseRobotMonetique\tests\file\app.robot">
-<test id="s1-t1" name="myfile.xml" line="55">
-<kw name="Get File" owner="OperatingSystem">
-<msg time="2026-03-20T12:55:33.213842" level="INFO" html="true">Getting file '&lt;a href="file://\\wsl.localhost\Ubuntu\home\genius\andoufile2.csv"&gt;\\wsl.localhost\Ubuntu\home\genius\andoufile2.csv&lt;/a&gt;'.</msg>
-<msg time="2026-03-20T12:55:33.230842" level="INFO">${content} = PAYMENT;ID=1003;STATUS=FAILED
-PAYMENT;ID=1004;STATUS=OK
-PAYMENT;ID=1005;STATUS=FAILED
-PAYMENT;ID=1001;STATUS=OK
-PAYMENT;ID=1002;STATUS=FAILED
-PAYMENT;ID=1006;STATUS=OK
-PAYMENT;ID=1007;STATUS=FAILED
-
-</msg>
-<var>${content}</var>
-<arg>${filecsv}</arg>
-<doc>Returns the contents of a specified file.</doc>
-<status status="PASS" start="2026-03-20T12:55:33.213842" elapsed="0.017000"/>
-</kw>
-<kw name="Split To Lines" owner="String">
-<msg time="2026-03-20T12:55:33.230842" level="INFO">8 lines returned.</msg>
-<msg time="2026-03-20T12:55:33.231850" level="INFO">@{lines} = [ PAYMENT;ID=1003;STATUS=FAILED | PAYMENT;ID=1004;STATUS=OK | PAYMENT;ID=1005;STATUS=FAILED | PAYMENT;ID=1001;STATUS=OK | PAYMENT;ID=1002;STATUS=FAILED | PAYMENT;ID=1006;STATUS=OK | PAYMENT;ID=1007;ST...</msg>
-<var>@{lines}</var>
-<arg>${content}</arg>
-<doc>Splits the given string to lines.</doc>
-<status status="PASS" start="2026-03-20T12:55:33.230842" elapsed="0.001008"/>
-</kw>
-<kw name="Set Variable" owner="BuiltIn">
-<msg time="2026-03-20T12:55:33.231850" level="INFO">${count} = 0</msg>
+<test id="s1-t1" name="test Failed" line="92">
+<kw name="Check Failed Payments" owner="countfailed">
+<msg time="2026-03-21T16:58:42.479437" level="INFO">Nombre de FAILED : 1
+ERREUR : il y a des paiements en FAILED</msg>
+<msg time="2026-03-21T16:58:42.481945" level="INFO">${count} = 1</msg>
 <var>${count}</var>
-<arg>0</arg>
-<doc>Returns the given values which can then be assigned to a variables.</doc>
-<status status="PASS" start="2026-03-20T12:55:33.231850" elapsed="0.000000"/>
+<arg>${pou}</arg>
+<status status="PASS" start="2026-03-21T16:58:42.458518" elapsed="0.023427"/>
 </kw>
-<for flavor="IN">
-<iter>
-<if>
-<branch type="IF" condition="'OK'">
-<kw name="in '${line}'">
-<msg time="2026-03-20T12:55:33.234848" level="FAIL">No keyword with name 'in '${line}'' found.</msg>
-<status status="FAIL" start="2026-03-20T12:55:33.233851" elapsed="0.000997">No keyword with name 'in '${line}'' found.</status>
-</kw>
-<status status="FAIL" start="2026-03-20T12:55:33.232844" elapsed="0.002004">No keyword with name 'in '${line}'' found.</status>
-</branch>
-<status status="FAIL" start="2026-03-20T12:55:33.232844" elapsed="0.002004">No keyword with name 'in '${line}'' found.</status>
-</if>
-<kw name="Evaluate" owner="BuiltIn">
-<var>${count}</var>
-<arg>${count}+1</arg>
-<doc>Evaluates the given expression in Python and returns the result.</doc>
-<status status="NOT RUN" start="2026-03-20T12:55:33.234848" elapsed="0.000000"/>
-</kw>
-<var name="${line}">PAYMENT;ID=1003;STATUS=FAILED</var>
-<status status="FAIL" start="2026-03-20T12:55:33.232844" elapsed="0.002004">No keyword with name 'in '${line}'' found.</status>
-</iter>
-<var>${line}</var>
-<value>@{lines}</value>
-<status status="FAIL" start="2026-03-20T12:55:33.231850" elapsed="0.002998">No keyword with name 'in '${line}'' found.</status>
-</for>
-<kw name="Log" owner="BuiltIn">
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-03-21T16:58:42.482947" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
 <arg>${count}</arg>
-<doc>Logs the given message with the given level.</doc>
-<status status="NOT RUN" start="2026-03-20T12:55:33.234848" elapsed="0.000000"/>
+<arg>1</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-03-21T16:58:42.481945" elapsed="0.001002"/>
 </kw>
-<status status="FAIL" start="2026-03-20T12:55:33.211842" elapsed="0.023006">No keyword with name 'in '${line}'' found.</status>
+<status status="PASS" start="2026-03-21T16:58:42.456523" elapsed="0.026424"/>
 </test>
-<status status="FAIL" start="2026-03-20T12:55:32.865604" elapsed="0.370245"/>
+<status status="PASS" start="2026-03-21T16:58:40.386836" elapsed="2.097111"/>
 </suite>
 <statistics>
 <total>
-<stat pass="0" fail="1" skip="0">All Tests</stat>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
 </total>
 <tag>
 </tag>
 <suite>
-<stat name="App" id="s1" pass="0" fail="1" skip="0">App</stat>
+<stat name="App" id="s1" pass="1" fail="0" skip="0">App</stat>
 </suite>
 </statistics>
 <errors>

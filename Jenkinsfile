@@ -92,7 +92,7 @@ pipeline {
         stage('Setup venv') {
             steps {
                 powershell 'python -m venv venv'
-                powershell '.\\venv\\Scripts\\Activate.ps1; pip install --upgrade pip'
+                powershell '.\\venv\\Scripts\\Activate.ps1; python -m pip install --upgrade pip'
                 powershell '.\\venv\\Scripts\\Activate.ps1; pip install -r requirements.txt'
             }
         }

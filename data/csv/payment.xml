@@ -1,0 +1,26 @@
+<payments>
+    <payment>
+       <id>1002</id>
+       <status>OK</status>
+       <amount>50</amount>
+    </payment>
+
+    <payment>
+       <id>1003</id>
+       <status>KO</status>
+       <amount>150</amount>
+    </payment>
+
+    <payment>
+       <id>1004</id>
+       <status>OK</status>
+       <amount>50</amount>
+    </payment>
+
+    <payment>
+       <id>1005</id>
+       <status>KO</status>
+       <amount>150</amount>
+    </payment>
+</payments>
+

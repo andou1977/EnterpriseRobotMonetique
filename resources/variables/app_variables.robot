@@ -4,14 +4,15 @@ Resource   ../variables/global_variables.robot
 
 
 *** Variables ***
-${fileapp}   //wsl.localhost/Ubuntu/home/genius/app.log
-${filecsv}   //wsl.localhost/Ubuntu/home/genius/andoufile2.csv
-${filejson}   //wsl.localhost/Ubuntu/home/genius/andou.json
-${filexml}   //wsl.localhost/Ubuntu/home/genius/payment.xml
-${filebatchtxt}   //wsl.localhost/Ubuntu/home/genius/batch.txt
-${filefixedtxt}   //wsl.localhost/Ubuntu/home/genius/fixed.txt
-${apploglinux}   /home/genius/app.log
-${appcsvlinux}   /home/genius/andoufile2.csv
-${pou}     //wsl.localhost/Ubuntu/home/genius/result.csv
-${pou2}    /home/genius/result.csv
+${fileapp}   ${EXECDIR}/data/csv/app.log
+${filecsv}   ${EXECDIR}/data/csv/andoufile2.csv
+${filejson}   ${EXECDIR}/data/csv/andou.json
+${filexml}   ${EXECDIR}/data/csv/payment.xml
+${filebatchtxt}   ${EXECDIR}/data/csv/batch.txt
+${filefixedtxt}   ${EXECDIR}/data/csv/fixed.txt
+${apploglinux}   ${EXECDIR}/data/csv/app.log
+${appcsvlinux}   ${EXECDIR}/data/csv/andoufile2.csv
+${pou}     ${EXECDIR}/data/csv/result.csv
+${pou2}    ${EXECDIR}/data/csv/result.csv
 
+${appcsvlinux2}    /home/genius/andoufile2.csv

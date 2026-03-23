@@ -24,74 +24,30 @@ Library    ../../python/countfailed.py
 *** Test Cases ***
 Direct to Linux
     To Linux
+Fichier txt
+    Fichier.txt
+Fichier json
+    Fichier.json
+Fichier xml
+    fichier.xml
+Fichier batxh
+    batch.txt
+Fichier fixed
+    fixed.txt
+Fichier hello
+    hello
+Fichier hello2
+    hello2
+fichier testing
+     testing
+fichier with get file
+    do with get file
+fichier test failed
+    test Failed
 
 
-Fichier.txt
-      ${result}=    Get File   ${fileapp}
-      File Should Exist    ${fileapp}
-      Should Not Contain    ${result}    FAILED
-     ${line}=   Split To Lines   ${result}
-     ${count}=  Get Length    ${line}
+
      
-
-Fichier.json
-   ${resultjson}=   Load JSON from file    ${filejson}
-   Should Be Equal    ${resultjson['status']}    OK
-
-
-fichier.xml
-    ${xml}=    Parse Xml    ${filexml}
-    Log   ${xml}
-
-batch.txt
-   ${batchtxt}=   Get File    ${filebatchtxt}
-   Should Start With    ${batchtxt}     HEADER
-   Should Contain    ${batchtxt}    FOOTER;TOTAL=2
-   
-fixed.txt
-   ${fixedtxt}=   Get File    ${filefixedtxt}
-   ${line}=   Split To Lines    ${fixedtxt}
-   FOR    ${element}    IN    @{line}
-       Log    ${element}
-
-   END
-
-
-
-hello
-     ${result}=    Run Process    wsl    sh    -c    grep FAILED ${appcsvlinux} | wc -l
-     Log To Console    qandtité = ${result.stdout}
-
-hello2
-     ${result}=    Run Process    wsl    sh    -c    cat ${apploglinux}
-     Log To Console    \n${result.stdout}
-     Should Not Contain    ${result.stdout}    FAILED
-     Should Start With    ${result.stdout}    INFO Start batch
-     Should Contain    ${result.stdout}    INFO End batch
-
-testing
-   ${result}=    Run Process    wsl    sh    -c    grep FAILED ${appcsvlinux}
-   Log To Console   \n${result.stdout}
-   Should Contain    ${result.stdout}    FAILED
-   
-do with get file
-    ${content}=    Get File    ${filecsv}
-    @{lines}=    Split To Lines    ${content}
-    ${count}=    Set Variable    0
-    FOR    ${line}    IN    @{lines}
-         IF    'FAILED' in '${line}'
-          ${count}=    Evaluate    ${count} + 1
-        END
-    END
-
-        Log To Console    FAILED COUNT = ${count}
-        Should Be Equal As Integers    ${count}    4
-
- 
-
-test Failed
-     ${count}=   Check Failed Payments    ${pou}
-     Should Be Equal As Integers    ${count}   1
 
 #     ou
 

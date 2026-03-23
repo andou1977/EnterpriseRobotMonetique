@@ -1,0 +1,9 @@
+INFO Start batch
+INFO Loading file
+ERROR Transaction 3001 failed
+INFO Processing
+ERROR Transaction 3002 failed
+INFO Loading transactions
+ERROR Transaction 2003 failed
+INFO Processing transaction 2004
+INFO End batch

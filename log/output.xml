@@ -1,27 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 7.3.2 (Python 3.11.0 on win32)" generated="2026-03-21T16:58:40.383836" rpa="false" schemaversion="5">
+<robot generator="Robot 7.3.2 (Python 3.11.0 on win32)" generated="2026-03-23T14:30:57.785182" rpa="false" schemaversion="5">
 <suite id="s1" name="App" source="C:\Users\GENIUS\IdeaProjects\EnterpriseRobotMonetique\tests\file\app.robot">
-<test id="s1-t1" name="test Failed" line="92">
-<kw name="Check Failed Payments" owner="countfailed">
-<msg time="2026-03-21T16:58:42.479437" level="INFO">Nombre de FAILED : 1
-ERREUR : il y a des paiements en FAILED</msg>
-<msg time="2026-03-21T16:58:42.481945" level="INFO">${count} = 1</msg>
-<var>${count}</var>
-<arg>${pou}</arg>
-<status status="PASS" start="2026-03-21T16:58:42.458518" elapsed="0.023427"/>
+<test id="s1-t1" name="fichier testing" line="41">
+<kw name="testing" owner="app">
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-03-23T14:30:58.121563" level="INFO">${failed} = ['PAYMENT;ID=1003;STATUS=FAILED\n', 'PAYMENT;ID=1005;STATUS=FAILED\n', 'PAYMENT;ID=1002;STATUS=FAILED\n', 'PAYMENT;ID=1007;STATUS=FAILED\n']</msg>
+<var>${failed}</var>
+<arg>[l for l in open(r"${filecsv}") if "FAILED" in l]</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-03-23T14:30:58.121563" elapsed="0.002425"/>
 </kw>
-<kw name="Should Be Equal As Integers" owner="BuiltIn">
-<msg time="2026-03-21T16:58:42.482947" level="INFO">Argument types are:
-&lt;class 'int'&gt;
-&lt;class 'str'&gt;</msg>
-<arg>${count}</arg>
-<arg>1</arg>
-<doc>Fails if objects are unequal after converting them to integers.</doc>
-<status status="PASS" start="2026-03-21T16:58:42.481945" elapsed="0.001002"/>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${failed}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-03-23T14:30:58.123988" elapsed="0.000000"/>
 </kw>
-<status status="PASS" start="2026-03-21T16:58:42.456523" elapsed="0.026424"/>
+<status status="PASS" start="2026-03-23T14:30:58.120483" elapsed="0.003505"/>
+</kw>
+<status status="PASS" start="2026-03-23T14:30:58.119565" elapsed="0.004423"/>
 </test>
-<status status="PASS" start="2026-03-21T16:58:40.386836" elapsed="2.097111"/>
+<status status="PASS" start="2026-03-23T14:30:57.787183" elapsed="0.337810"/>
 </suite>
 <statistics>
 <total>

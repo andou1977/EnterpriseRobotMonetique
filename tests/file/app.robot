@@ -12,6 +12,8 @@ Library    RequestsLibrary
 Library    XML
 Library    RPA.RobotLogListener
 Library    ../../python/countfailed.py
+Library    ../../python/calculeamount.py
+
 
 
 
@@ -47,7 +49,20 @@ fichier test failed
 
 
 
-     
+mytestingnow
+     ${tr}=   Calculate Total Amount    ${filebatchtxt}
+     Should Be Equal As Integers    ${tr}    120
+
+
+
+
+
+
+
+
+
+
+
 
 #     ou
 

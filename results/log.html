@@ -5,7 +5,7 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="-1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta content="Robot Framework 7.3.2 (Python 3.11.0 on win32)" name="Generator">
+<meta content="Robot Framework 7.4.2 (Python 3.11.0 on win32)" name="Generator">
 <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKcAAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAAqAAAAAAAAAAAAAAAAAAAALIAAAD/AAAA4AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA4AAAAP8AAACxAAAAAAAAAKYAAAD/AAAAuwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC/AAAA/wAAAKkAAAD6AAAAzAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAN8AAAD/AAAA+gAAAMMAAAAAAAAAAgAAAGsAAABrAAAAawAAAGsAAABrAAAAawAAAGsAAABrAAAADAAAAAAAAADaAAAA/wAAAPoAAADDAAAAAAAAAIsAAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAANEAAAAAAAAA2gAAAP8AAAD6AAAAwwAAAAAAAAAAAAAAMgAAADIAAAAyAAAAMgAAADIAAAAyAAAAMgAAADIAAAAFAAAAAAAAANoAAAD/AAAA+gAAAMMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADaAAAA/wAAAPoAAADDAAAAAAAAADwAAAB8AAAAAAAAAGAAAABcAAAAAAAAAH8AAABKAAAAAAAAAAAAAAAAAAAA2gAAAP8AAAD6AAAAwwAAAAAAAADCAAAA/wAAACkAAADqAAAA4QAAAAAAAAD7AAAA/wAAALAAAAAGAAAAAAAAANoAAAD/AAAA+gAAAMMAAAAAAAAAIwAAAP4AAAD/AAAA/wAAAGAAAAAAAAAAAAAAAMkAAAD/AAAAigAAAAAAAADaAAAA/wAAAPoAAADDAAAAAAAAAAAAAAAIAAAAcAAAABkAAAAAAAAAAAAAAAAAAAAAAAAAEgAAAAAAAAAAAAAA2gAAAP8AAAD7AAAAywAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAN4AAAD/AAAAqwAAAP8AAACvAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALIAAAD/AAAAsgAAAAAAAAC5AAAA/wAAAMoAAADAAAAAwAAAAMAAAADAAAAAwAAAAMAAAADAAAAAwAAAAMkAAAD/AAAAvAAAAAAAAAAAAAAAAAAAAKwAAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAArQAAAAAAAAAAwAMAAIABAAAf+AAAP/wAAD/8AAAgBAAAP/wAAD/8AAA//AAAJIwAADHEAAA//AAAP/wAAB/4AACAAQAAwAMAAA==">
 <style media="all">
 :root {
@@ -116,15 +116,16 @@ select {
 #header {
     width: 65em;
     height: 3em;
-    margin: 20px 0 6px 0;
+    margin: 1em 0 0 0;
 }
 h1 {
     float: left;
-    margin: 0 0 0.5em 0;
+    margin: 0 0 1em 0;
     width: 75%;
 }
 h2 {
     clear: left;
+    margin: 1.5em 0 0.5em 0;
 }
 #generated {
     float: right;
@@ -168,7 +169,13 @@ h2 {
     background-color: var(--primary-color);
     border-radius: 3px;
 }
-.label.debug, .label.trace, .label.error, .label.keyword {
+/* https://stackoverflow.com/questions/75238633 */
+@supports (-moz-appearance: none) {
+    .label {
+        padding-top: 4px;
+    }
+}
+.label.debug, .label.trace, .label.error {
     letter-spacing: 0;
 }
 .label.pass, .label.fail, .label.error, .label.skip, .label.warn {
@@ -355,19 +362,6 @@ th.stats-col-graph:hover {
 [data-theme="light"] .dark-mode-icon {
     display: block;
 }
-@keyframes highlight {
-    0% {
-        background: var(--primary-color)
-    }
-    100% {
-        background: var(--target-color);
-    }
-}
-:target {
-    background: var(--target-color);
-    transition: background 0.3s;
-    animation: highlight 4s;
-}
 </style>
 <style media="all">
 /* Icons are from Open Iconic <https://useiconic.com/open/>.
@@ -384,36 +378,43 @@ th.stats-col-graph:hover {
     --elapsed-color: #999;
 }
 /* Containers */
-.suite, .test, #errors {
+.suite, .test, #errors, #errors .messages {
     border-color: #ccc; /* Fallback value */
     border-color: var(--secondary-color);
     border-width: 1px;
     border-style: solid;
-    padding: 0.3em 0.2em;
-    margin: 0.2em 0;
+    padding: 5px;
+    margin-top: 5px;
 }
 .test {
     border-style: dashed;
 }
-#errors, .messages {
+.messages {
     width: 100%;
     border-spacing: 0;
+    padding: 0 5px;
 }
 .children {
     display: none;
-    margin-left: 1.4em;
+    margin-left: 18px;
+    margin-top: 2px;
 }
-.suite, .test, .keyword {
-    margin-left: -0.2em;
+#errors .children {
+    margin-left: 22px;
 }
-#s1, .suite > .children > .keyword {
-    margin-left: 0;
+.suite, .test {
+    margin-left: -5px;
+}
+#s1, #errors {
+    margin: 0;
 }
 /* Suite, test and kw headers */
 .element-header {
+    display: flex;
+    align-items: center;
+    padding: 2px;
     border: 1px solid transparent;
     border-radius: 2px;
-    position: relative;
 }
 .element-header:hover {
     cursor: pointer;
@@ -423,17 +424,15 @@ th.stats-col-graph:hover {
     border-color: var(--secondary-color);
 }
 .element-header-toggle {
-    position: absolute;
-    left: 3px;
-    top: 5px;
+    margin: 0 4px 0 2px;
+    height: 11px;
+    width: 11px;
+    min-width: 11px;
+    background-size: 6px 6px;
     background-repeat: no-repeat;
     background-position: center;
-    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAQAAABKxSfDAAAAAmJLR0QA/4ePzL8AAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQfeCR0JChSkZz20AAAAGklEQVQI12NgQAKMDKzInP8IDhOqMk4G7AAANQwBE427PYUAAAAASUVORK5CYII=);
     background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiIHZpZXdCb3g9IjAgMCA4IDgiPgogIDxwYXRoIGQ9Ik0wIDB2Mmg4di0yaC04eiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAzKSIgLz4KPC9zdmc+), none;
     filter: var(--icon-filter);
-    height: 10px;
-    width: 10px;
-    background-size: 6px 6px;
     border-color: #ccc; /* Fallback value */
     border-color: var(--icon-highlight);
     border-width: 1px;
@@ -441,67 +440,59 @@ th.stats-col-graph:hover {
     border-radius: 2px;
 }
 .closed > .element-header-toggle {
-    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAQAAABKxSfDAAAAAmJLR0QA/4ePzL8AAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQfeCR0JCDHdVYtxAAAAM0lEQVQI103MMQqAMBQFwVHyITaB3P+W1sKzSBC3mW6hRFw0pUB5DvF1bu9FN0RM3X/wAk98CUnvFTakAAAAAElFTkSuQmCC);
     background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiIHZpZXdCb3g9IjAgMCA4IDgiPgogIDxwYXRoIGQ9Ik0zIDB2M2gtM3YyaDN2M2gydi0zaDN2LTJoLTN2LTNoLTJ6IiAvPgo8L3N2Zz4=), none;
 }
 .element-header:hover > .element-header-toggle {
     background-color: #ccc; /* Fallback value */
     background-color: var(--icon-highlight);
 }
-.element-header-right:hover ~ .element-header-toggle {
+.element-header-menu:hover ~ .element-header-toggle {
     background-color: transparent;
 }
-.element-header-left {
-    padding: 3px 80px 3px 20px;
-}
-.element-header-right {
-    position: absolute;
-    right: 0;
-    top: 0;
-    padding: 3px;
+.element-header-menu {
+    margin: 0 2px 0 4px;
     cursor: default;
 }
-.element-header .label {
-    margin-right: 0.5em;
+.name, .arg, .assign {
+    margin-left: 7px;
+    white-space: pre-wrap;
 }
 .name {
     font-weight: bold;
-    white-space: pre-wrap;
-}
-.arg, .assign {
-    white-space: pre-wrap;
 }
 .elapsed {
-    float: right;
+    margin-left: auto;
+    padding-left: 0.5em;
     color: #666; /* Fallback value */
     color: var(--elapsed-color);
-    padding-left: 1em;
+    font-size: 0.9em;
+}
+/* https://stackoverflow.com/questions/75238633 */
+@supports (-moz-appearance: none) {
+    .name, .arg, .assign, .elapsed {
+        padding-top: 3px;
+    }
 }
 .link {
-    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEwAACxMBAJqcGAAAAHlJREFUGJVtzrEJwmAQBtCn6ASuIKTIBhY2gmghBiJYB1udwk10B8FJbKMBcQFbtbkfJHrVwfu+4/idJR64Y9H7E3higj5O3S8Y44ApLnjhnXCNGhV2yNGggDJwiC02gavUbpDFvscRo4QdXOMKDHBufz3HLYKzNn4AbSkV3fncGQYAAAAASUVORK5CYII=);
     background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiIHZpZXdCb3g9IjAgMCA4IDgiPgogIDxwYXRoIGQ9Ik01Ljg4LjAzYy0uMTguMDEtLjM2LjAzLS41My4wOS0uMjcuMS0uNTMuMjUtLjc1LjQ3YS41LjUgMCAxIDAgLjY5LjY5Yy4xMS0uMTEuMjQtLjE3LjM4LS4yMi4zNS0uMTIuNzgtLjA3IDEuMDYuMjIuMzkuMzkuMzkgMS4wNCAwIDEuNDRsLTEuNSAxLjVjLS40NC40NC0uOC40OC0xLjA2LjQ3LS4yNi0uMDEtLjQxLS4xMy0uNDEtLjEzYS41LjUgMCAxIDAtLjUuODhzLjM0LjIyLjg0LjI1Yy41LjAzIDEuMi0uMTYgMS44MS0uNzhsMS41LTEuNWMuNzgtLjc4Ljc4LTIuMDQgMC0yLjgxLS4yOC0uMjgtLjYxLS40NS0uOTctLjUzLS4xOC0uMDQtLjM4LS4wNC0uNTYtLjAzem0tMiAyLjMxYy0uNS0uMDItMS4xOS4xNS0xLjc4Ljc1bC0xLjUgMS41Yy0uNzguNzgtLjc4IDIuMDQgMCAyLjgxLjU2LjU2IDEuMzYuNzIgMi4wNi40Ny4yNy0uMS41My0uMjUuNzUtLjQ3YS41LjUgMCAxIDAtLjY5LS42OWMtLjExLjExLS4yNC4xNy0uMzguMjItLjM1LjEyLS43OC4wNy0xLjA2LS4yMi0uMzktLjM5LS4zOS0xLjA0IDAtMS40NGwxLjUtMS41Yy40LS40Ljc1LS40NSAxLjAzLS40NC4yOC4wMS40Ny4wOS40Ny4wOWEuNS41IDAgMSAwIC40NC0uODhzLS4zNC0uMi0uODQtLjIyeiIKICAvPgo8L3N2Zz4=), none;
-    filter: var(--icon-filter);
 }
 .expand {
-    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEwAACxMBAJqcGAAAADtJREFUGJVjYCACKDAwMByA0ljFDjAwMPxnYGB4ABVQgLL/Q+VQBB6gseGmIivCkERXhFUSWRFOSawAAEl7E3uv1iMcAAAAAElFTkSuQmCC);
     background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiIHZpZXdCb3g9IjAgMCA4IDgiPgogIDxwYXRoIGQ9Ik0xLjUgMGwtMS41IDEuNSA0IDQgNC00LTEuNS0xLjUtMi41IDIuNS0yLjUtMi41eiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAxKSIgLz4KPC9zdmc+), none;
-    filter: var(--icon-filter);
 }
 .collapse {
-    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEwAACxMBAJqcGAAAAC5JREFUGJVjYCARNEAxTsn/UIyhCFkSQxG6ThQ+C5IpjWhG1yNb4YDFTdjEMAEACi8Q++9Y9TAAAAAASUVORK5CYII=);
     background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiIHZpZXdCb3g9IjAgMCA4IDgiPgogIDxwYXRoIGQ9Ik00IDBsLTQgNCAxLjUgMS41IDIuNS0yLjUgMi41IDIuNSAxLjUtMS41LTQtNHoiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAgMSkiIC8+Cjwvc3ZnPg==), none;
-    filter: var(--icon-filter);
 }
 .expand, .collapse, .link {
     float: left;
     display: block;
     visibility: hidden;
-    margin: 0 4px;
+    margin: 0 3px;
     height: 14px;
     width: 14px;
     background-size: 8px 8px;
     background-repeat: no-repeat;
     background-position: center;
+    filter: var(--icon-filter);
     border-color: #ccc; /* Fallback value */
     border-color: var(--icon-highlight);
     border-width: 1px;
@@ -519,23 +510,18 @@ th.stats-col-graph:hover {
     background-color: var(--icon-highlight);
 }
 /* Messages and errors */
+.message-row {
+    height: 20px;
+}
 .messages .time, .messages .message {
     font-family: monospace;
     font-size: 1.1em;
 }
-#errors .message {
-    font-family: monospace;
-    font-size: 1.2em;
-}
-.message-row {
-    height: 20px;
-}
-.time {
+.messages .time {
     width: 7.5em;
 }
-.error-time {
-    width: 11em;
-    font-size: 0.9em;
+#errors .time {
+    width: 12.5em;
     white-space: nowrap;
 }
 .level {
@@ -555,7 +541,6 @@ th.stats-col-graph:hover {
     background-position: center;
 }
 .message-row:hover .select-message div {
-    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAQAAAD8fJRsAAAAAmJLR0QA/4ePzL8AAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQfeCR0MOzhWKZQOAAAASUlEQVQY032PsRHAIAwDX9BkicD+W8UMEqegAQJWKZ/+3sLZJhFGQEZzNaIa4ibh66En867VNaIeoP5WppNuIGoAlOm3g5VC1AdYeQv1BZPRSgAAAABJRU5ErkJggg==);
     background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiIHZpZXdCb3g9IjAgMCA4IDgiPgogIDxwYXRoIGQ9Ik0wIDB2MWg4di0xaC04em0wIDJ2MWg2di0xaC02em0wIDJ2MWg4di0xaC04em0wIDJ2MWg2di0xaC02eiIgLz4KPC9zdmc+), none;
     filter: var(--icon-filter);
     border-color: #ccc; /* Fallback value */
@@ -577,7 +562,6 @@ th.stats-col-graph:hover {
 .debug-message {
     display: table;
 }
-/* Metadata */
 .metadata {
     width: 100%;
     border-spacing: 0.2em;
@@ -596,6 +580,20 @@ th.stats-col-graph:hover {
 /* Custom styles for statistics */
 #total-stats tr:hover, #tag-stats tr:hover {
     cursor: default;
+}
+/* Target highlight */
+@keyframes highlight {
+    0% {
+        background: var(--primary-color)
+    }
+    100% {
+        background: var(--target-color);
+    }
+}
+:target {
+    background: var(--target-color);
+    transition: background 0.3s;
+    animation: highlight 4s;
 }
 </style>
 <style media="print">
@@ -741,7 +739,8 @@ function toggleElement(elementId, childrenNames) {
     children.toggle(100, '', function () {
         element.children('.element-header').toggleClass('closed');
     });
-    populateChildren(elementId, children, childrenNames);
+    if (childrenNames)
+        populateChildren(elementId, children, childrenNames);
 }
 function populateChildren(elementId, childElement, childrenNames) {
     if (!childElement.hasClass('populated')) {
@@ -1144,7 +1143,7 @@ window.model = (function () {
         kw.type = data.type;
         kw.template = 'keywordTemplate';
         kw.arguments = data.args;
-        kw.assign = data.assign + (data.assign ? ' =  ' : '');
+        kw.assign = data.assign;
         kw.tags = data.tags;
         kw.timeout = data.timeout;
         kw.populateKeywords = createIterablePopulator('Keyword');
@@ -1883,7 +1882,7 @@ function addStatistics() {
         '<th class="stats-col-elapsed">Elapsed</th>' +
         '<th class="stats-col-graph">Pass / Fail / Skip</th>';
     var statTable =
-        '<h2>{Test} Statistics</h2>' +
+        '<h2>Statistics</h2>' +
         '<table class="statistics" id="total-stats"><thead><tr>' +
         '<th class="stats-col-name">Total Statistics</th>' + statHeaders +
         '</tr></thead></table>' +
@@ -1893,7 +1892,7 @@ function addStatistics() {
         '<table class="statistics" id="suite-stats"><thead><tr>' +
         '<th class="stats-col-name">Statistics by Suite</th>' + statHeaders +
         '</tr></thead></table>';
-    $(testOrTask(statTable)).appendTo('#statistics-container');
+    $(statTable).appendTo('#statistics-container');
     util.map(['total', 'tag', 'suite'], addStatTable);
     addTooltipsToElapsedTimes();
     enableStatisticsSorter();
@@ -2074,25 +2073,25 @@ storage = function () {
 window.output = {};
 </script>
 <script type="text/javascript">
-window.output["suite"] = [1,2,3,0,[],[1,0,513],[[4,5,6,0,[],[1,19,90],[[7,8,9,0,[],[1,20,88],[],[[10,0,0,[],[1,50,58],[[0,11,12,0,0,0,0,0,[1,51,56],[[0,13,14,0,15,16,0,0,[1,51,43],[[51,2,17],[51,2,18],[85,2,19]]],[0,20,14,0,21,22,23,0,[1,94,13],[[94,2,24],[105,2,25],[107,2,26],[107,2,27]]],[0,28,29,0,30,23,0,0,[1,107,0],[[107,2,31]]],[0,32,29,0,33,34,0,0,[1,107,0],[[107,2,31]]]]]]]],[],[1,1,0,0]]],[],[],[1,1,0,0]],[35,36,37,0,[],[1,108,403],[[38,39,40,0,[],[1,110,297],[],[[41,0,0,[],[1,376,2],[[0,42,43,0,0,0,0,0,[1,376,2],[[0,44,45,0,46,47,48,0,[1,377,1],[[377,2,49],[378,2,50]]],[0,51,29,0,52,48,0,0,[1,378,0],[[378,2,53]]]]]]],[54,0,0,[],[1,378,2],[[0,55,43,0,0,0,0,0,[1,379,1],[[0,44,45,0,46,47,56,0,[1,379,0],[[379,2,49],[379,2,57]]],[0,58,45,0,59,47,0,0,[1,379,1],[[379,2,60]]],[0,61,29,0,62,63,0,0,[1,380,0],[]],[0,64,65,0,66,56,67,0,[1,380,0],[[380,2,68],[380,2,69]]],[0,70,29,0,71,67,72,0,[1,380,0],[[380,2,73],[380,2,74]]]]]]],[75,0,0,[],[1,381,2],[[0,76,43,0,0,0,0,0,[1,381,2],[[0,77,78,0,79,80,81,0,[1,382,0],[[382,2,82],[382,2,83]]],[0,84,29,0,85,86,0,0,[1,382,1],[]]]]]],[87,0,0,[],[1,383,2],[[0,88,43,0,0,0,0,0,[1,384,0],[[0,89,90,0,91,92,93,0,[1,384,0],[[384,2,94]]],[0,51,29,0,52,93,0,0,[1,384,0],[[384,2,95]]]]]]],[96,0,0,[],[1,385,2],[[0,97,43,0,0,0,0,0,[1,385,1],[[0,44,45,0,46,98,99,0,[1,386,0],[[386,2,100],[386,2,101]]],[0,102,29,0,103,104,0,0,[1,386,0],[]],[0,105,29,0,106,107,0,0,[1,386,0],[]]]]]],[108,0,0,[],[1,387,3],[[0,109,43,0,0,0,0,0,[1,388,2],[[0,44,45,0,46,110,111,0,[1,388,1],[[388,2,112],[389,2,113]]],[0,64,65,0,66,111,67,0,[1,389,0],[[389,2,114],[389,2,115]]],[3,116,0,0,0,0,0,0,[1,389,1],[[4,117,0,0,0,0,0,0,[1,389,0],[[0,51,29,0,52,118,0,0,[1,389,0],[[389,2,119]]]]],[4,120,0,0,0,0,0,0,[1,389,1],[[0,51,29,0,52,118,0,0,[1,390,0],[[390,2,121]]]]],[4,122,0,0,0,0,0,0,[1,390,0],[[0,51,29,0,52,118,0,0,[1,390,0],[[390,2,0]]]]]]]]]]],[123,0,0,[],[1,391,2],[[0,124,43,0,0,0,0,0,[1,391,1],[[0,44,45,0,46,125,126,0,[1,391,1],[[392,2,127],[392,2,128]]],[0,129,29,0,130,131,72,0,[1,392,0],[[392,2,132],[392,2,133]]],[0,134,29,0,135,136,0,0,[1,392,0],[]]]]]],[137,0,0,[],[1,394,2],[[0,138,43,0,0,0,0,0,[1,394,2],[[0,44,45,0,46,139,56,0,[1,394,1],[[394,2,49],[395,2,57]]],[0,134,29,0,135,140,0,0,[1,395,0],[]],[0,61,29,0,62,63,0,0,[1,395,0],[]],[0,102,29,0,103,141,0,0,[1,396,0],[]],[0,105,29,0,106,142,0,0,[1,396,0],[]]]]]],[143,0,0,[],[1,397,1],[[0,144,43,0,0,0,0,0,[1,397,1],[[0,145,29,0,146,147,148,0,[1,397,1],[[398,2,149]]],[0,134,29,0,135,148,0,0,[1,398,0],[]]]]]],[150,0,0,[],[1,399,6],[[0,151,43,0,0,0,0,0,[1,399,6],[[0,44,45,0,46,125,126,0,[1,400,0],[[400,2,127],[400,2,128]]],[0,64,65,0,66,126,152,0,[1,400,0],[[400,2,153],[400,2,154]]],[0,155,29,0,156,157,72,0,[1,400,0],[[400,2,158]]],[3,159,0,0,0,0,0,0,[1,401,3],[[4,160,0,0,0,0,0,0,[1,401,0],[[5,161,0,0,0,0,0,0,[1,401,0],[[0,145,29,0,146,162,72,0,[1,401,0],[[401,2,163]]]]]]],[4,164,0,0,0,0,0,0,[1,401,1],[[5,161,0,0,0,0,0,0,[3,401,1],[[0,145,29,0,146,162,72,0,[3,402,0],[]]]]]],[4,165,0,0,0,0,0,0,[1,402,0],[[5,161,0,0,0,0,0,0,[1,402,0],[[0,145,29,0,146,162,72,0,[1,402,0],[[402,2,166]]]]]]],[4,167,0,0,0,0,0,0,[1,402,1],[[5,161,0,0,0,0,0,0,[3,402,0],[[0,145,29,0,146,162,72,0,[3,402,0],[]]]]]],[4,168,0,0,0,0,0,0,[1,403,0],[[5,161,0,0,0,0,0,0,[1,403,0],[[0,145,29,0,146,162,72,0,[1,403,0],[[403,2,169]]]]]]],[4,170,0,0,0,0,0,0,[1,403,0],[[5,161,0,0,0,0,0,0,[3,403,0],[[0,145,29,0,146,162,72,0,[3,403,0],[]]]]]],[4,171,0,0,0,0,0,0,[1,403,1],[[5,161,0,0,0,0,0,0,[1,403,1],[[0,145,29,0,146,162,72,0,[1,403,1],[[404,2,133]]]]]]],[4,172,0,0,0,0,0,0,[1,404,0],[[5,161,0,0,0,0,0,0,[3,404,0],[[0,145,29,0,146,162,72,0,[3,404,0],[]]]]]]]],[0,134,29,0,135,173,0,0,[1,404,0],[]],[0,174,29,0,175,176,0,0,[1,404,1],[[405,2,177]]]]]]],[178,0,0,[],[1,405,1],[[0,179,43,0,0,0,0,0,[1,405,1],[[0,180,181,0,0,182,72,0,[1,405,1],[[406,2,183],[406,2,163]]],[0,174,29,0,175,184,0,0,[1,406,0],[[406,2,177]]]]]]]],[],[11,11,0,0]],[185,186,187,0,[],[1,408,102],[],[[188,0,0,[],[1,505,2],[[0,189,190,0,0,0,0,0,[1,506,1],[[0,44,45,0,46,191,192,0,[1,506,1],[[506,2,193],[507,2,194]]],[0,58,45,0,59,191,0,0,[1,507,0],[[507,2,195]]]]]]],[196,0,0,[],[1,508,2],[[0,197,190,0,0,0,0,0,[1,508,1],[[0,44,45,0,46,191,198,0,[1,508,1],[[508,2,193],[509,2,199]]],[0,58,45,0,59,191,0,0,[1,509,0],[[509,2,195]]],[0,105,29,0,106,200,0,0,[1,509,0],[]],[0,61,29,0,62,201,0,0,[1,509,0],[]]]]]]],[],[2,2,0,0]]],[],[],[13,13,0,0]]],[],[],[14,14,0,0]];
+window.output["suite"] = [1,2,3,0,[],[1,0,446],[[4,5,6,0,[],[1,22,68],[[7,8,9,0,[],[1,24,65],[],[[10,0,0,[],[1,52,37],[[0,11,12,0,0,0,0,0,[1,53,36],[[0,13,14,0,15,16,0,0,[1,54,32],[[54,2,17],[54,2,18],[79,2,19]]],[0,20,14,0,21,22,23,0,[1,86,1],[[86,2,24],[87,2,25],[87,2,26],[87,2,27]]],[0,28,29,0,30,23,0,0,[1,87,0],[[87,2,31]]],[0,32,29,0,33,34,0,0,[1,87,2],[[89,2,31]]]]]]]],[],[1,1,0,0]]],[],[],[1,1,0,0]],[35,36,37,0,[],[1,91,354],[[38,39,40,0,[],[1,92,302],[],[[41,0,0,[],[1,352,3],[[0,42,43,0,0,0,0,0,[1,352,2],[[0,44,45,0,46,47,48,0,[1,353,1],[[353,2,49],[354,2,50]]],[0,51,29,0,52,48,0,0,[1,354,0],[[354,2,53]]]]]]],[54,0,0,[],[1,355,3],[[0,55,43,0,0,0,0,0,[1,355,3],[[0,44,45,0,46,47,56,0,[1,355,1],[[356,2,49],[356,2,57]]],[0,58,45,0,59,47,0,0,[1,356,0],[[356,2,60]]],[0,61,29,0,62,63,0,0,[1,356,1],[]],[0,64,65,0,66,56,67,0,[1,357,0],[[357,2,68],[357,2,69]]],[0,70,29,0,71,67,72,0,[1,357,1],[[358,2,73],[358,2,74]]]]]]],[75,0,0,[],[1,359,2],[[0,76,43,0,0,0,0,0,[1,359,1],[[0,77,78,0,79,80,81,0,[1,359,1],[[359,2,82],[360,2,83]]],[0,84,29,0,85,86,0,0,[1,360,0],[]]]]]],[87,0,0,[],[1,362,2],[[0,88,43,0,0,0,0,0,[1,363,1],[[0,89,90,0,91,92,93,0,[1,363,1],[[364,2,94]]],[0,51,29,0,52,93,0,0,[1,364,0],[[364,2,95]]]]]]],[96,0,0,[],[1,365,3],[[0,97,43,0,0,0,0,0,[1,365,2],[[0,44,45,0,46,98,99,0,[1,365,1],[[366,2,100],[366,2,101]]],[0,102,29,0,103,104,0,0,[1,366,1],[]],[0,105,29,0,106,107,0,0,[1,367,0],[]]]]]],[108,0,0,[],[1,368,4],[[0,109,43,0,0,0,0,0,[1,369,3],[[0,44,45,0,46,110,111,0,[1,369,0],[[369,2,112],[369,2,113]]],[0,64,65,0,66,111,67,0,[1,369,0],[[369,2,114],[369,2,115]]],[3,116,0,0,0,0,0,0,[1,369,3],[[4,117,0,0,0,0,0,0,[1,371,0],[[0,51,29,0,52,118,0,0,[1,371,0],[[371,2,119]]]]],[4,120,0,0,0,0,0,0,[1,371,0],[[0,51,29,0,52,118,0,0,[1,371,0],[[371,2,121]]]]],[4,122,0,0,0,0,0,0,[1,372,0],[[0,51,29,0,52,118,0,0,[1,372,0],[[372,2,0]]]]]]]]]]],[123,0,0,[],[1,372,3],[[0,124,43,0,0,0,0,0,[1,372,2],[[0,44,45,0,46,125,126,0,[1,372,1],[[374,2,127],[374,2,128]]],[0,129,29,0,130,131,72,0,[1,374,0],[[374,2,132],[374,2,133]]],[0,134,29,0,135,136,0,0,[1,374,1],[[375,2,137]]],[0,138,29,0,139,140,0,0,[1,375,0],[]]]]]],[141,0,0,[],[1,377,2],[[0,142,43,0,0,0,0,0,[1,377,2],[[0,44,45,0,46,143,56,0,[1,377,0],[[377,2,49],[377,2,57]]],[0,138,29,0,139,144,0,0,[1,377,1],[]],[0,61,29,0,62,63,0,0,[1,378,0],[]],[0,102,29,0,103,145,0,0,[1,378,1],[]],[0,105,29,0,106,146,0,0,[1,379,0],[]]]]]],[147,0,0,[],[1,380,2],[[0,148,43,0,0,0,0,0,[1,380,1],[[0,149,29,0,150,151,152,0,[1,380,1],[[381,2,153]]],[0,138,29,0,139,152,0,0,[1,381,0],[]]]]]],[154,0,0,[],[1,382,7],[[0,155,43,0,0,0,0,0,[1,382,7],[[0,44,45,0,46,125,126,0,[1,383,0],[[383,2,127],[383,2,128]]],[0,64,65,0,66,126,156,0,[1,383,0],[[383,2,157],[383,2,158]]],[0,159,29,0,160,161,72,0,[1,383,0],[[383,2,162]]],[3,163,0,0,0,0,0,0,[1,384,4],[[4,164,0,0,0,0,0,0,[1,384,0],[[5,165,0,0,0,0,0,0,[1,384,0],[[0,149,29,0,150,166,72,0,[1,384,0],[[384,2,167]]]]]]],[4,168,0,0,0,0,0,0,[1,385,0],[[5,165,0,0,0,0,0,0,[3,385,0],[[0,149,29,0,150,166,72,0,[3,385,0],[]]]]]],[4,169,0,0,0,0,0,0,[1,385,1],[[5,165,0,0,0,0,0,0,[1,385,1],[[0,149,29,0,150,166,72,0,[1,385,0],[[385,2,170]]]]]]],[4,171,0,0,0,0,0,0,[1,385,0],[[5,165,0,0,0,0,0,0,[3,385,0],[[0,149,29,0,150,166,72,0,[3,385,0],[]]]]]],[4,172,0,0,0,0,0,0,[1,385,1],[[5,165,0,0,0,0,0,0,[1,386,0],[[0,149,29,0,150,166,72,0,[1,386,0],[[386,2,173]]]]]]],[4,174,0,0,0,0,0,0,[1,386,0],[[5,165,0,0,0,0,0,0,[3,386,0],[[0,149,29,0,150,166,72,0,[3,386,0],[]]]]]],[4,175,0,0,0,0,0,0,[1,387,0],[[5,165,0,0,0,0,0,0,[1,387,0],[[0,149,29,0,150,166,72,0,[1,387,0],[[387,2,133]]]]]]],[4,176,0,0,0,0,0,0,[1,387,0],[[5,165,0,0,0,0,0,0,[3,387,0],[[0,149,29,0,150,166,72,0,[3,387,0],[]]]]]]]],[0,138,29,0,139,177,0,0,[1,387,1],[]],[0,134,29,0,135,136,0,0,[1,388,0],[[388,2,137]]]]]]],[178,0,0,[],[1,389,1],[[0,179,43,0,0,0,0,0,[1,389,1],[[0,180,181,0,0,182,72,0,[1,389,1],[[390,2,183],[390,2,167]]],[0,134,29,0,135,184,0,0,[1,390,0],[[390,2,137]]]]]]],[185,0,0,[],[1,391,2],[[0,186,187,0,188,98,189,0,[1,392,0],[[392,2,190]]],[0,134,29,0,135,191,0,0,[1,393,0],[[393,2,137]]]]]],[],[12,12,0,0]],[192,193,194,0,[],[1,395,49],[],[[195,0,0,[],[1,439,2],[[0,196,197,0,0,0,0,0,[1,440,1],[[0,44,45,0,46,198,199,0,[1,440,0],[[440,2,200],[440,2,201]]],[0,58,45,0,59,198,0,0,[1,440,1],[[441,2,202]]]]]]],[203,0,0,[],[1,442,2],[[0,204,197,0,0,0,0,0,[1,442,2],[[0,44,45,0,46,198,205,0,[1,442,1],[[443,2,200],[443,2,206]]],[0,58,45,0,59,198,0,0,[1,443,0],[[443,2,202]]],[0,105,29,0,106,207,0,0,[1,443,1],[]],[0,61,29,0,62,208,0,0,[1,444,0],[]]]]]]],[],[2,2,0,0]]],[],[],[14,14,0,0]]],[],[],[15,15,0,0]];
 </script>
 <script type="text/javascript">
 window.output["strings"] = [];
 </script>
 <script type="text/javascript">
-window.output["strings"] = window.output["strings"].concat(["*","*Tests","*C:\\Users\\GENIUS\\IdeaProjects\\EnterpriseRobotMonetique\\tests","*../tests","*Database","*C:\\Users\\GENIUS\\IdeaProjects\\EnterpriseRobotMonetique\\tests\\database","*../tests/database","*Accounts","*C:\\Users\\GENIUS\\IdeaProjects\\EnterpriseRobotMonetique\\tests\\database\\accounts.robot","*../tests/database/accounts.robot","*Test Database","*tcheck data","*accounts","*Connect To Database","*DatabaseLibrary","*<p>Creates a database connection using the DB API 2.0 <code>db_module\x3c/code> and the parameters provided. Along with listed commonly used arguments (`db_name`, `db_host` etc.) you can set any other DB module specific parameters as key/value pairs.\x3c/p>","*${pysql}    ${db_name}    ${db_user}    ${db_pass}    ${db_host}    ${db_port}","*Looking for configuration file: 'resources\\db.cfg'","*Configuration file doesn't exist","*Connect to DB using : pymysql.connect(db='payment_system', user='root', passwd=***, host='localhost', port=3306, charset='utf8mb4')","*Query","*<p>Runs a query with the <code>select_statement\x3c/code> and returns the result as list of rows. The type of row values depends on the database module - usually they are tuples or tuple-like objects.\x3c/p>","*select * from transactions where transaction_id=${transaction_id} and amount=150.0","*${connexion}","*Executing sql:<br><code style=\"font-weight: bold;\">select * from transactions where transaction_id='TX10001' and amount=150.0\x3c/code>","*Commit the transaction","eNrVl1Fr2zAQx7/KkTBoYV7kNAlDzgKFla0vSxfSMvZSZOnsmLqSkeQk/vY9J3ba0T1sED8Yc7aRj//9/kL2yXOVbcH5Kscvg2exD3aZ8hsOIWMfIjBbtEludsGegyi9iaBO2WCWbjyHKWPF/k1S1SQNFnMv4hxb2UbyKBAbq9AG0uS5KBxyaO/aRxzGxR6cyTMFNo0vwgmDJi5JWYrCZ0a32h73PhB5lmoOOSY+gsRoH+waxNjkKoJCKJXplIiJd7D4WaKtwKIvrUYFIVizc/NRo0zwlmIDTpqCKhDfoK1WGJfVOZwGMvlUReBNwYFFtQtjeZwL+URG6JxaU2oVHMdhqGYo1eTVY/inxxn5O8ZldKL9TDlhPcVvTUrUHi25WJndfOQ3/4/6F7opq4/WBQyTJInOR5qpnoB6K7QTsqZ57A20kJKq+R4BP9e8PYGVpbWoZdWXFVwV2BNU54UvXU9gLQpndF/WLNF6VI+ieclGh4ZmW9L3PFthL4LAoTRaCVsdhz/CEBHrlvtqmBrlyfA/drzz2WLN9KuTkbNJhyStupFe/6KtFOuwQJfSU/aJse70b+5X3Ylf36+/L1e3v6/Xt8sfHZa5u1stH26+dlfh23LZofqYjWcBuwpYSEl8MuHTq2Oxw1djdNjI05X+EhYvM3v5Qw==","*${connexion} = ((1, 'TX10001', 1, Decimal('150.00'), 'EUR', 'AUTHORIZATION', 'APPROVED', 'GOOD', datetime.datetime(2026, 3, 1, 10, 44, 53)),)","*Should Not Be Empty","*BuiltIn","*<p>Verifies that the given item is not empty.\x3c/p>","*Length is 1.","*Length Should Be","*<p>Verifies that the length of the given item is correct.\x3c/p>","*${connexion}    1","*File","*C:\\Users\\GENIUS\\IdeaProjects\\EnterpriseRobotMonetique\\tests\\file","*../tests/file","*App","*C:\\Users\\GENIUS\\IdeaProjects\\EnterpriseRobotMonetique\\tests\\file\\app.robot","*../tests/file/app.robot","*Direct to Linux","*To Linux","*app","*Get File","*OperatingSystem","*<p>Returns the contents of a specified file.\x3c/p>","*${fileapp}","*${getfileapptolinux}","eNqtzDEOgkAQBdCrbGjo2J4gjSGEQmMkdNOM8ME1ZGedHTy/8Q6Wr3k9zELc3Bp2uLJh91Ssp+LH2vtzTVOGZuq76zCNNCzgm8oLs2XqokGThoy7PMQuEmHhfYAWNqY5f4hTqnbZivY/T+O5LasvnMlBsg==","eNpTqU5PLUnLzElNLCgoyc/JzCutqFWwVfD0c/NXCC5JLCpRSEosSc7gAgv45CemZOalK4DUc7kGBfkHKYQUJeYVJyaXZObnKRgbGBgqpCUCJVMg6gOK8pNTi4uBWrCrNkJRDTO9BKGoGIs+IwMDYxy2IGsFqTPh0tPTAwAEbkt8","*Log","*<p>Logs the given message with the given level.\x3c/p>","eNrz9HPzVwguSSwqUUhKLEnO4PIECfjkJ6Zk5qUrpGXmpHK5BgX5BymEFCXmFScml2Tm5ykYGxgYKqQlAiVTIOoDivKTU4uLgVqwqzZCUQ0zvQShqBiLPiMDA2MctiBrBakzgShwzUuB+gIA2KtGtA==","*Fichier txt","*Fichier.txt","*${result}","eNpTqS5KLS7NKalVsFXw9HPzVwguSSwqUUhKLEnO4AIL+OQnpmTmpSukZeakcrkGBfkHKYQUJeYVJyaXZObnKRgbGBgqpCUCJVMg6gOK8pNTi4uBWrCrNkJRDTO9BKGoGIs+IwMDYxy2IGsFqTPh0tPTAwASREbn","*File Should Exist","*<p>Fails unless the given <code>path\x3c/code> points to an existing file.\x3c/p>","eNqtzDEOgkAQBdCrbGjo2J4gjUFDoTEaumlG+Ogawqwzo/H4egjL17xdWhDKhsNdMW+K+cc6xm1Ng0GN9t2xHy7UT+CTygOjG3WrQ7Mmw1mu4gdZ4en5Ak3sTKO9iXOuFrkV7X+eJnJbBnySuVVfRsZBYA==","*Should Not Contain","*<p>Fails if <code>container\x3c/code> contains <code>item\x3c/code> one or more times.\x3c/p>","*${result}    FAILED","*Split To Lines","*String","*<p>Splits the given string to lines.\x3c/p>","*${line}","*9 lines returned.","eNpTqc7JzEutVbBViFb39HPzVwguSSwqUUhKLEnOUNdRgIj55CemZOalK6Rl5qSCBF2DgvyDFEKKEvOKE5NLMvPzFIwNDAwV0hKB8ilwXQFF+cmpxcVAjTj1GKHrgdlUglBXjF23kYGBMVYb9fT0AN+MQog=","*Get Length","*<p>Returns and logs the length of the given item as an integer.\x3c/p>","*${count}","*Length is 9.","*${count} = 9","*Fichier json","*Fichier.json","*Load JSON from file","*RPA.JSON","*<p>Load JSON data from a file, and return it as JSON serializable object. Depending on the input file the object can be either a dictionary, a list, or a scalar value.\x3c/p>","*${filejson}","*${resultjson}","*Loading JSON from file: C:\\Users\\GENIUS\\IdeaProjects\\EnterpriseRobotMonetique/data/csv/andou.json","*${resultjson} = {'id': 1001, 'status': 'OK', 'amount': 50}","*Should Be Equal","*<p>Fails if the given objects are unequal.\x3c/p>","*${resultjson['status']}    OK","*Fichier xml","*fichier.xml","*Parse Xml","*XML","*<p>Parses the given XML file or string into an element structure.\x3c/p>","*${filexml}","*${xml}","*${xml} = &lt;Element 'payments' at 0x000001A4C2EEE8E0&gt;","*&lt;Element 'payments' at 0x000001A4C2EEE8E0&gt;","*Fichier batxh","*batch.txt","*${filebatchtxt}","*${batchtxt}","eNqtzDEOgkAQBdCrbGjo2J4AjSGEQmMkdNMMy0fWmF2dGY3HN97B8jVvgFlMV7fFO1zZsNsFW1v8WHt/qGlWiNLQn8Z5onEFnyXfEEypTwZ5SFRc8pLtmBMsPl+glY0p6JsWtrBX9rGi+9fUeO7K6gu06kNw","*${batchtxt} = HEADER;DATE=20250301\nPAYMENT;ID=1001;AMOUNT=50\nPAYMENT;ID=1002;AMOUNT=70\nFOOTER;TOTAL=2\n","*Should Start With","*<p>Fails if the string <code>str1\x3c/code> does not start with the string <code>str2\x3c/code>.\x3c/p>","*${batchtxt}    HEADER","*Should Contain","*<p>Fails if <code>container\x3c/code> does not contain <code>item\x3c/code> one or more times.\x3c/p>","*${batchtxt}    FOOTER;TOTAL=2","*Fichier fixed","*fixed.txt","*${filefixedtxt}","*${fixedtxt}","eNqtzLEOgjAQBuBXaVjY6E6QxRDCoCEatltO+ldrTKt3p+Hxje/g+C3fCLOUry6mB1zdsbsJ4q76sfV+39KiEKVxOE7LmaYAnqXcsZrSkA3ylKQ4lUuxQ8mw9HqDAhvTqh+KaUNobLOq/9fUee7r5gu6jkOM","*${fixedtxt} = 1001OK 000050\n1002KO 000070\n\n","*3 lines returned.","*${line} = ['1001OK 000050', '1002KO 000070', '']","*${element}    IN    @{line}","*${element} = 1001OK 000050","*${element}","*1001OK 000050","*${element} = 1002KO 000070","*1002KO 000070","*${element} = ","*Fichier hello","*hello","*${filecsv}","*${content}","eNqtzDEOgkAQBdCrbGjo2MSSII0hhEJjNHTTjOxH15BdnRk8v3IHy9e8HmYx3d0cF7iyYfcQzPtiY+39oaZRIUp9dxrGKw0BfJb8xGRKXTLIS6Likm/ZjjnB4nsFBTamST/EKeR1q3bVj0X7167x3JbVF25LRxY=","eNpTqU7OzytJzSupVbBVCHCM9HX1C7H2dLE1NDAwtg4OcQwJDbZ1c/T0cXXhQpU1gcn6e6PJmOLVZ4hTnxFefWY49Zmj6eMCAGc7OSM=","*Get Count","*<p>Returns and logs how many times <code>item\x3c/code> is found from <code>container\x3c/code>.\x3c/p>","*${content}    FAILED","*Item found from container 4 times.","*${count} = 4","*Log To Console","*<p>Logs the given message to the console.\x3c/p>","*quantité = ${count}","*Fichier hello2","*hello2","*${apploglinux}","*\\n${result}","*${result}    INFO Start batch","*${result}    INFO End batch","*fichier testing","*testing","*Evaluate","*<p>Evaluates the given expression in Python and returns the result.\x3c/p>","*[l for l in open(r\"${filecsv}\") if \"FAILED\" in l]","*${failed}","eNpTqU5LzMxJTalVsFWIVg9wjPR19Qux9nSxNTQwMLYODnEMCQ22dXP09HF1iclT11FAU2JKWIkRYSXmGEpiAZrzKaA=","*fichier with get file","*do with get file","*@{lines}","*8 lines returned.","eNpzqM7JzEstrlWwVYhWCHCM9HX1C7H2dLE1NDAwtg4OcQwJDbZ1c/T0cXVRqEGTN4HJ+3tjyJkS0GuIR68RAb1mePSaA+X09PQAABg6XQ==","*Set Variable","*<p>Returns the given values which can then be assigned to a variables.\x3c/p>","*0","*${count} = 0","*${line}    IN    @{lines}","*${line} = PAYMENT;ID=1003;STATUS=FAILED","*'FAILED' in '${line}'","*${count} + 1","*${count} = 1","*${line} = PAYMENT;ID=1004;STATUS=OK","*${line} = PAYMENT;ID=1005;STATUS=FAILED","*${count} = 2","*${line} = PAYMENT;ID=1001;STATUS=OK","*${line} = PAYMENT;ID=1002;STATUS=FAILED","*${count} = 3","*${line} = PAYMENT;ID=1006;STATUS=OK","*${line} = PAYMENT;ID=1007;STATUS=FAILED","*${line} = ","*FAILED COUNT = ${count}","*Should Be Equal As Integers","*<p>Fails if objects are unequal after converting them to integers.\x3c/p>","*${count}    4","*Argument types are:\n&lt;class 'int'&gt;\n&lt;class 'str'&gt;","*fichier test failed","*test Failed","*Check Failed Payments","*countfailed","*${pou}","*Nombre de FAILED : 1\nERREUR : il y a des paiements en FAILED","*${count}    1","*Transactionstxt","*C:\\Users\\GENIUS\\IdeaProjects\\EnterpriseRobotMonetique\\tests\\file\\transactionstxt.robot","*../tests/file/transactionstxt.robot","*Verify the File","*Verify File","*transactions","*${myfiletransactionstxt}","*${myfile}","eNqtzDEOgkAQBdCrbGjo2J4gjSGEQmM0dNOMy6BjzK7OfI3HN97B8jVvFEDzJax6l1B3HK4m66b6sY1x29LsYk7jsJ/mE02L8MHKTRKchgyxh6nLsZwLdiUL9PkSWhhMyd8E4+ycoCV7gw+q/s9hF7mvmy/IVEme","*${myfile} = # Transaction File - Test Environment\n# Format: DATE | TYPE | AMOUNT | CURRENCY | STATUS | REFERENCE\n\n2026-03-21 | PAYMENT     | 125.50 | EUR | SUCCESS | TXN-20260321-001\n2026-03-21 | WITHDRAWAL  | 40...","eNqtzDEOgkAQBdCrbGjo2J4gjUFDoTEaumnG5RPHmF2dGQ3H10NYvubt5IFQdxxuimVTLT+2MW5bmgxqtB+O43ShcQaftNyR3GjIDn2qGM7lWvxQMlxeb9DMzpTsQ66cjZNLydb46lX/57CL3NcBq5hb8wVygUlM","*verify failed","*Verify File Failed","*${myfilefailed}","*${myfilefailed} = # Transaction File - Test Environment\n# Format: DATE | TYPE | AMOUNT | CURRENCY | STATUS | REFERENCE\n\n2026-03-21 | PAYMENT     | 125.50 | EUR | SUCCESS | TXN-20260321-001\n2026-03-21 | WITHDRAWAL  | 40...","*${myfilefailed}    FAILED","*${myfilefailed}    900"]);
+window.output["strings"] = window.output["strings"].concat(["*","*Tests","*C:\\Users\\GENIUS\\PycharmProjects\\EnterpriseRobotMonetique\\tests","*../tests","*Database","*C:\\Users\\GENIUS\\PycharmProjects\\EnterpriseRobotMonetique\\tests\\database","*../tests/database","*Accounts","*C:\\Users\\GENIUS\\PycharmProjects\\EnterpriseRobotMonetique\\tests\\database\\accounts.robot","*../tests/database/accounts.robot","*Test Database","*tcheck data","*accounts","*Connect To Database","*DatabaseLibrary","*<p>Creates a database connection using the DB API 2.0 <code>db_module\x3c/code> and the parameters provided. Along with listed commonly used arguments (`db_name`, `db_host` etc.) you can set any other DB module specific parameters as key/value pairs.\x3c/p>","*${pysql}    ${db_name}    ${db_user}    ${db_pass}    ${db_host}    ${db_port}","*Looking for configuration file: 'resources\\db.cfg'","*Configuration file doesn't exist","*Connect to DB using : pymysql.connect(db='payment_system', user='root', passwd=***, host='localhost', port=3306, charset='utf8mb4')","*Query","*<p>Runs a query with the <code>select_statement\x3c/code> and returns the result as list of rows. The type of row values depends on the database module - usually they are tuples or tuple-like objects.\x3c/p>","*select * from transactions where transaction_id=${transaction_id} and amount=150.0","*${connexion}","*Executing sql:<br><code style=\"font-weight: bold;\">select * from transactions where transaction_id='TX10001' and amount=150.0\x3c/code>","*Commit the transaction","eNrVl1Fr2zAQx7/KkTBoYV7kNAlDzgKFla0vSxfSMvZSZOnsmLqSkeQk/vY9J3ba0T1sED8Yc7aRj//9/kL2yXOVbcH5Kscvg2exD3aZ8hsOIWMfIjBbtEludsGegyi9iaBO2WCWbjyHKWPF/k1S1SQNFnMv4hxb2UbyKBAbq9AG0uS5KBxyaO/aRxzGxR6cyTMFNo0vwgmDJi5JWYrCZ0a32h73PhB5lmoOOSY+gsRoH+waxNjkKoJCKJXplIiJd7D4WaKtwKIvrUYFIVizc/NRo0zwlmIDTpqCKhDfoK1WGJfVOZwGMvlUReBNwYFFtQtjeZwL+URG6JxaU2oVHMdhqGYo1eTVY/inxxn5O8ZldKL9TDlhPcVvTUrUHi25WJndfOQ3/4/6F7opq4/WBQyTJInOR5qpnoB6K7QTsqZ57A20kJKq+R4BP9e8PYGVpbWoZdWXFVwV2BNU54UvXU9gLQpndF/WLNF6VI+ieclGh4ZmW9L3PFthL4LAoTRaCVsdhz/CEBHrlvtqmBrlyfA/drzz2WLN9KuTkbNJhyStupFe/6KtFOuwQJfSU/aJse70b+5X3Ylf36+/L1e3v6/Xt8sfHZa5u1stH26+dlfh23LZofqYjWcBuwpYSEl8MuHTq2Oxw1djdNjI05X+EhYvM3v5Qw==","*${connexion} = ((1, 'TX10001', 1, Decimal('150.00'), 'EUR', 'AUTHORIZATION', 'APPROVED', 'GOOD', datetime.datetime(2026, 3, 1, 10, 44, 53)),)","*Should Not Be Empty","*BuiltIn","*<p>Verifies that the given item is not empty.\x3c/p>","*Length is 1.","*Length Should Be","*<p>Verifies that the length of the given item is correct.\x3c/p>","*${connexion}    1","*File","*C:\\Users\\GENIUS\\PycharmProjects\\EnterpriseRobotMonetique\\tests\\file","*../tests/file","*App","*C:\\Users\\GENIUS\\PycharmProjects\\EnterpriseRobotMonetique\\tests\\file\\app.robot","*../tests/file/app.robot","*Direct to Linux","*To Linux","*app","*Get File","*OperatingSystem","*<p>Returns the contents of a specified file.\x3c/p>","*${fileapp}","*${getfileapptolinux}","eNqtzLEOgkAMANBfubCwcTtBFkOIg4ZI2LrUs8AZvJ5tMfHvjf/g+JbXk1lMi5vjRq5s0K1C86H4sfb+WMOkJAp9dzlNIwyfsKI8B+EHBVPokpFkiUpXvrGdOZHF105wR0MI+gbMudp4Kdq/VY3Htqy+W7REdA==","eNpTqU5PLUnLzElNLCgoyc/JzCutqFWwVfD0c/NXCC5JLCpRSEosSc7gAgv45CemZOalK4DUc7kGBfkHKYQUJeYVJyaXZObnKRgbGBgqpCUCJVMg6gOK8pNTi4uBWrCrNkJRDTO9BKGoGIs+IwMDYxy2IGsFqTPh0tPTAwAEbkt8","*Log","*<p>Logs the given message with the given level.\x3c/p>","eNrz9HPzVwguSSwqUUhKLEnO4PIECfjkJ6Zk5qUrpGXmpHK5BgX5BymEFCXmFScml2Tm5ykYGxgYKqQlAiVTIOoDivKTU4uLgVqwqzZCUQ0zvQShqBiLPiMDA2MctiBrBakzgShwzUuB+gIA2KtGtA==","*Fichier txt","*Fichier.txt","*${result}","eNpTqS5KLS7NKalVsFXw9HPzVwguSSwqUUhKLEnO4AIL+OQnpmTmpSukZeakcrkGBfkHKYQUJeYVJyaXZObnKRgbGBgqpCUCJVMg6gOK8pNTi4uBWrCrNkJRDTO9BKGoGIs+IwMDYxy2IGsFqTPh0tPTAwASREbn","*File Should Exist","*<p>Fails unless the given <code>path\x3c/code> points to an existing file.\x3c/p>","eNqtzLEOgkAMANBfubCwcTtBFoPGQUM0bF3KUeQM0rOtRv5eP4LxLe8QZ3J5hW4SGnfZ+Gfp/b6ETkkUjs3l1N2gXcOE8myFHxRMoVmMJElUunLPduaFLL7eBAMaQtAPYErFzPes3qyqPNa5o29U0+IHBpNEIg==","*Should Not Contain","*<p>Fails if <code>container\x3c/code> contains <code>item\x3c/code> one or more times.\x3c/p>","*${result}    FAILED","*Split To Lines","*String","*<p>Splits the given string to lines.\x3c/p>","*${line}","*9 lines returned.","eNpTqc7JzEutVbBViFb39HPzVwguSSwqUUhKLEnOUNdRgIj55CemZOalK6Rl5qSCBF2DgvyDFEKKEvOKE5NLMvPzFIwNDAwV0hKB8ilwXQFF+cmpxcVAjTj1GKHrgdlUglBXjF23kYGBMVYb9fT0AN+MQog=","*Get Length","*<p>Returns and logs the length of the given item as an integer.\x3c/p>","*${count}","*Length is 9.","*${count} = 9","*Fichier json","*Fichier.json","*Load JSON from file","*RPA.JSON","*<p>Load JSON data from a file, and return it as JSON serializable object. Depending on the input file the object can be either a dictionary, a list, or a scalar value.\x3c/p>","*${filejson}","*${resultjson}","*Loading JSON from file: C:\\Users\\GENIUS\\PycharmProjects\\EnterpriseRobotMonetique/data/csv/andou.json","*${resultjson} = {'id': 1001, 'status': 'OK', 'amount': 50}","*Should Be Equal","*<p>Fails if the given objects are unequal.\x3c/p>","*${resultjson['status']}    OK","*Fichier xml","*fichier.xml","*Parse Xml","*XML","*<p>Parses the given XML file or string into an element structure.\x3c/p>","*${filexml}","*${xml}","*${xml} = &lt;Element 'payments' at 0x000002145A389A30&gt;","*&lt;Element 'payments' at 0x000002145A389A30&gt;","*Fichier batxh","*batch.txt","*${filebatchtxt}","*${batchtxt}","eNqtzLEOgjAQBuBXaVjY6E6AxRDioCEatluOetgaaeX6a/Ttje/g+C3fIECIV7OEu5iyYeNVlrb4sbZ2V9OURTMN/XE/nWn8OM+6jppu4pCpjxB9aMhySnPCIUVB2J5CFwaTyy+aGc5XeKPo/pg1lruy+gJ+uEYy","*${batchtxt} = HEADER;DATE=20250301\nPAYMENT;ID=1001;AMOUNT=50\nPAYMENT;ID=1002;AMOUNT=70\nFOOTER;TOTAL=2\n","*Should Start With","*<p>Fails if the string <code>str1\x3c/code> does not start with the string <code>str2\x3c/code>.\x3c/p>","*${batchtxt}    HEADER","*Should Contain","*<p>Fails if <code>container\x3c/code> does not contain <code>item\x3c/code> one or more times.\x3c/p>","*${batchtxt}    FOOTER;TOTAL=2","*Fichier fixed","*fixed.txt","*${filefixedtxt}","*${fixedtxt}","eNqtzLEOgkAMANBfubCwcTtBFkOIg4ZI2LrUoyc1eidtNfj3xn9wfMvryYzT1UW+kysbdItQ3BU/1t7va5iURKHvTodphOETFpTHIPlGwRS6ZCRPYaVzvmQ75kTG64tgRkMI+obIG82VbVa0f8waj21ZfQGEhkZO","*${fixedtxt} = 1001OK 000050\n1002KO 000070\n\n","*3 lines returned.","*${line} = ['1001OK 000050', '1002KO 000070', '']","*${element}    IN    @{line}","*${element} = 1001OK 000050","*${element}","*1001OK 000050","*${element} = 1002KO 000070","*1002KO 000070","*${element} = ","*Fichier hello","*hello","*${filecsv}","*${content}","eNqtzLEOgkAMANBfubCwcYkjQRZDiIOEaNi61KPIGb1iW0z8e+UfHN/yWjKL6eam+CCXV+hmoWmfbSy9P5QwKIlC23TH4QL9J8woz174TsEUmmQki0SlM1/ZTpzI4mslGNEQgr4B08jrtu2KH7P632Plsc6LL1JBSdg=","eNpTqU7OzytJzSupVbBVCHCM9HX1C7H2dLE1NDAwtg4OcQwJDbZ1c/T0cXXhQpU1gcn6e6PJmOLVZ4hTnxFefWY49Zmj6eMCAGc7OSM=","*Get Count","*<p>Returns and logs how many times <code>item\x3c/code> is found from <code>container\x3c/code>.\x3c/p>","*${content}    FAILED","*Item found from container 4 times.","*${count} = 4","*Should Be Equal As Integers","*<p>Fails if objects are unequal after converting them to integers.\x3c/p>","*${count}    4","*Argument types are:\n&lt;class 'int'&gt;\n&lt;class 'str'&gt;","*Log To Console","*<p>Logs the given message to the console.\x3c/p>","*quantité = ${count}","*Fichier hello2","*hello2","*${apploglinux}","*\\n${result}","*${result}    INFO Start batch","*${result}    INFO End batch","*fichier testing","*testing","*Evaluate","*<p>Evaluates the given expression in Python and returns the result.\x3c/p>","*[l for l in open(r\"${filecsv}\") if \"FAILED\" in l]","*${failed}","eNpTqU5LzMxJTalVsFWIVg9wjPR19Qux9nSxNTQwMLYODnEMCQ22dXP09HF1iclT11FAU2JKWIkRYSXmGEpiAZrzKaA=","*fichier with get file","*do with get file","*@{lines}","*8 lines returned.","eNpzqM7JzEstrlWwVYhWCHCM9HX1C7H2dLE1NDAwtg4OcQwJDbZ1c/T0cXVRqEGTN4HJ+3tjyJkS0GuIR68RAb1mePSaA+X09PQAABg6XQ==","*Set Variable","*<p>Returns the given values which can then be assigned to a variables.\x3c/p>","*0","*${count} = 0","*${line}    IN    @{lines}","*${line} = PAYMENT;ID=1003;STATUS=FAILED","*'FAILED' in '${line}'","*${count} + 1","*${count} = 1","*${line} = PAYMENT;ID=1004;STATUS=OK","*${line} = PAYMENT;ID=1005;STATUS=FAILED","*${count} = 2","*${line} = PAYMENT;ID=1001;STATUS=OK","*${line} = PAYMENT;ID=1002;STATUS=FAILED","*${count} = 3","*${line} = PAYMENT;ID=1006;STATUS=OK","*${line} = PAYMENT;ID=1007;STATUS=FAILED","*${line} = ","*FAILED COUNT = ${count}","*fichier test failed","*test Failed","*Check Failed Payments","*countfailed","*${pou}","*Nombre de FAILED : 1\nERREUR : il y a des paiements en FAILED","*${count}    1","*mytestingnow","*Calculate Total Amount","*calculeamount","*<p>Lit un fichier batch et calcule la somme de tous les AMOUNT=xx. Exemple de lignes : PAYMENT;ID=1001;AMOUNT=50 PAYMENT;ID=1002;AMOUNT=70\x3c/p>","*${tr}","*${tr} = 120","*${tr}    120","*Transactionstxt","*C:\\Users\\GENIUS\\PycharmProjects\\EnterpriseRobotMonetique\\tests\\file\\transactionstxt.robot","*../tests/file/transactionstxt.robot","*Verify the File","*Verify File","*transactions","*${myfiletransactionstxt}","*${myfile}","eNqtzDEOgkAQBdCrbGjo2J4gjSHEQkMkdNOM6yBrdFdmvkZvb7yD5WteL0BMFzfHm7iyYbeozJvix9r7bU2TiRr13WE3jTR8wsJ6HzRfJcCoSxB9aDQ55lPGPidBXJ9CZwZTsBdBORkHxJyswhtF+/+z8dyW1Re4XExg","*${myfile} = # Transaction File - Test Environment\n# Format: DATE | TYPE | AMOUNT | CURRENCY | STATUS | REFERENCE\n\n2026-03-21 | PAYMENT     | 125.50 | EUR | SUCCESS | TXN-20260321-001\n2026-03-21 | WITHDRAWAL  | 40...","eNqtzLEOgkAMANBfubCwcTtBFoPGQUMwbF3qWUKNXqWtBv9eP8LxLW/Hdwplg2FWmjbF9GMd47aG0UgN9t3pMJ6h/6QZ9dGr3Ci5QZed9KlsNMhF/CiZnJcXwRUdIdkbXDEbJmfJVvnqRfv/s4nYloFWNrfqC2NrTA4=","*verify failed","*Verify File Failed","*${myfilefailed}","*${myfilefailed} = # Transaction File - Test Environment\n# Format: DATE | TYPE | AMOUNT | CURRENCY | STATUS | REFERENCE\n\n2026-03-21 | PAYMENT     | 125.50 | EUR | SUCCESS | TXN-20260321-001\n2026-03-21 | WITHDRAWAL  | 40...","*${myfilefailed}    FAILED","*${myfilefailed}    900"]);
 </script>
 <script type="text/javascript">
-window.output["stats"] = [[{"elapsed":"00:00:00","fail":0,"label":"All Tests","pass":14,"skip":0}],[],[{"elapsed":"00:00:01","fail":0,"id":"s1","label":"Tests","name":"Tests","pass":14,"skip":0},{"elapsed":"00:00:00","fail":0,"id":"s1-s1","label":"Tests.Database","name":"Database","pass":1,"skip":0},{"elapsed":"00:00:00","fail":0,"id":"s1-s1-s1","label":"Tests.Database.Accounts","name":"Accounts","pass":1,"skip":0},{"elapsed":"00:00:00","fail":0,"id":"s1-s2","label":"Tests.File","name":"File","pass":13,"skip":0},{"elapsed":"00:00:00","fail":0,"id":"s1-s2-s1","label":"Tests.File.App","name":"App","pass":11,"skip":0},{"elapsed":"00:00:00","fail":0,"id":"s1-s2-s2","label":"Tests.File.Transactionstxt","name":"Transactionstxt","pass":2,"skip":0}]];
+window.output["stats"] = [[{"elapsed":"00:00:00","fail":0,"label":"All Tests","pass":15,"skip":0}],[],[{"elapsed":"00:00:00","fail":0,"id":"s1","label":"Tests","name":"Tests","pass":15,"skip":0},{"elapsed":"00:00:00","fail":0,"id":"s1-s1","label":"Tests.Database","name":"Database","pass":1,"skip":0},{"elapsed":"00:00:00","fail":0,"id":"s1-s1-s1","label":"Tests.Database.Accounts","name":"Accounts","pass":1,"skip":0},{"elapsed":"00:00:00","fail":0,"id":"s1-s2","label":"Tests.File","name":"File","pass":14,"skip":0},{"elapsed":"00:00:00","fail":0,"id":"s1-s2-s1","label":"Tests.File.App","name":"App","pass":12,"skip":0},{"elapsed":"00:00:00","fail":0,"id":"s1-s2-s2","label":"Tests.File.Transactionstxt","name":"Transactionstxt","pass":2,"skip":0}]];
 </script>
 <script type="text/javascript">
 window.output["errors"] = [];
 </script>
 <script type="text/javascript">
-window.output["baseMillis"] = 1774272695284;
+window.output["baseMillis"] = 1774293927741;
 </script>
 <script type="text/javascript">
-window.output["generated"] = 528;
+window.output["generated"] = 454;
 </script>
 <script type="text/javascript">
 window.output["expand_keywords"] = null;
@@ -2154,8 +2153,9 @@ function addErrors() {
     var errors = window.testdata.errorIterator();
     if (errors.hasNext()) {
         $.tmpl('errorHeaderTemplate').appendTo($('body'));
-        drawErrorsRecursively(errors, $('#errors'));
+        drawErrorsRecursively(errors, $('#errors .messages'));
     }
+    toggleElement('errors');
 }
 
 function drawErrorsRecursively(errors, target) {
@@ -2189,7 +2189,7 @@ function makeElementVisible(id) {
 }
 
 function addExecutionLog(main) {
-    $('body').append($(testOrTask('<h2>{Test} Execution Log</h2>')),
+    $('body').append('<h2>Execution Log</h2>',
                      $.tmpl('suiteTemplate', main));
 }
 </script>
@@ -2234,20 +2234,31 @@ function addExecutionLog(main) {
 </script>
 
 <script type="text/x-jquery-tmpl" id="errorHeaderTemplate">
-  <h2>{{= testOrTask('{Test}')}} Execution Errors</h2>
-  <table id="errors"></table>
+  <h2>Execution Errors</h2>
+  <div id="errors">
+    <div class="element-header closed" onclick="toggleElement('errors')">
+      <div class="element-header-toggle" title="Toggle visibility"></div>
+      <div class="label error">ERRORS</div>
+      <div class="name">Errors and warnings during execution</div>
+    </div>
+    <div class="children">
+      <table class="messages"></table>
+    </div>
+  </div>
 </script>
 
 <script type="text/x-jquery-tmpl" id="errorTemplate">
   <tr id="${id}" class="message-row">
-    <td class="error-time">
+    <td class="time">
       {{if link}}
       <a onclick="makeElementVisible('${link}')" href="#${link}" title="Link to details">${date} ${time}</a>
       {{else}}
       ${date} ${time}
       {{/if}}
     </td>
-    <td class="${level.toLowerCase()} level"><span class="label ${level.toLowerCase()}">${level}</span></td>
+    <td class="${level.toLowerCase()} level">
+      <span class="label ${level.toLowerCase()}">${level}</span>
+    </td>
     <td class="message">{{html text}}</td>
     <td class="select-message" onclick="javascript:selectMessage('${id}')" title="Select message text">
       <div></div>
@@ -2257,18 +2268,18 @@ function addExecutionLog(main) {
 
 <script type="text/x-jquery-tmpl" id="suiteTemplate">
   <div id="${id}" class="suite">
-    <div class="element-header closed" onclick="toggleSuite('${id}')">
-      <div class="element-header-left" title="SUITE  {{html name}}  [${status}]">
-        <span class="elapsed" title="Elapsed time">${times.elapsedTime}</span>
-        <span class="label ${status.toLowerCase()}">SUITE</span>
-        <span class="name">{{html name}}</span>
-      </div>
-      <div class="element-header-right" onclick="stopPropagation(event)" title="">
+    <div class="element-header closed" onclick="toggleSuite('${id}')"
+         title="SUITE  {{html name}}  [${status}]">
+      <div class="element-header-toggle" title="Toggle visibility"></div>
+      <div class="label ${status.toLowerCase()}">SUITE</div>
+      <div class="name">{{html name}}</div>
+      <div class="elapsed" title="Elapsed time">${times.elapsedTime}</div>
+      <div class="element-header-menu" onclick="stopPropagation(event)" title="">
         <a class="expand" title="Expand all" href="javascript:expandAll('${id}')"></a>
         <a class="collapse" title="Collapse all" href="javascript:collapseAll('${id}')"></a>
-        <a class="link" title="Link to this suite" href="#${id}" onclick="makeElementVisible('${id}')"></a>
+        <a class="link" onclick="makeElementVisible('${id}')"
+           title="Link to this suite" href="#${id}"></a>
       </div>
-      <div class="element-header-toggle" title="Toggle visibility"></div>
     </div>
     <div class="children">
       <table class="metadata">
@@ -2319,18 +2330,18 @@ function addExecutionLog(main) {
 
 <script type="text/x-jquery-tmpl" id="testTemplate">
   <div id="${id}" class="test">
-    <div class="element-header closed" onclick="toggleTest('${id}')">
-      <div class="element-header-left" title="{{= testOrTask('{TEST}')}}  {{html name}}  [${status}]">
-        <span class="elapsed" title="Elapsed time">${times.elapsedTime}</span>
-        <span class="label ${status.toLowerCase()}">{{= testOrTask('{TEST}')}}</span>
-        <span class="name">{{html name}}</span>
-      </div>
-      <div class="element-header-right" onclick="stopPropagation(event)" title="">
+    <div class="element-header closed" onclick="toggleTest('${id}')"
+         title="{{= testOrTask('{TEST}')}}  {{html name}}  [${status}]">
+      <div class="element-header-toggle" title="Toggle visibility"></div>
+      <div class="label ${status.toLowerCase()}">{{= testOrTask('{TEST}')}}</div>
+      <div class="name">{{html name}}</div>
+      <div class="elapsed" title="Elapsed time">${times.elapsedTime}</div>
+      <div class="element-header-menu" onclick="stopPropagation(event)" title="">
         <a class="expand" title="Expand all" href="javascript:expandAll('${id}')"></a>
         <a class="collapse" title="Collapse all" href="javascript:collapseAll('${id}')"></a>
-        <a class="link" title="Link to this {{= testOrTask('{test}')}}" href="#${id}" onclick="makeElementVisible('${id}')"></a>
+        <a class="link" href="#${id}" onclick="makeElementVisible('${id}')"
+           title="Link to this {{= testOrTask('{test}')}}"></a>
       </div>
-      <div class="element-header-toggle" title="Toggle visibility"></div>
     </div>
     <div class="children">
       <table class="metadata">
@@ -2377,21 +2388,20 @@ function addExecutionLog(main) {
 
 <script type="text/x-jquery-tmpl" id="keywordTemplate">
   <div id="${id}" class="keyword">
-    <div class="element-header closed" onclick="toggleKeyword('${id}')">
-      <div class="element-header-left" title="${type}  {{if name}}{{html fullName}}  {{/if}}[${status}]">
-        <span class="elapsed" title="Elapsed time">${times.elapsedTime}</span>
-        <span class="label ${status.toLowerCase()}">${type}</span>
-        <span class="assign">{{html assign}}</span>
-        <span class="name"><span class="parent-name">{{html libname}}{{if libname}} . {{/if}}</span>{{html name}}</span>
-        &nbsp;
-        <span class="arg">{{html arguments}}</span>
-      </div>
-      <div class="element-header-right" onclick="stopPropagation(event)">
+    <div class="element-header closed" onclick="toggleKeyword('${id}')"
+         title="${type}  {{if name}}{{html fullName}}  {{/if}}[${status}]">
+      <div class="element-header-toggle" title="Toggle visibility"></div>
+      <div class="label ${status.toLowerCase()}">${type}</div>
+      {{if assign}}<div class="assign">{{html assign}}&nbsp;=</div>{{/if}}
+      <div class="name">{{if libname}}<span class="parent-name">{{html libname}} . </span>{{/if}}{{html name}}</div>
+      <div class="arg">{{html arguments}}</div>
+      <div class="elapsed" title="Elapsed time">${times.elapsedTime}</div>
+      <div class="element-header-menu" onclick="stopPropagation(event)">
         <a class="expand" title="Expand all" href="javascript:expandAll('${id}')"></a>
         <a class="collapse" title="Collapse all" href="javascript:collapseAll('${id}')"></a>
-        <a class="link" title="Link to this item" href="#${id}" onclick="makeElementVisible('${id}')"></a>
+        <a class="link" onclick="makeElementVisible('${id}')"
+           title="Link to this item" href="#${id}"></a>
       </div>
-      <div class="element-header-toggle" title="Toggle visibility"></div>
     </div>
     <div class="children">
       <table class="metadata keyword-metadata">

@@ -1,25 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 7.3.2 (Python 3.11.0 on win32)" generated="2026-03-23T14:30:57.785182" rpa="false" schemaversion="5">
-<suite id="s1" name="App" source="C:\Users\GENIUS\IdeaProjects\EnterpriseRobotMonetique\tests\file\app.robot">
-<test id="s1-t1" name="fichier testing" line="41">
-<kw name="testing" owner="app">
-<kw name="Evaluate" owner="BuiltIn">
-<msg time="2026-03-23T14:30:58.121563" level="INFO">${failed} = ['PAYMENT;ID=1003;STATUS=FAILED\n', 'PAYMENT;ID=1005;STATUS=FAILED\n', 'PAYMENT;ID=1002;STATUS=FAILED\n', 'PAYMENT;ID=1007;STATUS=FAILED\n']</msg>
-<var>${failed}</var>
-<arg>[l for l in open(r"${filecsv}") if "FAILED" in l]</arg>
-<doc>Evaluates the given expression in Python and returns the result.</doc>
-<status status="PASS" start="2026-03-23T14:30:58.121563" elapsed="0.002425"/>
+<robot generator="Robot 7.3.2 (Python 3.11.0 on win32)" generated="2026-03-23T20:23:49.517649" rpa="false" schemaversion="5">
+<suite id="s1" name="App" source="C:\Users\GENIUS\PycharmProjects\EnterpriseRobotMonetique\tests\file\app.robot">
+<test id="s1-t1" name="Fichier hello" line="39">
+<kw name="hello" owner="app">
+<kw name="Get File" owner="OperatingSystem">
+<msg time="2026-03-23T20:23:51.500153" level="INFO" html="true">Getting file '&lt;a href="file://C:\Users\GENIUS\PycharmProjects\EnterpriseRobotMonetique\data\csv\andoufile2.csv"&gt;C:\Users\GENIUS\PycharmProjects\EnterpriseRobotMonetique\data\csv\andoufile2.csv&lt;/a&gt;'.</msg>
+<msg time="2026-03-23T20:23:51.521674" level="INFO">${content} = PAYMENT;ID=1003;STATUS=FAILED
+PAYMENT;ID=1004;STATUS=OK
+PAYMENT;ID=1005;STATUS=FAILED
+PAYMENT;ID=1001;STATUS=OK
+PAYMENT;ID=1002;STATUS=FAILED
+PAYMENT;ID=1006;STATUS=OK
+PAYMENT;ID=1007;STATUS=FAILED
+
+</msg>
+<var>${content}</var>
+<arg>${filecsv}</arg>
+<doc>Returns the contents of a specified file.</doc>
+<status status="PASS" start="2026-03-23T20:23:51.500153" elapsed="0.021521"/>
+</kw>
+<kw name="Get Count" owner="BuiltIn">
+<msg time="2026-03-23T20:23:51.522676" level="INFO">Item found from container 4 times.</msg>
+<msg time="2026-03-23T20:23:51.522676" level="INFO">${count} = 4</msg>
+<var>${count}</var>
+<arg>${content}</arg>
+<arg>FAILED</arg>
+<doc>Returns and logs how many times ``item`` is found from ``container``.</doc>
+<status status="PASS" start="2026-03-23T20:23:51.522676" elapsed="0.000000"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-03-23T20:23:51.523674" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${count}</arg>
+<arg>4</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-03-23T20:23:51.522676" elapsed="0.000998"/>
 </kw>
 <kw name="Log To Console" owner="BuiltIn">
-<arg>${failed}</arg>
+<arg>quantité = ${count}</arg>
 <doc>Logs the given message to the console.</doc>
-<status status="PASS" start="2026-03-23T14:30:58.123988" elapsed="0.000000"/>
+<status status="PASS" start="2026-03-23T20:23:51.523674" elapsed="0.000000"/>
 </kw>
-<status status="PASS" start="2026-03-23T14:30:58.120483" elapsed="0.003505"/>
+<status status="PASS" start="2026-03-23T20:23:51.499153" elapsed="0.024521"/>
 </kw>
-<status status="PASS" start="2026-03-23T14:30:58.119565" elapsed="0.004423"/>
+<status status="PASS" start="2026-03-23T20:23:51.499153" elapsed="0.024521"/>
 </test>
-<status status="PASS" start="2026-03-23T14:30:57.787183" elapsed="0.337810"/>
+<status status="PASS" start="2026-03-23T20:23:49.519650" elapsed="2.005025"/>
 </suite>
 <statistics>
 <total>

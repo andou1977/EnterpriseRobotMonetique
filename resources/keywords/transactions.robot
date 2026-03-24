@@ -16,10 +16,6 @@ Verify File Failed
    Should Contain    ${myfilefailed}   FAILED
    Should not Contain    ${myfilefailed}    900
 
-verify file for csv
-     ${myfilecsv}=  Get File    ${myfiletransactionscsv}
-      File Should Exist    ${myfiletransactionscsv}
-      Should Contain    ${myfilecsv}    FAILED
 
 
 

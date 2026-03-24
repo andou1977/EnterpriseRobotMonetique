@@ -13,6 +13,8 @@ Library    XML
 Library    RPA.RobotLogListener
 Library    ../../python/countfailed.py
 Library    ../../python/calculeamount.py
+Library    DatabaseLibrary
+Library    ../../python/showfailed.py
 
 
 
@@ -52,6 +54,36 @@ fichier test failed
 mytestingnow
      ${tr}=   Calculate Total Amount    ${filebatchtxt}
      Should Be Equal As Integers    ${tr}    120
+
+
+testinagain
+    Connect To Database   ${pysql}   monext_db   ${db_user}   ${db_pass}   ${db_host}   ${db_port}
+    ${query}=    Get File    C:/Users/GENIUS/PycharmProjects/EnterpriseRobotMonetique/data/csv/fast.sql
+    ${result}=   Query    ${query}
+
+
+
+je suis la
+    ${content}=   get_error_lines   ${apploglinux}
+    ${convert}=   Convert To String    ${content}
+    Should Contain    ${convert}    failed
+
+
+
+
+
+
+
+
+
+
+
+#    Connect To Database   ${pysql}   monext_db   ${db_user}   ${db_pass}   ${db_host}   ${db_port}
+#    ${myquery}=   Query   select sum(amount) from transaction
+#    ${value}=     Set Variable    ${myquery[0][0]}
+#    Should Be Equal As Numbers    ${value}    1415.49
+
+
 
 
 

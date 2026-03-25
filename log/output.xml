@@ -1,29 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 7.3.2 (Python 3.11.0 on win32)" generated="2026-03-24T11:01:04.033641" rpa="false" schemaversion="5">
+<robot generator="Robot 7.3.2 (Python 3.11.0 on win32)" generated="2026-03-25T16:21:20.706843" rpa="false" schemaversion="5">
 <suite id="s1" name="App" source="C:\Users\GENIUS\PycharmProjects\EnterpriseRobotMonetique\tests\file\app.robot">
-<test id="s1-t1" name="je suis la" line="66">
-<kw name="Get Error Lines" owner="showfailed">
-<msg time="2026-03-24T11:01:04.435662" level="INFO">${content} = ['ERROR Transaction 3001 failed', 'ERROR Transaction 3002 failed', 'ERROR Transaction 2003 failed']</msg>
-<var>${content}</var>
-<arg>${apploglinux}</arg>
-<status status="PASS" start="2026-03-24T11:01:04.434661" elapsed="0.003000"/>
+<test id="s1-t1" name="verifier inconherence" line="75">
+<kw name="Connect To Database" owner="DatabaseLibrary">
+<msg time="2026-03-25T16:21:22.282215" level="INFO">Looking for configuration file: 'resources\db.cfg'</msg>
+<msg time="2026-03-25T16:21:22.284215" level="INFO">Configuration file doesn't exist</msg>
+<msg time="2026-03-25T16:21:22.313501" level="INFO">Connect to DB using : pymysql.connect(db='monext_db', user='root', passwd=***, host='localhost', port=3306, charset='utf8mb4')</msg>
+<arg>${pysql}</arg>
+<arg>monext_db</arg>
+<arg>${db_user}</arg>
+<arg>${db_pass}</arg>
+<arg>${db_host}</arg>
+<arg>${db_port}</arg>
+<doc>Creates a database connection using the DB API 2.0 ``db_module`` and the parameters provided.
+Along with listed commonly used arguments (`db_name`, `db_host` etc.)
+you can set any other DB module specific parameters as key/value pairs.</doc>
+<status status="PASS" start="2026-03-25T16:21:22.281216" elapsed="0.048712"/>
 </kw>
-<kw name="Convert To String" owner="BuiltIn">
-<msg time="2026-03-24T11:01:04.437661" level="INFO">${convert} = ['ERROR Transaction 3001 failed', 'ERROR Transaction 3002 failed', 'ERROR Transaction 2003 failed']</msg>
-<var>${convert}</var>
-<arg>${content}</arg>
-<doc>Converts the given item to a Unicode string.</doc>
-<status status="PASS" start="2026-03-24T11:01:04.437661" elapsed="0.000000"/>
+<kw name="Get File" owner="OperatingSystem">
+<msg time="2026-03-25T16:21:22.330943" level="INFO" html="true">Getting file '&lt;a href="file://C:\Users\GENIUS\PycharmProjects\EnterpriseRobotMonetique\data\csv\incoherence.sql"&gt;C:\Users\GENIUS\PycharmProjects\EnterpriseRobotMonetique\data\csv\incoherence.sql&lt;/a&gt;'.</msg>
+<msg time="2026-03-25T16:21:22.330943" level="INFO">${file} = select p.status,s.amount
+from payment p
+join settlement s on p.id=s.payment_id
+where s.amount=0 and p.status='SUCCESS'</msg>
+<var>${file}</var>
+<arg>C:/Users/GENIUS/PycharmProjects/EnterpriseRobotMonetique/data/csv/incoherence.sql</arg>
+<doc>Returns the contents of a specified file.</doc>
+<status status="PASS" start="2026-03-25T16:21:22.329928" elapsed="0.001015"/>
 </kw>
-<kw name="Should Contain" owner="BuiltIn">
-<arg>${convert}</arg>
-<arg>failed</arg>
-<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
-<status status="PASS" start="2026-03-24T11:01:04.437661" elapsed="0.000000"/>
+<kw name="Query" owner="DatabaseLibrary">
+<msg time="2026-03-25T16:21:22.331944" level="INFO" html="true">Executing sql:&lt;br&gt;&lt;code style="font-weight: bold;"&gt;select p.status,s.amount
+from payment p
+join settlement s on p.id=s.payment_id
+where s.amount=0 and p.status='SUCCESS'&lt;/code&gt;</msg>
+<msg time="2026-03-25T16:21:22.339477" level="INFO">Commit the transaction</msg>
+<msg time="2026-03-25T16:21:22.339477" level="INFO" html="true">&lt;div style="max-width: 100%; overflow-x: auto; max-height: 500px; overflow-y: auto;"&gt;&lt;table style="width: auto; border-collapse: collapse; border: 2px solid rgb(140 140 140)"&gt;&lt;caption style="text-align: left; font-weight: bold; padding: 5px;"&gt;Query returned 0 rows&lt;/caption&gt;&lt;tr&gt;&lt;th scope="col" style="position: sticky; top: 0; color:black; background-color: #d6ecd4; border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;Row&lt;/th&gt;&lt;th scope="col" style="position: sticky; top: 0; background-color: #505050; color: #fff;border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;status&lt;/th&gt;&lt;th scope="col" style="position: sticky; top: 0; background-color: #505050; color: #fff;border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;amount&lt;/th&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</msg>
+<msg time="2026-03-25T16:21:22.340468" level="INFO">${result} = ()</msg>
+<var>${result}</var>
+<arg>${file}</arg>
+<doc>Runs a query with the ``select_statement`` and returns the result as list of rows.
+The type of row values depends on the database module -
+usually they are tuples or tuple-like objects.</doc>
+<status status="PASS" start="2026-03-25T16:21:22.331944" elapsed="0.008524"/>
 </kw>
-<status status="PASS" start="2026-03-24T11:01:04.433662" elapsed="0.005005"/>
+<kw name="Should Be Empty" owner="BuiltIn">
+<msg time="2026-03-25T16:21:22.341483" level="INFO">Length is 0.</msg>
+<arg>${result}</arg>
+<doc>Verifies that the given item is empty.</doc>
+<status status="PASS" start="2026-03-25T16:21:22.340468" elapsed="0.001015"/>
+</kw>
+<status status="PASS" start="2026-03-25T16:21:22.280215" elapsed="0.061268"/>
 </test>
-<status status="PASS" start="2026-03-24T11:01:04.036121" elapsed="0.402546"/>
+<status status="PASS" start="2026-03-25T16:21:20.708842" elapsed="1.632641"/>
 </suite>
 <statistics>
 <total>

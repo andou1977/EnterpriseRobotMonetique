@@ -72,6 +72,19 @@ je suis la
 
 
 
+verifier inconherence
+     Connect To Database   ${pysql}   monext_db   ${db_user}   ${db_pass}   ${db_host}   ${db_port}
+     ${file}=   Get File    C:/Users/GENIUS/PycharmProjects/EnterpriseRobotMonetique/data/csv/incoherence.sql
+     ${result}=   Query    ${file}
+     Should Be Empty    ${result}
+
+
+
+
+
+
+
+
 
 
 

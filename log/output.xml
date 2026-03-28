@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 7.3.2 (Python 3.11.0 on win32)" generated="2026-03-25T16:21:20.706843" rpa="false" schemaversion="5">
+<robot generator="Robot 7.3.2 (Python 3.11.0 on win32)" generated="2026-03-28T18:35:45.033261" rpa="false" schemaversion="5">
 <suite id="s1" name="App" source="C:\Users\GENIUS\PycharmProjects\EnterpriseRobotMonetique\tests\file\app.robot">
-<test id="s1-t1" name="verifier inconherence" line="75">
+<test id="s1-t1" name="testinagain" line="59">
 <kw name="Connect To Database" owner="DatabaseLibrary">
-<msg time="2026-03-25T16:21:22.282215" level="INFO">Looking for configuration file: 'resources\db.cfg'</msg>
-<msg time="2026-03-25T16:21:22.284215" level="INFO">Configuration file doesn't exist</msg>
-<msg time="2026-03-25T16:21:22.313501" level="INFO">Connect to DB using : pymysql.connect(db='monext_db', user='root', passwd=***, host='localhost', port=3306, charset='utf8mb4')</msg>
+<msg time="2026-03-28T18:35:45.407195" level="INFO">Looking for configuration file: 'resources\db.cfg'</msg>
+<msg time="2026-03-28T18:35:45.409189" level="INFO">Configuration file doesn't exist</msg>
+<msg time="2026-03-28T18:35:45.435713" level="INFO">Connect to DB using : pymysql.connect(db='monext_db', user='root', passwd=***, host='localhost', port=3306, charset='utf8mb4')</msg>
 <arg>${pysql}</arg>
 <arg>monext_db</arg>
 <arg>${db_user}</arg>
@@ -15,43 +15,43 @@
 <doc>Creates a database connection using the DB API 2.0 ``db_module`` and the parameters provided.
 Along with listed commonly used arguments (`db_name`, `db_host` etc.)
 you can set any other DB module specific parameters as key/value pairs.</doc>
-<status status="PASS" start="2026-03-25T16:21:22.281216" elapsed="0.048712"/>
+<status status="PASS" start="2026-03-28T18:35:45.406186" elapsed="0.034542"/>
 </kw>
 <kw name="Get File" owner="OperatingSystem">
-<msg time="2026-03-25T16:21:22.330943" level="INFO" html="true">Getting file '&lt;a href="file://C:\Users\GENIUS\PycharmProjects\EnterpriseRobotMonetique\data\csv\incoherence.sql"&gt;C:\Users\GENIUS\PycharmProjects\EnterpriseRobotMonetique\data\csv\incoherence.sql&lt;/a&gt;'.</msg>
-<msg time="2026-03-25T16:21:22.330943" level="INFO">${file} = select p.status,s.amount
-from payment p
-join settlement s on p.id=s.payment_id
-where s.amount=0 and p.status='SUCCESS'</msg>
-<var>${file}</var>
-<arg>C:/Users/GENIUS/PycharmProjects/EnterpriseRobotMonetique/data/csv/incoherence.sql</arg>
+<msg time="2026-03-28T18:35:45.441734" level="INFO" html="true">Getting file '&lt;a href="file://C:\Users\GENIUS\PycharmProjects\EnterpriseRobotMonetique\data\sql\fast.sql"&gt;C:\Users\GENIUS\PycharmProjects\EnterpriseRobotMonetique\data\sql\fast.sql&lt;/a&gt;'.</msg>
+<msg time="2026-03-28T18:35:45.442719" level="INFO">${query} = select * from transaction where timestampdiff(SECOND, start_time,end_time) &lt; 2
+</msg>
+<var>${query}</var>
+<arg>C:/Users/GENIUS/PycharmProjects/EnterpriseRobotMonetique/data/sql/fast.sql</arg>
 <doc>Returns the contents of a specified file.</doc>
-<status status="PASS" start="2026-03-25T16:21:22.329928" elapsed="0.001015"/>
+<status status="PASS" start="2026-03-28T18:35:45.441734" elapsed="0.000985"/>
 </kw>
 <kw name="Query" owner="DatabaseLibrary">
-<msg time="2026-03-25T16:21:22.331944" level="INFO" html="true">Executing sql:&lt;br&gt;&lt;code style="font-weight: bold;"&gt;select p.status,s.amount
-from payment p
-join settlement s on p.id=s.payment_id
-where s.amount=0 and p.status='SUCCESS'&lt;/code&gt;</msg>
-<msg time="2026-03-25T16:21:22.339477" level="INFO">Commit the transaction</msg>
-<msg time="2026-03-25T16:21:22.339477" level="INFO" html="true">&lt;div style="max-width: 100%; overflow-x: auto; max-height: 500px; overflow-y: auto;"&gt;&lt;table style="width: auto; border-collapse: collapse; border: 2px solid rgb(140 140 140)"&gt;&lt;caption style="text-align: left; font-weight: bold; padding: 5px;"&gt;Query returned 0 rows&lt;/caption&gt;&lt;tr&gt;&lt;th scope="col" style="position: sticky; top: 0; color:black; background-color: #d6ecd4; border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;Row&lt;/th&gt;&lt;th scope="col" style="position: sticky; top: 0; background-color: #505050; color: #fff;border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;status&lt;/th&gt;&lt;th scope="col" style="position: sticky; top: 0; background-color: #505050; color: #fff;border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;amount&lt;/th&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</msg>
-<msg time="2026-03-25T16:21:22.340468" level="INFO">${result} = ()</msg>
+<msg time="2026-03-28T18:35:45.442719" level="INFO" html="true">Executing sql:&lt;br&gt;&lt;code style="font-weight: bold;"&gt;select * from transaction where timestampdiff(SECOND, start_time,end_time) &lt; 2
+&lt;/code&gt;</msg>
+<msg time="2026-03-28T18:35:45.444719" level="INFO">Commit the transaction</msg>
+<msg time="2026-03-28T18:35:45.445719" level="INFO" html="true">&lt;div style="max-width: 100%; overflow-x: auto; max-height: 500px; overflow-y: auto;"&gt;&lt;table style="width: auto; border-collapse: collapse; border: 2px solid rgb(140 140 140)"&gt;&lt;caption style="text-align: left; font-weight: bold; padding: 5px;"&gt;Query returned 6 rows&lt;/caption&gt;&lt;tr&gt;&lt;th scope="col" style="position: sticky; top: 0; color:black; background-color: #d6ecd4; border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;Row&lt;/th&gt;&lt;th scope="col" style="position: sticky; top: 0; background-color: #505050; color: #fff;border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;id&lt;/th&gt;&lt;th scope="col" style="position: sticky; top: 0; background-color: #505050; color: #fff;border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;payment_id&lt;/th&gt;&lt;th scope="col" style="position: sticky; top: 0; background-color: #505050; color: #fff;border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;batch_id&lt;/th&gt;&lt;th scope="col" style="position: sticky; top: 0; background-color: #505050; color: #fff;border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;amount&lt;/th&gt;&lt;th scope="col" style="position: sticky; top: 0; background-color: #505050; color: #fff;border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;status&lt;/th&gt;&lt;th scope="col" style="position: sticky; top: 0; background-color: #505050; color: #fff;border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;start_time&lt;/th&gt;&lt;th scope="col" style="position: sticky; top: 0; background-color: #505050; color: #fff;border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;end_time&lt;/th&gt;&lt;/tr&gt;&lt;tr style="background-color: var(--secondary-color, #eee)"&gt;&lt;th scope="row" style="color:black; background-color: #d6ecd4;border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;0&lt;/th&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;1&lt;/td&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;1001&lt;/td&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;2024031901&lt;/td&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;50.00&lt;/td&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;SUCCESS&lt;/td&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;2026-03-19 10:02:01&lt;/td&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;2026-03-19 10:02:02&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th scope="row" style="color:black; background-color: #d6ecd4;border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;1&lt;/th&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;4&lt;/td&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;1004&lt;/td&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;2024031904&lt;/td&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;200.00&lt;/td&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;SUCCESS&lt;/td&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;2026-03-19 10:13:01&lt;/td&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;2026-03-19 10:13:02&lt;/td&gt;&lt;/tr&gt;&lt;tr style="background-color: var(--secondary-color, #eee)"&gt;&lt;th scope="row" style="color:black; background-color: #d6ecd4;border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;2&lt;/th&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;5&lt;/td&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;1005&lt;/td&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;2024031905&lt;/td&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;15.00&lt;/td&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;SUCCESS&lt;/td&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;2026-03-19 10:21:02&lt;/td&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;2026-03-19 10:21:03&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th scope="row" style="color:black; background-color: #d6ecd4;border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;3&lt;/th&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;6&lt;/td&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;1006&lt;/td&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;2024031906&lt;/td&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;300.00&lt;/td&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;SUCCESS&lt;/td&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;2026-03-19 10:26:03&lt;/td&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;2026-03-19 10:26:04&lt;/td&gt;&lt;/tr&gt;&lt;tr style="background-color: var(--secondary-color, #eee)"&gt;&lt;th scope="row" style="color:black; background-color: #d6ecd4;border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;4&lt;/th&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;9&lt;/td&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;1009&lt;/td&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;2024031909&lt;/td&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;10.00&lt;/td&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;SUCCESS&lt;/td&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;2026-03-19 10:41:06&lt;/td&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;2026-03-19 10:41:07&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th scope="row" style="color:black; background-color: #d6ecd4;border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;5&lt;/th&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;10&lt;/td&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;1010&lt;/td&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;2024031910&lt;/td&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;500.00&lt;/td&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;SUCCESS&lt;/td&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;2026-03-28 10:46:07&lt;/td&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;2026-03-19 10:46:09&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</msg>
+<msg time="2026-03-28T18:35:45.445719" level="INFO">${result} = ((1, 1001, 2024031901, Decimal('50.00'), 'SUCCESS', datetime.datetime(2026, 3, 19, 10, 2, 1), datetime.datetime(2026, 3, 19, 10, 2, 2)), (4, 1004, 2024031904, Decimal('200.00'), 'SUCCESS', datetime.da...</msg>
 <var>${result}</var>
-<arg>${file}</arg>
+<arg>${query}</arg>
 <doc>Runs a query with the ``select_statement`` and returns the result as list of rows.
 The type of row values depends on the database module -
 usually they are tuples or tuple-like objects.</doc>
-<status status="PASS" start="2026-03-25T16:21:22.331944" elapsed="0.008524"/>
+<status status="PASS" start="2026-03-28T18:35:45.442719" elapsed="0.003000"/>
 </kw>
-<kw name="Should Be Empty" owner="BuiltIn">
-<msg time="2026-03-25T16:21:22.341483" level="INFO">Length is 0.</msg>
+<kw name="Should Not Be Empty" owner="BuiltIn">
+<msg time="2026-03-28T18:35:45.446718" level="INFO">Length is 6.</msg>
 <arg>${result}</arg>
-<doc>Verifies that the given item is empty.</doc>
-<status status="PASS" start="2026-03-25T16:21:22.340468" elapsed="0.001015"/>
+<doc>Verifies that the given item is not empty.</doc>
+<status status="PASS" start="2026-03-28T18:35:45.445719" elapsed="0.000999"/>
 </kw>
-<status status="PASS" start="2026-03-25T16:21:22.280215" elapsed="0.061268"/>
+<kw name="Disconnect From Database" owner="DatabaseLibrary">
+<doc>Disconnects from the database.</doc>
+<status status="PASS" start="2026-03-28T18:35:45.446718" elapsed="0.001003"/>
+</kw>
+<status status="PASS" start="2026-03-28T18:35:45.405198" elapsed="0.042523"/>
 </test>
-<status status="PASS" start="2026-03-25T16:21:20.708842" elapsed="1.632641"/>
+<status status="PASS" start="2026-03-28T18:35:45.035264" elapsed="0.412457"/>
 </suite>
 <statistics>
 <total>

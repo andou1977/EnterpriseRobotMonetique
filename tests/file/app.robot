@@ -157,7 +157,34 @@ Jsondirect
      ${gty}=   Set Variable   ${hg.json()}
      Should Not Be Empty    ${gty}
 
+verifiercontenucsvfile
+    [Documentation]   vérifie que chaque ligne suivante contient exactement 3 colonnes ex:PAYMENT;ID=2001;STATUS=OK
+    ${content}=    Get File    ${pou}
+    ${lines}=    Split To Lines    ${content}
 
+    FOR    ${line}    IN    @{lines}[1:]
+    ${cols}=    Split String    ${line}    ;
+    Length Should Be    ${cols}    3
+    END
+
+verifiertimeoutapi
+     [Documentation]   verifier le timeout d'un api inferieur a 3s
+     Create Session    timeverifier    https://6957bb19f7ea690182d2e402.mockapi.io/api/andouv1
+     ${juo}=   POST On Session   timeverifier   /andouv1api   ...   json={"Card_number": 4970100000000012,"amount": 1845.89,"status": "SUCCESS"}
+     Status Should Be    201
+     ${elapsed}=    Set Variable    ${juo.elapsed.total_seconds()}
+     Log    Temps de réponse: ${elapsed} secondes
+     Should Be True    ${elapsed} < 2
+
+
+testerid
+      Connect To Database   ${pysql}   monext_db   ${db_user}   ${db_pass}   ${db_host}   ${db_port}
+       ${result}=  Get File    C:/Users/GENIUS/PycharmProjects/EnterpriseRobotMonetique/data/sql/idfile.sql
+        ${query}=   Query    ${result}
+       Should Not Be Empty    ${query}
+       Should Be Equal    ${query[0][3]}    FAILED
+       Should Be Equal As Numbers    ${query[0][2]}    99.99
+       
 
 
 

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 7.3.2 (Python 3.11.0 on win32)" generated="2026-03-30T17:40:26.376025" rpa="false" schemaversion="5">
+<robot generator="Robot 7.3.2 (Python 3.11.0 on win32)" generated="2026-04-02T09:06:14.886107" rpa="false" schemaversion="5">
 <suite id="s1" name="App" source="C:\Users\GENIUS\PycharmProjects\EnterpriseRobotMonetique\tests\file\app.robot">
-<test id="s1-t1" name="testerid" line="180">
+<test id="s1-t1" name="la somme" line="116">
 <kw name="Connect To Database" owner="DatabaseLibrary">
-<msg time="2026-03-30T17:40:26.761240" level="INFO">Looking for configuration file: 'resources\db.cfg'</msg>
-<msg time="2026-03-30T17:40:26.762241" level="INFO">Configuration file doesn't exist</msg>
-<msg time="2026-03-30T17:40:26.776242" level="INFO">Connect to DB using : pymysql.connect(db='monext_db', user='root', passwd=***, host='localhost', port=3306, charset='utf8mb4')</msg>
+<msg time="2026-04-02T09:06:15.273889" level="INFO">Looking for configuration file: 'resources\db.cfg'</msg>
+<msg time="2026-04-02T09:06:15.274889" level="INFO">Configuration file doesn't exist</msg>
+<msg time="2026-04-02T09:06:15.288887" level="INFO">Connect to DB using : pymysql.connect(db='monext_db', user='root', passwd=***, host='localhost', port=3306, charset='utf8mb4')</msg>
 <arg>${pysql}</arg>
 <arg>monext_db</arg>
 <arg>${db_user}</arg>
@@ -15,67 +15,77 @@
 <doc>Creates a database connection using the DB API 2.0 ``db_module`` and the parameters provided.
 Along with listed commonly used arguments (`db_name`, `db_host` etc.)
 you can set any other DB module specific parameters as key/value pairs.</doc>
-<status status="PASS" start="2026-03-30T17:40:26.760243" elapsed="0.020411"/>
+<status status="PASS" start="2026-04-02T09:06:15.272889" elapsed="0.034999"/>
 </kw>
 <kw name="Get File" owner="OperatingSystem">
-<msg time="2026-03-30T17:40:26.781652" level="INFO" html="true">Getting file '&lt;a href="file://C:\Users\GENIUS\PycharmProjects\EnterpriseRobotMonetique\data\sql\idfile.sql"&gt;C:\Users\GENIUS\PycharmProjects\EnterpriseRobotMonetique\data\sql\idfile.sql&lt;/a&gt;'.</msg>
-<msg time="2026-03-30T17:40:26.781652" level="INFO">${result} = SELECT * from payment where id=1007
-</msg>
+<msg time="2026-04-02T09:06:15.307888" level="INFO" html="true">Getting file '&lt;a href="file://C:\Users\GENIUS\PycharmProjects\EnterpriseRobotMonetique\data\sql\sommepayment.sql"&gt;C:\Users\GENIUS\PycharmProjects\EnterpriseRobotMonetique\data\sql\sommepayment.sql&lt;/a&gt;'.</msg>
+<msg time="2026-04-02T09:06:15.308888" level="INFO">${result} = select sum(amount) from payment</msg>
 <var>${result}</var>
-<arg>C:/Users/GENIUS/PycharmProjects/EnterpriseRobotMonetique/data/sql/idfile.sql</arg>
+<arg>C:/Users/GENIUS/PycharmProjects/EnterpriseRobotMonetique/data/sql/sommepayment.sql</arg>
 <doc>Returns the contents of a specified file.</doc>
-<status status="PASS" start="2026-03-30T17:40:26.781652" elapsed="0.000000"/>
+<status status="PASS" start="2026-04-02T09:06:15.307888" elapsed="0.001000"/>
+</kw>
+<kw name="File Should Exist" owner="OperatingSystem">
+<msg time="2026-04-02T09:06:15.308888" level="INFO" html="true">File '&lt;a href="file://C:\Users\GENIUS\PycharmProjects\EnterpriseRobotMonetique\data\sql\sommepayment.sql"&gt;C:\Users\GENIUS\PycharmProjects\EnterpriseRobotMonetique\data\sql\sommepayment.sql&lt;/a&gt;' exists.</msg>
+<arg>C:/Users/GENIUS/PycharmProjects/EnterpriseRobotMonetique/data/sql/sommepayment.sql</arg>
+<doc>Fails unless the given ``path`` points to an existing file.</doc>
+<status status="PASS" start="2026-04-02T09:06:15.308888" elapsed="0.000000"/>
 </kw>
 <kw name="Query" owner="DatabaseLibrary">
-<msg time="2026-03-30T17:40:26.782644" level="INFO" html="true">Executing sql:&lt;br&gt;&lt;code style="font-weight: bold;"&gt;SELECT * from payment where id=1007
-&lt;/code&gt;</msg>
-<msg time="2026-03-30T17:40:26.783640" level="INFO">Commit the transaction</msg>
-<msg time="2026-03-30T17:40:26.783640" level="INFO" html="true">&lt;div style="max-width: 100%; overflow-x: auto; max-height: 500px; overflow-y: auto;"&gt;&lt;table style="width: auto; border-collapse: collapse; border: 2px solid rgb(140 140 140)"&gt;&lt;caption style="text-align: left; font-weight: bold; padding: 5px;"&gt;Query returned 1 rows&lt;/caption&gt;&lt;tr&gt;&lt;th scope="col" style="position: sticky; top: 0; color:black; background-color: #d6ecd4; border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;Row&lt;/th&gt;&lt;th scope="col" style="position: sticky; top: 0; background-color: #505050; color: #fff;border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;id&lt;/th&gt;&lt;th scope="col" style="position: sticky; top: 0; background-color: #505050; color: #fff;border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;card_number&lt;/th&gt;&lt;th scope="col" style="position: sticky; top: 0; background-color: #505050; color: #fff;border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;amount&lt;/th&gt;&lt;th scope="col" style="position: sticky; top: 0; background-color: #505050; color: #fff;border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;status&lt;/th&gt;&lt;th scope="col" style="position: sticky; top: 0; background-color: #505050; color: #fff;border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;date&lt;/th&gt;&lt;th scope="col" style="position: sticky; top: 0; background-color: #505050; color: #fff;border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;auth_id&lt;/th&gt;&lt;/tr&gt;&lt;tr style="background-color: var(--secondary-color, #eee)"&gt;&lt;th scope="row" style="color:black; background-color: #d6ecd4;border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;0&lt;/th&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;1007&lt;/td&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;4970100000000007&lt;/td&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;99.99&lt;/td&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;FAILED&lt;/td&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;2026-03-19 10:31:00&lt;/td&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;7&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</msg>
-<msg time="2026-03-30T17:40:26.784653" level="INFO">${query} = ((1007, '4970100000000007', Decimal('99.99'), 'FAILED', datetime.datetime(2026, 3, 19, 10, 31), 7),)</msg>
-<var>${query}</var>
+<msg time="2026-04-02T09:06:15.309889" level="INFO" html="true">Executing sql:&lt;br&gt;&lt;code style="font-weight: bold;"&gt;select sum(amount) from payment&lt;/code&gt;</msg>
+<msg time="2026-04-02T09:06:15.309889" level="INFO">Commit the transaction</msg>
+<msg time="2026-04-02T09:06:15.310889" level="INFO" html="true">&lt;div style="max-width: 100%; overflow-x: auto; max-height: 500px; overflow-y: auto;"&gt;&lt;table style="width: auto; border-collapse: collapse; border: 2px solid rgb(140 140 140)"&gt;&lt;caption style="text-align: left; font-weight: bold; padding: 5px;"&gt;Query returned 1 rows&lt;/caption&gt;&lt;tr&gt;&lt;th scope="col" style="position: sticky; top: 0; color:black; background-color: #d6ecd4; border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;Row&lt;/th&gt;&lt;th scope="col" style="position: sticky; top: 0; background-color: #505050; color: #fff;border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;sum(amount)&lt;/th&gt;&lt;/tr&gt;&lt;tr style="background-color: var(--secondary-color, #eee)"&gt;&lt;th scope="row" style="color:black; background-color: #d6ecd4;border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;0&lt;/th&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;1862.84&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</msg>
+<msg time="2026-04-02T09:06:15.310889" level="INFO">${myfirstquery} = ((Decimal('1862.84'),),)</msg>
+<var>${myfirstquery}</var>
 <arg>${result}</arg>
 <doc>Runs a query with the ``select_statement`` and returns the result as list of rows.
 The type of row values depends on the database module -
 usually they are tuples or tuple-like objects.</doc>
-<status status="PASS" start="2026-03-30T17:40:26.782644" elapsed="0.002009"/>
+<status status="PASS" start="2026-04-02T09:06:15.308888" elapsed="0.002001"/>
 </kw>
 <kw name="Should Not Be Empty" owner="BuiltIn">
-<msg time="2026-03-30T17:40:26.784653" level="INFO">Length is 1.</msg>
-<arg>${query}</arg>
+<msg time="2026-04-02T09:06:15.311886" level="INFO">Length is 1.</msg>
+<arg>${myfirstquery}</arg>
 <doc>Verifies that the given item is not empty.</doc>
-<status status="PASS" start="2026-03-30T17:40:26.784653" elapsed="0.000000"/>
+<status status="PASS" start="2026-04-02T09:06:15.310889" elapsed="0.000997"/>
 </kw>
-<kw name="Should Be Equal" owner="BuiltIn">
-<arg>${query[0][3]}</arg>
-<arg>FAILED</arg>
-<doc>Fails if the given objects are unequal.</doc>
-<status status="PASS" start="2026-03-30T17:40:26.785639" elapsed="0.000000"/>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-04-02T09:06:15.311886" level="INFO">${convertion} = 1862.84</msg>
+<var>${convertion}</var>
+<arg>${myfirstquery[0][0]}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-04-02T09:06:15.311886" elapsed="0.000000"/>
 </kw>
 <kw name="Should Be Equal As Numbers" owner="BuiltIn">
-<msg time="2026-03-30T17:40:26.786642" level="INFO">Argument types are:
+<msg time="2026-04-02T09:06:15.312888" level="INFO">Argument types are:
 &lt;class 'decimal.Decimal'&gt;
 &lt;class 'str'&gt;</msg>
-<arg>${query[0][2]}</arg>
-<arg>99.99</arg>
+<msg time="2026-04-02T09:06:15.312888" level="FAIL">1862.84 != 1961.94</msg>
+<arg>${convertion}</arg>
+<arg>1961.94</arg>
 <doc>Fails if objects are unequal after converting them to real numbers.</doc>
-<status status="PASS" start="2026-03-30T17:40:26.785639" elapsed="0.001003"/>
+<status status="FAIL" start="2026-04-02T09:06:15.311886" elapsed="0.001002">1862.84 != 1961.94</status>
 </kw>
-<status status="PASS" start="2026-03-30T17:40:26.759238" elapsed="0.027404"/>
+<kw name="Disconnect From Database" owner="DatabaseLibrary">
+<doc>Disconnects from the database.</doc>
+<status status="NOT RUN" start="2026-04-02T09:06:15.312888" elapsed="0.000000"/>
+</kw>
+<status status="FAIL" start="2026-04-02T09:06:15.271890" elapsed="0.041997">1862.84 != 1961.94</status>
 </test>
 <kw name="Disconnect From Database" owner="DatabaseLibrary" type="TEARDOWN">
 <doc>Disconnects from the database.</doc>
-<status status="PASS" start="2026-03-30T17:40:26.786642" elapsed="0.001001"/>
+<status status="PASS" start="2026-04-02T09:06:15.313887" elapsed="0.000000"/>
 </kw>
-<status status="PASS" start="2026-03-30T17:40:26.377619" elapsed="0.410024"/>
+<status status="FAIL" start="2026-04-02T09:06:14.888523" elapsed="0.425364"/>
 </suite>
 <statistics>
 <total>
-<stat pass="1" fail="0" skip="0">All Tests</stat>
+<stat pass="0" fail="1" skip="0">All Tests</stat>
 </total>
 <tag>
 </tag>
 <suite>
-<stat name="App" id="s1" pass="1" fail="0" skip="0">App</stat>
+<stat name="App" id="s1" pass="0" fail="1" skip="0">App</stat>
 </suite>
 </statistics>
 <errors>

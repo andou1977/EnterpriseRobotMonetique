@@ -16,6 +16,7 @@ Library    ../../python/calculeamount.py
 Library    DatabaseLibrary
 Library    ../../python/showfailed.py
 Suite Teardown    Disconnect From Database
+Library    ../../python/countandsumtransaction.py
 
 
 
@@ -98,7 +99,7 @@ transaction lente
      ${file}=   Get File    C:/Users/GENIUS/PycharmProjects/EnterpriseRobotMonetique/data/sql/timeout.sql
       File Should Exist    C:/Users/GENIUS/PycharmProjects/EnterpriseRobotMonetique/data/sql/timeout.sql
      ${query}=  Query    ${file}
-     Should Be Empty    ${query}
+     Should not Be Empty    ${query}
      Disconnect From Database
 
    
@@ -204,8 +205,36 @@ lenteurapi
      Should Be True    ${elapsed} < 2    L’API est trop lente : ${elapsed} secondes
 
 
+settlementmanquant
+    Connect To Database  ${pysql}   monext_db   ${db_user}   ${db_pass}   ${db_host}   ${db_port}
+    ${myfile}=   Get File    C:/Users/GENIUS/PycharmProjects/EnterpriseRobotMonetique/data/sql/settlementmanquant.sql
+    File Should Exist   C:/Users/GENIUS/PycharmProjects/EnterpriseRobotMonetique/data/sql/settlementmanquant.sql
+    ${myquery}=   Query    ${myfile}
+    Should Not Be Empty    ${myquery}
+    ${verify}=   Set Variable   ${myquery[0][1]}
+    Should Be Equal As Numbers    ${verify}    546.45
+    
+countandsumtransaction
+   ${thevariable}=   Countandsum    C:/Users/GENIUS/PycharmProjects/EnterpriseRobotMonetique/data/csv/transactions.txt
+   Log To Console    ${thevariable}
+   ${convert}=   Convert To Number    ${thevariable[0]}
+   ${convert}=   Convert To Number    ${thevariable[1]}
+   Should Be Equal As Numbers    ${convert}   755.49
 
+#----------------------likemo-------------------------------
+myfirstlikemo
+    Connect To Database   ${pysql}   monext_simulation   ${db_user}   ${db_pass}   ${db_host}   ${db_port}
+    ${query}=   Query    ${myrequest}
+    Should not Be Empty    ${query}
+    ${montant}=   Set Variable   ${query[2][1]}
+    Should Be Equal As Numbers    ${montant}    152.06
+    ${statut}=   Set Variable   ${query[2][4]}
+    Should Be Equal As Strings    ${statut}    ACTIVE
 
+mysecondlikemo
+   Connect To Database   ${pysql}   monext_simulation   ${db_user}   ${db_pass}   ${db_host}   ${db_port}
+   ${myquery}=   Query    ${myrequest1}
+   Should Be Empty    ${myquery}
 
 
 

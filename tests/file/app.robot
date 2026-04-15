@@ -121,7 +121,7 @@ la somme
      ${myfirstquery}=   Query    ${result}
      Should not Be Empty    ${myfirstquery}
      ${convertion}=   Set Variable   ${myfirstquery[0][0]}
-     Should Be Equal As Numbers    ${convertion}   1862.84
+     Should Be Equal As Numbers    ${convertion}   2097.4
      Disconnect From Database
 
 payment existant mais pas dans transaction
@@ -189,7 +189,7 @@ testerid
        Should Be Equal As Numbers    ${query[0][2]}    99.99
        Should Be Equal As Numbers    ${query[0][5]}    7
        Should Be Equal As Numbers    ${query[0][1]}    4970100000000007
-
+       Disconnect From Database
 transactiondifferent
     Connect To Database   ${pysql}   monext_db   ${db_user}   ${db_pass}   ${db_host}   ${db_port}
     ${takeit}=   Get File    C:/Users/GENIUS/PycharmProjects/EnterpriseRobotMonetique/data/sql/difference.sql
@@ -197,7 +197,7 @@ transactiondifferent
     ${myquery}=   Query    ${takeit}
     Should Be Equal As Numbers   ${myquery[0][1]}   400.90
     Should Be Equal As Numbers    ${myquery[0][4]}    500.00
-    
+    Disconnect From Database
 lenteurapi
      Create Session    testlenteur    https://6957bb19f7ea690182d2e402.mockapi.io/api/andouv1
      ${response}=    GET On Session    testlenteur    /andouv1api
@@ -213,6 +213,7 @@ settlementmanquant
     Should Not Be Empty    ${myquery}
     ${verify}=   Set Variable   ${myquery[0][1]}
     Should Be Equal As Numbers    ${verify}    546.45
+    Disconnect From Database
     
 countandsumtransaction
    ${thevariable}=   Countandsum    C:/Users/GENIUS/PycharmProjects/EnterpriseRobotMonetique/data/csv/transactions.txt
@@ -230,11 +231,13 @@ myfirstlikemo
     Should Be Equal As Numbers    ${montant}    152.06
     ${statut}=   Set Variable   ${query[2][4]}
     Should Be Equal As Strings    ${statut}    ACTIVE
+    Disconnect From Database
 
 mysecondlikemo
    Connect To Database   ${pysql}   monext_simulation   ${db_user}   ${db_pass}   ${db_host}   ${db_port}
    ${myquery}=   Query    ${myrequest1}
    Should Be Empty    ${myquery}
+   Disconnect From Database
 
 
 

@@ -11,6 +11,7 @@ verifier un fichier son format si il est ok etc
 ---Vérifier que le fichier n’a pas de doublons (idempotence) : cut -d',' -f1 fichier.csv | sort | uniq -d
 ---Vérifier que le fichier n’est pas vide : test -s fichier.csv && echo "OK" || echo "Fichier vide"
 --- Vérifier que le séparateur est bien la virgule : head -n 5 fichier.csv | grep -v ","
+------------verifier l'encodage du fichier : file -i fichier.csv
 
 
 

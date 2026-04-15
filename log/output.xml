@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 7.3.2 (Python 3.11.0 on win32)" generated="2026-04-08T16:54:45.000584" rpa="false" schemaversion="5">
+<robot generator="Robot 7.3.2 (Python 3.11.0 on win32)" generated="2026-04-15T12:15:25.481403" rpa="false" schemaversion="5">
 <suite id="s1" name="App" source="C:\Users\GENIUS\PycharmProjects\EnterpriseRobotMonetique\tests\file\app.robot">
-<test id="s1-t1" name="transaction lente" line="97">
+<test id="s1-t1" name="la somme" line="117">
 <kw name="Connect To Database" owner="DatabaseLibrary">
-<msg time="2026-04-08T16:54:45.360834" level="INFO">Looking for configuration file: 'resources\db.cfg'</msg>
-<msg time="2026-04-08T16:54:45.362750" level="INFO">Configuration file doesn't exist</msg>
-<msg time="2026-04-08T16:54:45.374993" level="INFO">Connect to DB using : pymysql.connect(db='monext_db', user='root', passwd=***, host='localhost', port=3306, charset='utf8mb4')</msg>
+<msg time="2026-04-15T12:15:25.886021" level="INFO">Looking for configuration file: 'resources\db.cfg'</msg>
+<msg time="2026-04-15T12:15:25.888027" level="INFO">Configuration file doesn't exist</msg>
+<msg time="2026-04-15T12:15:25.902545" level="INFO">Connect to DB using : pymysql.connect(db='monext_db', user='root', passwd=***, host='localhost', port=3306, charset='utf8mb4')</msg>
 <arg>${pysql}</arg>
 <arg>monext_db</arg>
 <arg>${db_user}</arg>
@@ -15,58 +15,68 @@
 <doc>Creates a database connection using the DB API 2.0 ``db_module`` and the parameters provided.
 Along with listed commonly used arguments (`db_name`, `db_host` etc.)
 you can set any other DB module specific parameters as key/value pairs.</doc>
-<status status="PASS" start="2026-04-08T16:54:45.360834" elapsed="0.028267"/>
+<status status="PASS" start="2026-04-15T12:15:25.886021" elapsed="0.038572"/>
 </kw>
 <kw name="Get File" owner="OperatingSystem">
-<msg time="2026-04-08T16:54:45.389101" level="INFO" html="true">Getting file '&lt;a href="file://C:\Users\GENIUS\PycharmProjects\EnterpriseRobotMonetique\data\sql\timeout.sql"&gt;C:\Users\GENIUS\PycharmProjects\EnterpriseRobotMonetique\data\sql\timeout.sql&lt;/a&gt;'.</msg>
-<msg time="2026-04-08T16:54:45.390091" level="INFO">${file} = SELECT  start_time, end_time,
-TIMESTAMPDIFF(SECOND, start_time, end_time) AS duration
-FROM TRANSACTION
-WHERE TIMESTAMPDIFF(SECOND, start_time, end_time) &gt; 2;</msg>
-<var>${file}</var>
-<arg>C:/Users/GENIUS/PycharmProjects/EnterpriseRobotMonetique/data/sql/timeout.sql</arg>
+<msg time="2026-04-15T12:15:25.925599" level="INFO" html="true">Getting file '&lt;a href="file://C:\Users\GENIUS\PycharmProjects\EnterpriseRobotMonetique\data\sql\sommepayment.sql"&gt;C:\Users\GENIUS\PycharmProjects\EnterpriseRobotMonetique\data\sql\sommepayment.sql&lt;/a&gt;'.</msg>
+<msg time="2026-04-15T12:15:25.925599" level="INFO">${result} = select sum(amount) from payment</msg>
+<var>${result}</var>
+<arg>C:/Users/GENIUS/PycharmProjects/EnterpriseRobotMonetique/data/sql/sommepayment.sql</arg>
 <doc>Returns the contents of a specified file.</doc>
-<status status="PASS" start="2026-04-08T16:54:45.389101" elapsed="0.000990"/>
+<status status="PASS" start="2026-04-15T12:15:25.924593" elapsed="0.002012"/>
 </kw>
 <kw name="File Should Exist" owner="OperatingSystem">
-<msg time="2026-04-08T16:54:45.390091" level="INFO" html="true">File '&lt;a href="file://C:\Users\GENIUS\PycharmProjects\EnterpriseRobotMonetique\data\sql\timeout.sql"&gt;C:\Users\GENIUS\PycharmProjects\EnterpriseRobotMonetique\data\sql\timeout.sql&lt;/a&gt;' exists.</msg>
-<arg>C:/Users/GENIUS/PycharmProjects/EnterpriseRobotMonetique/data/sql/timeout.sql</arg>
+<msg time="2026-04-15T12:15:25.926605" level="INFO" html="true">File '&lt;a href="file://C:\Users\GENIUS\PycharmProjects\EnterpriseRobotMonetique\data\sql\sommepayment.sql"&gt;C:\Users\GENIUS\PycharmProjects\EnterpriseRobotMonetique\data\sql\sommepayment.sql&lt;/a&gt;' exists.</msg>
+<arg>C:/Users/GENIUS/PycharmProjects/EnterpriseRobotMonetique/data/sql/sommepayment.sql</arg>
 <doc>Fails unless the given ``path`` points to an existing file.</doc>
-<status status="PASS" start="2026-04-08T16:54:45.390091" elapsed="0.000000"/>
+<status status="PASS" start="2026-04-15T12:15:25.926605" elapsed="0.001001"/>
 </kw>
 <kw name="Query" owner="DatabaseLibrary">
-<msg time="2026-04-08T16:54:45.390091" level="INFO" html="true">Executing sql:&lt;br&gt;&lt;code style="font-weight: bold;"&gt;SELECT  start_time, end_time,
-TIMESTAMPDIFF(SECOND, start_time, end_time) AS duration
-FROM TRANSACTION
-WHERE TIMESTAMPDIFF(SECOND, start_time, end_time) &gt; 2;&lt;/code&gt;</msg>
-<msg time="2026-04-08T16:54:45.391098" level="INFO">Commit the transaction</msg>
-<msg time="2026-04-08T16:54:45.391098" level="INFO" html="true">&lt;div style="max-width: 100%; overflow-x: auto; max-height: 500px; overflow-y: auto;"&gt;&lt;table style="width: auto; border-collapse: collapse; border: 2px solid rgb(140 140 140)"&gt;&lt;caption style="text-align: left; font-weight: bold; padding: 5px;"&gt;Query returned 1 rows&lt;/caption&gt;&lt;tr&gt;&lt;th scope="col" style="position: sticky; top: 0; color:black; background-color: #d6ecd4; border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;Row&lt;/th&gt;&lt;th scope="col" style="position: sticky; top: 0; background-color: #505050; color: #fff;border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;start_time&lt;/th&gt;&lt;th scope="col" style="position: sticky; top: 0; background-color: #505050; color: #fff;border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;end_time&lt;/th&gt;&lt;th scope="col" style="position: sticky; top: 0; background-color: #505050; color: #fff;border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;duration&lt;/th&gt;&lt;/tr&gt;&lt;tr style="background-color: var(--secondary-color, #eee)"&gt;&lt;th scope="row" style="color:black; background-color: #d6ecd4;border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;0&lt;/th&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;2026-03-19 10:46:07&lt;/td&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;2026-03-28 10:46:09&lt;/td&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;777602&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</msg>
-<msg time="2026-04-08T16:54:45.391098" level="INFO">${query} = ((datetime.datetime(2026, 3, 19, 10, 46, 7), datetime.datetime(2026, 3, 28, 10, 46, 9), 777602),)</msg>
-<var>${query}</var>
-<arg>${file}</arg>
+<msg time="2026-04-15T12:15:25.927606" level="INFO" html="true">Executing sql:&lt;br&gt;&lt;code style="font-weight: bold;"&gt;select sum(amount) from payment&lt;/code&gt;</msg>
+<msg time="2026-04-15T12:15:25.929608" level="INFO">Commit the transaction</msg>
+<msg time="2026-04-15T12:15:25.930608" level="INFO" html="true">&lt;div style="max-width: 100%; overflow-x: auto; max-height: 500px; overflow-y: auto;"&gt;&lt;table style="width: auto; border-collapse: collapse; border: 2px solid rgb(140 140 140)"&gt;&lt;caption style="text-align: left; font-weight: bold; padding: 5px;"&gt;Query returned 1 rows&lt;/caption&gt;&lt;tr&gt;&lt;th scope="col" style="position: sticky; top: 0; color:black; background-color: #d6ecd4; border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;Row&lt;/th&gt;&lt;th scope="col" style="position: sticky; top: 0; background-color: #505050; color: #fff;border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;sum(amount)&lt;/th&gt;&lt;/tr&gt;&lt;tr style="background-color: var(--secondary-color, #eee)"&gt;&lt;th scope="row" style="color:black; background-color: #d6ecd4;border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;0&lt;/th&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;2097.40&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</msg>
+<msg time="2026-04-15T12:15:25.930608" level="INFO">${myfirstquery} = ((Decimal('2097.40'),),)</msg>
+<var>${myfirstquery}</var>
+<arg>${result}</arg>
 <doc>Runs a query with the ``select_statement`` and returns the result as list of rows.
 The type of row values depends on the database module -
 usually they are tuples or tuple-like objects.</doc>
-<status status="PASS" start="2026-04-08T16:54:45.390091" elapsed="0.001007"/>
+<status status="PASS" start="2026-04-15T12:15:25.927606" elapsed="0.003002"/>
 </kw>
 <kw name="Should Not Be Empty" owner="BuiltIn">
-<msg time="2026-04-08T16:54:45.392093" level="INFO">Length is 1.</msg>
-<arg>${query}</arg>
+<msg time="2026-04-15T12:15:25.931606" level="INFO">Length is 1.</msg>
+<arg>${myfirstquery}</arg>
 <doc>Verifies that the given item is not empty.</doc>
-<status status="PASS" start="2026-04-08T16:54:45.391098" elapsed="0.000995"/>
+<status status="PASS" start="2026-04-15T12:15:25.930608" elapsed="0.000998"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-04-15T12:15:25.931606" level="INFO">${convertion} = 2097.40</msg>
+<var>${convertion}</var>
+<arg>${myfirstquery[0][0]}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-04-15T12:15:25.931606" elapsed="0.000000"/>
+</kw>
+<kw name="Should Be Equal As Numbers" owner="BuiltIn">
+<msg time="2026-04-15T12:15:25.932687" level="INFO">Argument types are:
+&lt;class 'decimal.Decimal'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${convertion}</arg>
+<arg>2097.4</arg>
+<doc>Fails if objects are unequal after converting them to real numbers.</doc>
+<status status="PASS" start="2026-04-15T12:15:25.931606" elapsed="0.001081"/>
 </kw>
 <kw name="Disconnect From Database" owner="DatabaseLibrary">
 <doc>Disconnects from the database.</doc>
-<status status="PASS" start="2026-04-08T16:54:45.392093" elapsed="0.000000"/>
+<status status="PASS" start="2026-04-15T12:15:25.932687" elapsed="0.000000"/>
 </kw>
-<status status="PASS" start="2026-04-08T16:54:45.359797" elapsed="0.032296"/>
+<status status="PASS" start="2026-04-15T12:15:25.885021" elapsed="0.047666"/>
 </test>
 <kw name="Disconnect From Database" owner="DatabaseLibrary" type="TEARDOWN">
-<msg time="2026-04-08T16:54:45.393092" level="INFO">No open database connection to close</msg>
+<msg time="2026-04-15T12:15:25.934211" level="INFO">No open database connection to close</msg>
 <doc>Disconnects from the database.</doc>
-<status status="PASS" start="2026-04-08T16:54:45.393092" elapsed="0.000000"/>
+<status status="PASS" start="2026-04-15T12:15:25.932687" elapsed="0.001524"/>
 </kw>
-<status status="PASS" start="2026-04-08T16:54:45.002583" elapsed="0.390509"/>
+<status status="PASS" start="2026-04-15T12:15:25.484094" elapsed="0.450117"/>
 </suite>
 <statistics>
 <total>

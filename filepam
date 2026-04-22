@@ -20,4 +20,5 @@ verifier un fichier son format si il est ok etc
 “Je préfère valider avant de corriger”
 
 
-“Le système devient lent sans raison” : SHOW PROCESSLIST;
+“Le système devient lent sans raison” : SHOW PROCESSLIST;  et top pour linux
+

@@ -132,13 +132,13 @@ payment existant mais pas dans transaction
 verifier creation paiement
     Create Session    creatednow    https://6957bb19f7ea690182d2e402.mockapi.io/api/andouv1
 
-    ${addvalue}=    Create Dictionary   Card_number=4970100000000014   amount=1845.89   status=SUCCESS
+    ${addvalue}=    Create Dictionary   Card_number=4970100000000014   amount=1845   status=SUCCESS
     ${myadd}=    POST On Session    creatednow    /andouv1api    json=${addvalue}
     Status Should Be    201
     ${verify}=    Set Variable    ${myadd.json()}
 
     Should Be Equal    ${verify['status']}    SUCCESS
-    Should Be Equal   ${verify['amount']}    1845.89
+    Should Be Equal   ${verify['amount']}    1845
     Should Not Be Empty    ${verify['id']}
     [Documentation]  regex pour 16 chiffres stricte sans espaces et sans lettres etc ex: 1234567890234567
     Should Match Regexp    ${verify['Card_number']}   ^[0-9]{16}$

@@ -1,82 +1,89 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 7.3.2 (Python 3.11.0 on win32)" generated="2026-04-15T12:15:25.481403" rpa="false" schemaversion="5">
+<robot generator="Robot 7.3.2 (Python 3.11.0 on win32)" generated="2026-04-22T18:56:06.045749" rpa="false" schemaversion="5">
 <suite id="s1" name="App" source="C:\Users\GENIUS\PycharmProjects\EnterpriseRobotMonetique\tests\file\app.robot">
-<test id="s1-t1" name="la somme" line="117">
-<kw name="Connect To Database" owner="DatabaseLibrary">
-<msg time="2026-04-15T12:15:25.886021" level="INFO">Looking for configuration file: 'resources\db.cfg'</msg>
-<msg time="2026-04-15T12:15:25.888027" level="INFO">Configuration file doesn't exist</msg>
-<msg time="2026-04-15T12:15:25.902545" level="INFO">Connect to DB using : pymysql.connect(db='monext_db', user='root', passwd=***, host='localhost', port=3306, charset='utf8mb4')</msg>
-<arg>${pysql}</arg>
-<arg>monext_db</arg>
-<arg>${db_user}</arg>
-<arg>${db_pass}</arg>
-<arg>${db_host}</arg>
-<arg>${db_port}</arg>
-<doc>Creates a database connection using the DB API 2.0 ``db_module`` and the parameters provided.
-Along with listed commonly used arguments (`db_name`, `db_host` etc.)
-you can set any other DB module specific parameters as key/value pairs.</doc>
-<status status="PASS" start="2026-04-15T12:15:25.886021" elapsed="0.038572"/>
+<test id="s1-t1" name="verifier creation paiement" line="132">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2026-04-22T18:56:06.429859" level="INFO">Creating Session using : alias=creatednow, url=https://6957bb19f7ea690182d2e402.mockapi.io/api/andouv1, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>creatednow</arg>
+<arg>https://6957bb19f7ea690182d2e402.mockapi.io/api/andouv1</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2026-04-22T18:56:06.429859" elapsed="0.000992"/>
 </kw>
-<kw name="Get File" owner="OperatingSystem">
-<msg time="2026-04-15T12:15:25.925599" level="INFO" html="true">Getting file '&lt;a href="file://C:\Users\GENIUS\PycharmProjects\EnterpriseRobotMonetique\data\sql\sommepayment.sql"&gt;C:\Users\GENIUS\PycharmProjects\EnterpriseRobotMonetique\data\sql\sommepayment.sql&lt;/a&gt;'.</msg>
-<msg time="2026-04-15T12:15:25.925599" level="INFO">${result} = select sum(amount) from payment</msg>
-<var>${result}</var>
-<arg>C:/Users/GENIUS/PycharmProjects/EnterpriseRobotMonetique/data/sql/sommepayment.sql</arg>
-<doc>Returns the contents of a specified file.</doc>
-<status status="PASS" start="2026-04-15T12:15:25.924593" elapsed="0.002012"/>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-04-22T18:56:06.431849" level="INFO">${addvalue} = {'Card_number': '4970100000000014', 'amount': '1845', 'status': 'SUCCESS'}</msg>
+<var>${addvalue}</var>
+<arg>Card_number=4970100000000014</arg>
+<arg>amount=1845</arg>
+<arg>status=SUCCESS</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-04-22T18:56:06.430851" elapsed="0.000998"/>
 </kw>
-<kw name="File Should Exist" owner="OperatingSystem">
-<msg time="2026-04-15T12:15:25.926605" level="INFO" html="true">File '&lt;a href="file://C:\Users\GENIUS\PycharmProjects\EnterpriseRobotMonetique\data\sql\sommepayment.sql"&gt;C:\Users\GENIUS\PycharmProjects\EnterpriseRobotMonetique\data\sql\sommepayment.sql&lt;/a&gt;' exists.</msg>
-<arg>C:/Users/GENIUS/PycharmProjects/EnterpriseRobotMonetique/data/sql/sommepayment.sql</arg>
-<doc>Fails unless the given ``path`` points to an existing file.</doc>
-<status status="PASS" start="2026-04-15T12:15:25.926605" elapsed="0.001001"/>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-04-22T18:56:06.761132" level="INFO">POST Request : url=https://6957bb19f7ea690182d2e402.mockapi.io/api/andouv1/andouv1api 
+ path_url=/api/andouv1/andouv1api 
+ headers={'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '74', 'Content-Type': 'application/json'} 
+ body=b'{"Card_number": "4970100000000014", "amount": "1845", "status": "SUCCESS"}' 
+ </msg>
+<msg time="2026-04-22T18:56:06.762130" level="INFO">POST Response : url=https://6957bb19f7ea690182d2e402.mockapi.io/api/andouv1/andouv1api 
+ status=201, reason=Created 
+ headers={'Access-Control-Allow-Headers': 'X-Requested-With,Content-Type,Cache-Control,access_token', 'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,OPTIONS', 'Access-Control-Allow-Origin': '*', 'Content-Length': '79', 'Content-Type': 'application/json', 'Date': 'Wed, 22 Apr 2026 16:56:06 GMT', 'Nel': '{"report_to":"heroku-nel","response_headers":["Via"],"max_age":3600,"success_fraction":0.01,"failure_fraction":0.1}', 'Report-To': '{"group":"heroku-nel","endpoints":[{"url":"https://nel.heroku.com/reports?s=JXSUTS%2B9yrRAygGZliT94vJDEGZ%2BiJIS%2FH7W1X39EWY%3D\\u0026sid=1b10b0ff-8a76-4548-befa-353fc6c6c045\\u0026ts=1776876966"}],"max_age":3600}', 'Reporting-Endpoints': 'heroku-nel="https://nel.heroku.com/reports?s=JXSUTS%2B9yrRAygGZliT94vJDEGZ%2BiJIS%2FH7W1X39EWY%3D&amp;sid=1b10b0ff-8a76-4548-befa-353fc6c6c045&amp;ts=1776876966"', 'Server': 'Heroku', 'Via': '1.1 heroku-router', 'X-Powered-By': 'Express'} 
+ body={"Card_number":"4970100000000014","amount":"1845","status":"SUCCESS","id":"39"} 
+ </msg>
+<msg time="2026-04-22T18:56:06.762130" level="INFO">C:\Users\GENIUS\AppData\Roaming\Python\Python311\site-packages\urllib3\connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host '6957bb19f7ea690182d2e402.mockapi.io'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(</msg>
+<msg time="2026-04-22T18:56:06.762130" level="INFO">${myadd} = &lt;Response [201]&gt;</msg>
+<var>${myadd}</var>
+<arg>creatednow</arg>
+<arg>/andouv1api</arg>
+<arg>json=${addvalue}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-04-22T18:56:06.431849" elapsed="0.330281"/>
 </kw>
-<kw name="Query" owner="DatabaseLibrary">
-<msg time="2026-04-15T12:15:25.927606" level="INFO" html="true">Executing sql:&lt;br&gt;&lt;code style="font-weight: bold;"&gt;select sum(amount) from payment&lt;/code&gt;</msg>
-<msg time="2026-04-15T12:15:25.929608" level="INFO">Commit the transaction</msg>
-<msg time="2026-04-15T12:15:25.930608" level="INFO" html="true">&lt;div style="max-width: 100%; overflow-x: auto; max-height: 500px; overflow-y: auto;"&gt;&lt;table style="width: auto; border-collapse: collapse; border: 2px solid rgb(140 140 140)"&gt;&lt;caption style="text-align: left; font-weight: bold; padding: 5px;"&gt;Query returned 1 rows&lt;/caption&gt;&lt;tr&gt;&lt;th scope="col" style="position: sticky; top: 0; color:black; background-color: #d6ecd4; border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;Row&lt;/th&gt;&lt;th scope="col" style="position: sticky; top: 0; background-color: #505050; color: #fff;border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;sum(amount)&lt;/th&gt;&lt;/tr&gt;&lt;tr style="background-color: var(--secondary-color, #eee)"&gt;&lt;th scope="row" style="color:black; background-color: #d6ecd4;border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;0&lt;/th&gt;&lt;td style="border: 1px solid rgb(160 160 160);padding: 8px 10px;text-align: center;"&gt;2097.40&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</msg>
-<msg time="2026-04-15T12:15:25.930608" level="INFO">${myfirstquery} = ((Decimal('2097.40'),),)</msg>
-<var>${myfirstquery}</var>
-<arg>${result}</arg>
-<doc>Runs a query with the ``select_statement`` and returns the result as list of rows.
-The type of row values depends on the database module -
-usually they are tuples or tuple-like objects.</doc>
-<status status="PASS" start="2026-04-15T12:15:25.927606" elapsed="0.003002"/>
-</kw>
-<kw name="Should Not Be Empty" owner="BuiltIn">
-<msg time="2026-04-15T12:15:25.931606" level="INFO">Length is 1.</msg>
-<arg>${myfirstquery}</arg>
-<doc>Verifies that the given item is not empty.</doc>
-<status status="PASS" start="2026-04-15T12:15:25.930608" elapsed="0.000998"/>
+<kw name="Status Should Be" owner="RequestsLibrary">
+<arg>201</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" start="2026-04-22T18:56:06.763129" elapsed="0.000000"/>
 </kw>
 <kw name="Set Variable" owner="BuiltIn">
-<msg time="2026-04-15T12:15:25.931606" level="INFO">${convertion} = 2097.40</msg>
-<var>${convertion}</var>
-<arg>${myfirstquery[0][0]}</arg>
+<msg time="2026-04-22T18:56:06.764132" level="INFO">${verify} = {'Card_number': '4970100000000014', 'amount': '1845', 'status': 'SUCCESS', 'id': '39'}</msg>
+<var>${verify}</var>
+<arg>${myadd.json()}</arg>
 <doc>Returns the given values which can then be assigned to a variables.</doc>
-<status status="PASS" start="2026-04-15T12:15:25.931606" elapsed="0.000000"/>
+<status status="PASS" start="2026-04-22T18:56:06.763129" elapsed="0.001003"/>
 </kw>
-<kw name="Should Be Equal As Numbers" owner="BuiltIn">
-<msg time="2026-04-15T12:15:25.932687" level="INFO">Argument types are:
-&lt;class 'decimal.Decimal'&gt;
-&lt;class 'str'&gt;</msg>
-<arg>${convertion}</arg>
-<arg>2097.4</arg>
-<doc>Fails if objects are unequal after converting them to real numbers.</doc>
-<status status="PASS" start="2026-04-15T12:15:25.931606" elapsed="0.001081"/>
+<kw name="Should Be Equal" owner="BuiltIn">
+<arg>${verify['status']}</arg>
+<arg>SUCCESS</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" start="2026-04-22T18:56:06.764132" elapsed="0.000995"/>
 </kw>
-<kw name="Disconnect From Database" owner="DatabaseLibrary">
-<doc>Disconnects from the database.</doc>
-<status status="PASS" start="2026-04-15T12:15:25.932687" elapsed="0.000000"/>
+<kw name="Should Be Equal" owner="BuiltIn">
+<arg>${verify['amount']}</arg>
+<arg>1845</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" start="2026-04-22T18:56:06.765127" elapsed="0.001000"/>
 </kw>
-<status status="PASS" start="2026-04-15T12:15:25.885021" elapsed="0.047666"/>
+<kw name="Should Not Be Empty" owner="BuiltIn">
+<msg time="2026-04-22T18:56:06.766127" level="INFO">Length is 2.</msg>
+<arg>${verify['id']}</arg>
+<doc>Verifies that the given item is not empty.</doc>
+<status status="PASS" start="2026-04-22T18:56:06.766127" elapsed="0.000000"/>
+</kw>
+<kw name="Should Match Regexp" owner="BuiltIn">
+<arg>${verify['Card_number']}</arg>
+<arg>^[0-9]{16}$</arg>
+<doc>Fails if ``string`` does not match ``pattern`` as a regular expression.</doc>
+<status status="PASS" start="2026-04-22T18:56:06.766127" elapsed="0.001505"/>
+</kw>
+<doc>regex pour 16 chiffres stricte sans espaces et sans lettres etc ex: 1234567890234567</doc>
+<status status="PASS" start="2026-04-22T18:56:06.428849" elapsed="0.338783"/>
 </test>
 <kw name="Disconnect From Database" owner="DatabaseLibrary" type="TEARDOWN">
-<msg time="2026-04-15T12:15:25.934211" level="INFO">No open database connection to close</msg>
+<msg time="2026-04-22T18:56:06.767632" level="INFO">No open database connection to close</msg>
 <doc>Disconnects from the database.</doc>
-<status status="PASS" start="2026-04-15T12:15:25.932687" elapsed="0.001524"/>
+<status status="PASS" start="2026-04-22T18:56:06.767632" elapsed="0.000000"/>
 </kw>
-<status status="PASS" start="2026-04-15T12:15:25.484094" elapsed="0.450117"/>
+<status status="PASS" start="2026-04-22T18:56:06.047963" elapsed="0.719669"/>
 </suite>
 <statistics>
 <total>

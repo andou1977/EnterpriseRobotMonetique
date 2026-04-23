@@ -22,3 +22,6 @@ verifier un fichier son format si il est ok etc
 
 “Le système devient lent sans raison” : SHOW PROCESSLIST;  et top pour linux
 
+generer directment dans le fichier results en entreprise pour tester ton code en locale
+robot --outputdir results tests/
+

@@ -17,6 +17,7 @@ Library    DatabaseLibrary
 Library    ../../python/showfailed.py
 Suite Teardown    Disconnect From Database
 Library    ../../python/countandsumtransaction.py
+Library    SSHLibrary
 
 
 
@@ -238,6 +239,7 @@ mysecondlikemo
    ${myquery}=   Query    ${myrequest1}
    Should Be Empty    ${myquery}
    Disconnect From Database
+
 
 
 

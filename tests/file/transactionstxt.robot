@@ -5,8 +5,6 @@ Library    RPA.FileSystem
 Resource   ../../resources/keywords/transactions.robot
 
 
-
-
 *** Test Cases ***
 Verify the File
      Verify File

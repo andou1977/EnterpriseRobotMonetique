@@ -1,0 +1,844 @@
+site pour pratiquer :  https://admin-demo.nopcommerce.com/  
+
+
+  --------racourci recheche intellij-----
+ Shift deux fois : Recherche globale : fichiers, classes, actions, etc.
+Control F : Recherche dans le fichier ouvert
+control n : aller dans une classe
+
+site jeux
+https://www.skidrow-games.com/
+https://torgamez.com/?s=just+cause 
+https://crackwatcher.com/search/mortal%20kombat
+les meilleurs
+https://fitgirl-repacks.site/f1-22/
+https://dodi-repacks.site/battlefield-6/
+https://steamrip.com/
+----movie
+https://en.yts-official.org/?search=predator
+
+https://app.collective.work/collective/emmanuel-andou/profile?tab=1
+
+----Mon Api a moi
+https://6957bb19f7ea690182d2e402.mockapi.io/api/andouv1/andouv1api
+le site est   https://mockapi.io/signup
+
+---pour login
+https://dummyjson.com/auth/login
+
+avec le compte mybestdick
+
+
+
+
+
+  
+----------------------RobotFramework-------------------
+
+pour installe roboframework with ride
+pip install robotframework
+avc selenium
+pip install robotframework-jira
+pip install robotframework-metrics
+pip install robotframework-seleniumlibrary
+pugin for IntelliJ:Robot Framework Language Server and Robot Framework Support 
+pip install robotframework-databaselibrary
+pip install pymysql
+pip install robotframework-requests
+pip install robotframework-datadriver
+pip install robotframework-excel
+pip install rpa-framework
+pip install rpaframework
+pip uninstall robotframework-excellib
+pip install robotframework-sshlibrary
+npm install -g appium
+npm install -g appium-doctor
+pip install Appium-Python-Client
+pip install robotframework-appiumlibrary
+appium driver install uiautomator2
+pip install rpaframework
+pip install robotframework-pabot
+pip install robotframework-allurereport
+pip install allure-pytest
+scoop install allure
+pip install robotframework-reportportal
+pip install robotframework-mainframe3270
+pip install coverage
+pip install robotframework-jsonschemalibrary jsonschema
+
+
+
+---------------a installer de preference
+python -m pip install --upgrade pip
+
+python -m pip install robotframework
+python -m pip install robotframework-seleniumlibrary
+python -m pip install "selenium>=4.26,<5.0"
+python -m pip install robotframework-requests
+python -m pip install robotframework-databaselibrary
+python -m pip install pymysql
+python -m pip install robotframework-datadriver
+python -m pip install robotframework-mainframe3270
+python -m pip install rpaframework
+python -m pip install jsonschema
+python -m pip install requests
+
+
+Nb: c'est mieux avec python 11
+
+---petit truc--
+*** Settings ***
+Library  OperatingSystem
+Documentation  my first test now
+*** Keywords ***
+
+*** Variables ***
+
+*** Test Cases ***
+TEST
+     Log   Welcome Andou
+
+
+
+ 
+
+lancer browser et clicker
+*** Settings ***
+Library    SeleniumLibrary
+
+*** Variables ***
+${URL}    https://www.google.com/
+
+*** Test Cases ***
+Cliquer Sur Un Bouton
+    Open Browser    ${URL}    chrome
+    Maximize Browser Window
+    Click Element    id=my-button
+    Sleep    3s    # Attendez pour voir l'effet du clic
+    Close Browser
+-------------envoyer value a form--- 
+  
+  Input Text      id=user-name    ${username}
+    Input Password  id=password   ${password}
+--- verfier si username a envoyer Emmanuel
+Should Contain    ${sendvalue}  real madrid
+--verifier que le bouton a ete clicker
+Wait Until Page Contains    Merci pour votre soumission 
+Page Should Contain    ${verifyvariable}
+----lister par liste deroulante----
+
+Select From List By Value    id:liste-deroulante    others
+----------lancer un nouveau lien-----
+ Execute Javascript  window.open('https://www.saucedemo.com/')
+---revenir sur un autre lien--
+Switch Window  file:///C:/Users/GENIUS/Downloads/html-application-form.html
+--verifier le titre
+ Title Should Be    Google
+---afficher le titre
+ ${title}  Get Title
+     Log  ${title}
+-----verifier que le texte est egale a 1 ou un text etc
+ ${quantite}=   Get Text    xpath=//div[@class="cart_quantity"]
+   Should Be Equal As Strings    ${quantite}    1
+------prendre une date
+ Press Keys       id=dob    22/09/1967
+---attends qu'un element soit visible
+Wait Until Element Is Visible    id=login_button    timeout=10s
+click element  id=login_button
+---attends qu'un element text soit visible
+ Wait Until Element Is Visible    id=lastname 
+
+-----clicker en pressant enter dans input
+ Input Text   class=new-todo   Robot Framework
+    Press Keys    css:.new-todo    ENTER
+
+-----know the length
+${myname}=   Get Length   andou
+
+ 
+
+---documentation-----
+ex:
+*** Settings ***
+Documentation  connection de l'utilisateur
+...            ajouter la carte
+*** Keywords ***
+forms
+     [Documentation]  connection de l'utilisateur
+     ...             ajouter la carte
+nb:tu peux utiliser documentation dans keywords,testcase et settings
+
+lancer un seul fichier : robot tests/api/CreateCommande.robot
+nb:après robot les autres sont les noms des fichiers
+
+
+--------------Tableau--------------
+Vérifier Que Le Tableau Est Visible
+    Open Browser    ${HTML_FILE}    ${BROWSER}
+    Wait Until Element Is Visible    //table
+    Element Should Be Visible       //table
+    Sleep   20
+    Close Browser
+
+Vérifier La Valeur Du Prix Produit 1
+    Open Browser   ${HTML_FILE}   ${BROWSER}
+    ${valeur}=   Get Text   xpath=//table/tbody/tr[1]/td[1]
+    ${valeur1}=   Get Text   xpath=//table/tbody/tr[1]/td[2]
+    Should Be Equal   ${valeur}    Price
+    Should Be Equal   ${valeur1}   $199.99
+    Close Browser
+
+----pour th
+ ${mytable2}=   Get Text   xpath=//table/thead/tr/th[1] 
+
+
+
+----boucle
+Login to website
+    Open Browser   ${url}   firefox
+    @{elements}   Get WebElements    xpath=//h2[@class="dolor_text"]
+    FOR    ${element}    IN    @{elements}
+        ${text}=    Get Text    ${element}
+        Log    ${text}
+    END
+
+ 
+ ----------------Lire fichier----------------
+ ${my file}=  Get File   C:\\Users\\GENIUS\\IdeaProjects\\robotframeworktestforentretien\\tests\\file\\myfile.log
+   Should Contain    ${my file}    mon premier fichier log dans robot
+
+
+--------if condition-----
+
+ IF    '${biil}' == '1 item left!'
+       Should Be Equal    ${biil}   ${myvariable}
+    ELSE
+       Log    il ne sont pas egaux
+
+    END
+   
+-----connecter avec database et selectionner tout----
+*** Variables ***
+${DB_HOST}     localhost
+${DB_NAME}     first
+${DB_USER}     root
+${DB_PASSWORD}
+${DB_Port}     3306
+
+*** Test Cases ***
+Connexion À La Base De Données MySQL
+    Connect To Database    pymysql    ${DB_NAME}    ${DB_USER}    ${DB_PASSWORD}    ${DB_HOST}   ${DB_Port}
+    ${result}=    Query    SELECT * FROM firsttable
+   Log    ${result}
+    Disconnect From Database
+
+
+-----insertion a la base de donnee----------
+Inserer des donnees
+   Connect To Database  pymysql  ${databasename}  ${username}  ${password}  ${host}  ${port}
+   ${query}=    Set Variable  INSERT INTO firsttable (name, lasname, age) VALUES ('Jeanandou ', 'juniorne',6)
+   Execute Sql String    ${query}
+   Disconnect From Database
+
+----tester si les donnees ont bien ete enregistrer---
+*** Test Cases ***
+Inserer des donnees
+   Connect To Database  pymysql  ${databasename}  ${username}  ${password}  ${host}  ${port}
+   ${query}=    Set Variable  INSERT INTO firsttable (name, lasname, age) VALUES ('Jeanandou ', 'juniorne',6)
+   Execute Sql String    ${query}
+   Disconnect From Database
+nb:avec plus logique et robuste
+${result}=    Query    SELECT * FROM firsttable WHERE name='Jeanandou ' AND lasname='juniorne' AND age=6
+Should Not Be Empty    ${result}
+Should Be Equal As Strings    ${result[0][0]}    Jeanandou
+Should Be Equal As Strings    ${result[0][1]}    juniorne
+Should Be Equal As Integers   ${result[0][2]}    6
+-----code test au complet
+Inserer Des Donnees
+    Connect To Database    pymysql    ${DB_NAME}    ${USER}    ${PASSWORD}    ${HOST}    ${PORT}
+    ${query}=    Set Variable    INSERT INTO firsttable (name, lastname, age) VALUES ('Jeanandou', 'Juniorne', 6)
+    Execute Sql String    ${query}
+    ${result}=    Query    SELECT * FROM firsttable WHERE name='Jeanandou' AND lastname='Juniorne' AND age=6
+    Should Not Be Empty    ${result}
+    Disconnect From Database
+
+Connecter a La Base De Donnees
+    Connect To Database    pymysql    ${DB_NAME}    ${USER}    ${PASSWORD}    ${HOST}    ${PORT}
+    ${myquery}=    Query    SELECT * FROM firsttable
+    Should Not Be Empty    ${myquery}
+    Log Many    ${myquery}
+    Disconnect From Database
+
+
+*****Mise a jour****
+Update et Tester la base de donnee
+        Connect To Database  pymysql  ${database}  ${username}  ${password}  ${host}  ${port}
+        ${update}=  Set Variable  UPDATE firsttable SET age = 60, lasname = 'andou' WHERE name = 'Jean Dupont'
+        Execute Sql String    ${update}
+        ${mytest}=  query  select * from firsttable where age=60  and  lasname = 'andou'
+        Should Not Be Empty    ${mytest}
+        Disconnect From Database
+
+
+-------coder avec python et roboframework------------------
+1--creer fichier python ex : index.py
+def calcul_complexe(x):
+    return int(x) + 2
+2----l'appeler dans robotframework
+*** Settings ***
+Library    index.py
+*** Test Cases ***
+Test Calcul
+    ${result}=   Calcul Complexe    5
+    Should Be Equal As Integers    ${result}    7
+
+
+------faire le test coverage-----
+coverage run -m robot tests/   
+----genrer rapport----
+coverage report
+coverage html
+
+
+
+
+
+--------------------------------API-------------------------------------
+-----lancer l'api
+Create Session  jsonplaceholder    https://jsonplaceholder.typicode.com
+    ${response}=      Get Request    jsonplaceholder    /users/1
+----verifier s'il envois 200
+Should Be Equal As Integers    ${response.status_code}    200   ou     Status Should Be   200
+----verifier que le nom est Jeanne
+ ${myname}=  To Json    {$request.content}
+    Should Be Equal       ${myname['name']}   Bret
+ou selon le format de json
+ ${nametest}=   To Json    ${myrequest.content}
+    ${first}=  Get From List   ${nametest}    0
+    Should Be Equal      ${first['name']}    Google Pixel 6 Pro
+----------Method post
+Test API POST Create Post
+    Create Session    jsonplaceholder    https://jsonplaceholder.typicode.com
+    ${data}=          Create Dictionary    title=foo    body=bar    userId=1
+    ${response}=      Post Request    jsonplaceholder    /posts    json=${data}
+-------delete
+ Create Session    jsonplaceholder    https://jsonplaceholder.typicode.com
+       ${response}=      Delete Request    jsonplaceholder    /posts/1
+------Mise a jour
+Update User
+    Create Session     jsonplaceholder    https://jsonplaceholder.typicode.com
+    ${data}=           Create Dictionary    name=peter
+    PUT On Session     jsonplaceholder    /users/1    json=${data}
+---rechercher
+Create Session     jsonplaceholder    https://jsonplaceholder.typicode.com
+    ${response}=       GET On Session    jsonplaceholder    /users/1 
+
+
+---------------Excel-----------
+---afficher tout le  Fichier Excel
+    Open Workbook   C:\\Users\\GENIUS\\IdeaProjects\\RobotExo\\resources\\testreadroboframework.xlsx
+
+    ${rows}=    Read Worksheet As Table    
+    FOR    ${row}    IN    @{rows}
+        Log    ${row}
+    END
+    Close Workbook
+
+
+-----------lire la Valeur d'une ligne precise a savoir username et password
+Open Workbook      C:\\Users\\GENIUS\\IdeaProjects\\RobotExo\\resources\\testloginrobotframework.xlsx
+        ${data}=    Read Worksheet As Table    header=False
+
+        ${ligne}=    Get From List    ${data}    2  # First row of actual data
+        Log    Username: ${ligne[0]} | Password: ${ligne[1]}
+
+        Close Workbook
+
+
+
+------------------boucle dans excel--------------
+Lire excel
+   Open Workbook   C://Users//GENIUS//IdeaProjects//ExoRoboframework//users.xlsx
+   ${lire}=  Read Worksheet As Table  header=true
+   FOR   ${elements}   IN   @{lire}
+   ${username}=  Set Variable  ${elements}[username]
+   ${MOTDEPASSE}=  Set Variable  ${elements}[MOTDEPASSE]
+   Log   Username: ${username}
+   Log   Password: ${MOTDEPASSE}
+
+   END
+
+
+-----prendre exactement les colonnes en question------
+Open Workbook    ${FICHIER}
+    ${lire}=  Read Worksheet As Table  header=true
+    FOR    ${element}    IN    @{lire}
+    IF    '${element}[username]' == 'standard_user' and '${element}[MOTDEPASSE]' == 'secret_sauce'
+            ${USERNAME}=    Set Variable    ${element}[username]
+            ${PASSWORD}=    Set Variable    ${element}[MOTDEPASSE]
+        END
+
+    END
+    
+
+
+--------telecharger avec  link e donner le chemin-------
+*** Test Cases ***
+Télécharger le fichier CSV
+    Download    https://drive.google.com/uc?id=1zO8ekHWx9U7mrbx_0Hoxxu6od7uxJqWw&export=download    C:/Users/GENIUS/IdeaProjects/ExoRoboframework/File/customers-100.csv
+
+nb: mieux de les mettres dans des variables
+${URL}      https://drive.google.com/uc?id=1zO8ekHWx9U7mrbx_0Hoxxu6od7uxJqWw&export=download        
+${DEST}     C:/Users/GENIUS/IdeaProjects/ExoRoboframework/File/andou.csv
+
+------ouvrir et lire le fichier----
+Télécharger le fichier CSV
+    Download    ${URL}    ${DEST}
+    ${fre}=   Read table from CSV   ${DEST}
+
+    FOR    ${element}    IN    @{fre}
+        Log    ${element}
+
+    END
+
+
+
+
+
+
+-------------------------------------------------utilization de keyword---------------------------------
+*** Keywords ***
+Username and Password
+    Open Workbook      C:\\Users\\GENIUS\\IdeaProjects\\RobotExo\\resources\\testloginrobotframework.xlsx
+    ${data}=    Read Worksheet As Table
+    ${ligne}=    Get From List    ${data}    2  # First row of actual data
+    Log    Username: ${ligne[0]} | Password: ${ligne[1]}
+    Close Workbook
+ 
+
+*** Test Cases ***
+Afficher Username et Password
+       Username and Password
+
+
+
+-----------------------Setup et teardown------------------------
+[Setup] → utilisé ici pour ouvrir une connexion 
+[Teardown] → utilisé pour libérer la ressource 
+ex:
+    [Setup]  Connect To Database  pymysql  try  root  ${password}  localhost  3306
+    ${testerrequette}=  query  select * from client where nom_client='andou'
+    Should Not Be Empty  ${testerrequette}
+    [Teardown]  Disconnect From Database
+Setup / Teardown = Préparer et nettoyer l’environnement de test, quelle que soit la ressource utilisée.
+
+---------exemple Chainer plusieurs bibliothèques---------  
+ADDValue
+     Create Session   jsonfolder   http://localhost:8090
+     ${addvalue}=   Create Dictionary    nomClient=peter   age=67   compte=900
+     ${addgrande}=   Post Request    jsonfolder  /save   json= ${addvalue}
+     log    ${addgrande}
+verify
+    [Setup]  Connect To Database  pymysql  try  root  ${password}  localhost  3306
+    ${testerrequette}=  query  select * from client where nom_client='andou'
+    Should Not Be Empty  ${testerrequette}
+    [Teardown]  Disconnect From Database
+
+
+
+
+
+----------------------créer rapport-------------------------
+robot --output output_Login.xml --report report_Login.html --log log_Login.html Login.robot
+
+----------------structurer en entreprise----
+1--fichier test : file ui api db
+puis mes le keywords dans un fichiers keywords et variables dans un fichiers variables 
+ex:
+file keywords
+*** Settings ***
+Library    RPA.HTTP
+Library    RPA.Excel.Files
+Library    RPA.Tables
+Library    Collections
+Resource   C:/Users/GENIUS/IdeaProjects/ExoRoboframework/ressources/variables.robot
+
+
+*** Keywords ***
+Télécharger le fichier CSV1
+    [Tags]    @jira-23    login    critique
+    [Setup]  Download    ${URL}    ${DEST}
+    ${fre}=   Read table from CSV   ${DEST}
+    Download   ${url2}   ${destin2}
+    ${de2}=   Read table from CSV   ${destin2}
+    [Teardown]
+
+
+file variables
+*** Variables ***
+${URL}      https://drive.google.com/uc?id=1zO8ekHWx9U7mrbx_0Hoxxu6od7uxJqWw&export=download
+${DEST}     C:/Users/GENIUS/IdeaProjects/ExoRoboframework/File/andou.csv
+
+${url2}     https://drive.google.com/uc?id=1OT84-j5J5z2tHoUvikJtoJFInWmlyYzY&amp;export=download
+${destin2}  C:/Users/GENIUS/IdeaProjects/ExoRoboframework/File/andou2.csv
+
+file principales
+*** Settings ***
+Resource   C:/Users/GENIUS/IdeaProjects/ExoRoboframework/ressources/keywords.robot
+
+*** Test Cases ***
+Appelez la fonction
+   Télécharger le fichier CSV1
+
+
+-----creer screeshoot automatique en cas d'echec-----
+Library    SeleniumLibrary    run_on_failure=Capture Page Screenshot  
+nb: dans settings cela fonctionne uniquement avec des bibliothèques qui interagissent avec une interface graphique, comme SeleniumLibrary
+pas pour csv
+
+
+----Générer un rapport Allure ou ReportPortal--------
+----  robot --listener allure_robotframework;./allure-results tests/
+----   allure serve ./allure-results  
+
+
+
+--------------structurer en entreprise pour different environnement(dev,uat,prod)---------
+1----tu crees les differentes fichiers variables avec leurs variables
+- env_DEV.robot
+- env_UAT.robot
+- env_PROD.robot
+2----tu crees un fichier environnement qui charge dynamiquemant le bon fichier
+*** Settings ***
+Variables    resources/env_${ENV}.robot
+
+3---tu appelles fichiers environment.robot dans keywords
+ex;
+*** Settings ***
+Resource    environment.robot
+
+4----tu appelles fichier keywords dans le fichier principale .robot
+
+5---nb;appeler en ligne de commmande      
+robot --variable ENV:PROD tests/ui/LoginExcel.robot
+robot --variable ENV:DEV tests/ui/LoginExcel.robot
+robot --variable ENV:UAT tests/ui/LoginExcel.robot
+nb; appeler toute les fichiers
+robot --variable ENV:DEV tests/
+robot --variable ENV:UAT tests/
+robot --variable ENV:PROD tests/
+c'est en ligne de commande tu vas apper soit prod ou uat ou dev
+
+
+---generer repport d-un seul fichier
+robot -d results tests/test_depot_cheque.robot
+
+
+---generer directment dans le fichier output
+robot --outputdir results tests/
+avec pabot : pabot --outputdir results tests/
+----generer directement un fichier particulier dans output
+robot --outputdir output tests/ui/login.robot
+
+
+
+
+
+-----executer roboframework dans Jira-------
+1--creer test case dans jira
+2--creer test execution et met le test case
+3--mets cela dans robotframework
+*** Test Cases ***
+Télécharger le fichier CSV1
+    [Tags]    EN-21
+    [Setup]  Download    ${URL}    ${DEST}
+4--lancer le ou les fichiers test : robot "C:\Users\GENIUS\IdeaProjects\ExoRoboframework\Data-Driven Testing.robot"
+5--puis aller chercher le fichier outpout.xml
+6--puis le lencer dans import xml
+nb: robot .  pour lancer toute les test
+
+
+
+----cloner---
+git clone https://github.com/andou1977/RobotFramewprk
+
+
+
+--------------------Jenkins et robotframework------------------
+---lancer Jenkins
+1-lancer le servicejenkins
+2-lancer :http://localhost:8080/
+3--installer plugin robotframework et git
+4--- Crée un Freestyle Project.
+5---- Dans la configuration du job, va dans "Source Code Management"
+6---- Sélectionne Git et entre l’URL de ton dépôt GitHub.
+7---- Ajoute tes identifiants GitHub si necessaire
+8----- Dans "Build Steps", ajoute "Execute Shell" (Linux/macOS) ou "Execute Windows Batch Command" (Windows): 
+robot --outputdir results C:\Users\andou\IdeaProjects\RobotFramewprk
+9---met  sa  :  robot tests/  
+ou  
+set PATH=C:\Users\GENIUS\AppData\Local\Programs\Python\Python311\Scripts;C:\Users\GENIUS\AppData\Local\Programs\Python\Python311;%PATH%
+robot tests/
+
+ou 
+lancer ainsi qui es miex et structurer pour entreprise :
+
+-----copie------
+
+@echo off
+REM 1) créer/activer venv
+python -m venv .venv
+call .venv\Scripts\activate
+
+REM 2) upgrade pip et installer deps
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+
+REM 3) vérifier conflits
+python -m pip check
+if %ERRORLEVEL% NEQ 0 (
+  echo "Dependency conflicts detected. Aborting build."
+  python -m pip check
+  exit /b 1
+)
+
+REM 4) créer dossier résultats unique
+set OUTDIR=results\staging\%BUILD_NUMBER%
+if not exist "%OUTDIR%" mkdir "%OUTDIR%"
+
+REM 5) lancer Robot via python -m
+python -m robot --variable ENV:staging --variable RUN_ID:%BUILD_NUMBER% --outputdir "%OUTDIR%" tests/
+
+set rc=%ERRORLEVEL%
+
+REM 6) archive ou publication (Jenkins fera l'archivage)
+deactivate
+exit /b %rc%
+
+
+---coller---
+
+
+-----------------exemple fichier requirements.txt en entreprise-----------
+#pour entreprise parce qu'il faut toujours donné les version
+#obligation de toujours mettre les version en entreprise  ais en local vous pouvez les enleves ex; robotframework ,robotframework-seleniumlibrary
+robotframework==6.1.1
+robotframework-seleniumlibrary==6.7.2
+selenium==4.26.0
+robotframework-requests==0.9.1
+robotframework-databaselibrary==1.2.0
+pymysql==1.0.2
+robotframework-datadriver==1.3.0
+robotframework-mainframe3270
+rpaframework==31.0.0
+jsonschema==4.20.0
+requests==2.31.0
+
+   
+nb : pour voir le rapport sur jenkins
+
+Étape B : Si ton job est “Freestyle Project”
+Ouvre ton job Jenkins → Configure
+Descends tout en bas → clique sur “Add post-build action”
+Choisis “Publish Robot Framework test results”
+puis save
+
+---generer directment dans le fichier results en entreprise pour tester ton code en locale
+robot --outputdir results tests/
+
+
+-----process en entreprise----
+robotframework local ---> GitHub ou bitbucket---->Jenkins + rapport---->jira (de manière automatique)
+
+
+-------execution automatique sur jira-----
+--le script
+curl -H "Content-Type: multipart/form-data" ^
+     -u andouemmanuel@gmail.com:TON_API_TOKEN ^
+     -F "file=@\"C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\robotframeworkentreprise\\results\\staging\\localtest\\output.xml\"" ^
+     "https://andouemmanuel-1761611106284.atlassian.net/rest/raven/1.0/import/execution/robot?testExecKey=PRJ-7201587-3"
+
+---complet essayer et focntionne
+
+
+
+l'endroit ou trouver le token :  Va sur https://id.atlassian.com/manage/api-tokens
+
+
+
+
+
+-----------kibon------------
+1-lancer le servicejenkins
+2-lancer :http://localhost:8080/
+3--installer plugin robotframework et git
+4--- Crée un Freestyle Project.
+5---- Dans la configuration du job, va dans "Source Code Management"
+6---- Sélectionne Git et entre l’URL de ton dépôt GitHub. ex: https://github.com/andou1977/RobotFramewprk
+7---dans buildstep, pran batch windows epi mete sa comme commande :  
+cd C:\Users\andou\IdeaProjects\RobotFramewprk ----chemin
+robot Saudecemo.robot ----nom du fichier
+8---on vas dans le projet IntelliJ dans le folder du projet on creer ce fichier : on le nomme run.bat et met cela a l'interieur
+C:\Users\andou\IdeaProjects\RobotFramewprk
+robot --outputdir results --RobotFramewprk\*.robot
+
+
+
+-------robotframework et Jenkins-------
+1---va dans gestipn de code source pran git et met le lien : https://github.com/andou1977/Exotestunitaire.git
+2---au lieu de master met la branche main
+3---dans Étapes du build, Exécuter une commande batch Windows  robot tests/
+nb: installer plugin robotframework
+nb: s'i t donne erreur tu peux mettre avec: robot tests/   
+ou
+set PATH=C:\Users\GENIUS\AppData\Local\Programs\Python\Python311\Scripts;C:\Users\GENIUS\AppData\Local\Programs\Python\Python311;%PATH%
+robot tests/
+
+
+
+
+
+
+
+
+------------les info pour lancer jenkins en local automatiquement
+https://chatgpt.com/c/69348245-bdf0-8326-b016-fae278ff4533
+------ou les etapes-----
+--Installer ngrok
+--Dans un terminal, colle l’authtoken : ngrok authtoken TON_AUTHTOKEN_ICI     tu le trouve sur ton compte ngrok
+--Lance ngrok et ecrit :  ngrok http 8080            Garde ce terminal ouvert : si tu le fermes, l’URL disparaît.
+--il te donnera un url comme exemple : https://anastacia-overabusive-mattie.ngrok-free.dev
+--Dans ton job Jenkins cocher :  GitHub hook trigger for GITScm polling
+---Aller sur GitHub dans ton repo et créer le webhook  Va sur ton dépôt GitHub → Settings puis Menu à gauche → Webhooks puis Clique : Add webhook
+Et remplis EXACTEMENT :
+Payload URL : https://anastacia-overabusive-mattie.ngrok-free.dev/github-webhook/
+Content type : application/json
+et puis a chaque push jenkins se lance automatiquement
+
+nb; un seul authotoken pour toute les webhooks de chaque repositories sur git
+
+
+Payload URL :
+https://anastacia-overabusive-mattie.ngrok-free.dev/github-webhook/
+
+
+
+nb :ou trouver authotoken ; https://dashboard.ngrok.com/get-started/your-authtoken
+
+
+pou jira automatique   https://chatgpt.com/c/69348245-bdf0-8326-b016-fae278ff4533
+
+
+
+
+
+En entreprise, les tokens les plus utilisés sont ceux liés à l’authentification et la sécurité des API, principalement les Bearer Tokens sous forme de JWT (JSON Web Token) et OAuth2 Access Tokens.JWT et OAuth2
+
+
+
+----------------JWT--------------
+----afficher les infos(ne jamais faire enentrprise
+*** Settings ***
+Library    RequestsLibrary
+Library    Collections
+Library    String
+
+*** Variables ***
+${BASE_URL}    https://reqres.in/api
+${TOKEN}       eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3NTQ1NiIsIm5hbWUiOiJhbmRvdSIsImFkbWluIjp0cnVlLCJpYXQiOjE1MTYyMzkwMjJ9.MCfWgTM8HHSo1ac3nxzJBJYP2IuGuRgBG2--rZrg8YY
+
+*** Test Cases ***
+Obtenir Token Et Vérifier Claim
+    Log    Token: ${TOKEN}
+    ${parts}=     Split String    ${TOKEN}    .
+    ${payload_b64}=    Set Variable    ${parts[1]}
+    ${payload_json}=    Evaluate    __import__('base64').b64decode('${payload_b64}==').decode('utf-8')
+    ${payload}=    Evaluate    __import__('json').loads('''${payload_json}''')
+    Should Contain    ${payload['name']}    andou
+    Log    Claim 'name' = ${payload['name']}
+
+
+----jira----
+https://andouemmanuel.atlassian.net/jira/software/c/projects/NEW/boards/2?selectedIssue=NEW-3
+
+
+----------------------partie mobile----------------------------
+telecharger app apk info pour avoir les infos sur les app installer
+lancer emulator sans android studio : emulator -avd Pixel_7
+connaitre le nom de l'emulateur : emulator -list-avds
+lancer serveur Appium:appium --port 4723
+
+
+nom utilisateur : coucou197
+password:   
+
+
+
+
+-----------------------------------------------------etapes avant de passer par linux directement-----------------------------------
+les etapes pour robot dans powershell :
+Dans PowerShell (en admin ou normal) : wsl --set-default Ubuntu
+
+verifier : wsl -l -v
+
+verifier : wsl ls -l /home/genius/app.log
+
+verifier : wsl sh -c "grep -i INFO /home/genius/app.log"
+
+
+-------------fichier avec linux directement dans robotframework---------
+hello
+   ${result}=   Run Process    wsl    sh    -c    grep FAILED ${appcsvlinux}
+  Log To Console    \n${result.stdout}
+  Should not Contain    ${result.stdout}    ERROR
+
+
+ou
+${cmd}=    Set Variable    wsl bash -c "grep ERROR /home/genius/app.log"
+
+       ${result}=    Run Process    ${cmd}    shell=True
+      Log To Console    \n${result.stdout}
+      Should Contain    ${result.stdout}   ERROR
+
+
+vrai chemin ; ${apploglinux}   /home/genius/app.log
+
+
+-------------------------------------------FICHIER-----------------------------------
+Lire Le fichier
+${result}=   Get File    ${myfiletransactionstxt}
+
+verifier que le fichier existe  : File Should Exist    ${myfiletransactionstxt}
+verifier que le fichier ne contient pas Failed ou Status n est pas egal a Failed  : Should not Contain    ${myfilefailed}   FAILED
+verifier quil commence par HEADER :    Should Start With    ${batchtxt}     HEADER
+
+compter les lignes:
+${line}=   Split To Lines   ${result}
+${count}=  Get Length    ${line}
+
+Lire ligne par ligne
+  ${fixedtxt}=   Get File    ${filefixedtxt}
+   ${line}=   Split To Lines    ${fixedtxt}
+   FOR    ${element}    IN    @{line}
+       Log    ${element}
+END
+
+
+lire json file :  ${resultjson}=   Load JSON from file    ${filejson}
+
+verifier la valeur de status dans le json 
+ ${resultjson}=   Load JSON from file    ${filejson}
+   Should Be Equal    ${resultjson['status']}    OK
+
+
+lire xml file : 
+fichier.xml
+    ${xml}=    Parse XML    ${filexml}
+    Log    ${xml}
+
+
+---------------compter le nombre de failed avec get file-------------------
+ ${content}=    Get File    ${filecsv}
+     ${count}=      Get Count     ${content}    FAILED
+     Should Be Equal As Integers   ${count}    4
+     Log To Console    quantité = ${count}

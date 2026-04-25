@@ -1,0 +1,54 @@
+robot --outputdir results tests/
+
+
+verifier un fichier son format si il est ok etc
+---Vérifier qu’aucune ligne n’est vide : grep -n "^$" fichier.csv
+----Vérifier que toutes les lignes ont le bon nombre de colonnes : awk -F',' 'NF!=3' fichier.csv
+----Vérifier que chaque ligne commence par un ID numérique : grep -nv "^[0-9]" fichier.csv
+---Vérifier que la colonne amount est un nombre valide : awk -F',' '!($2 ~ /^[0-9]+(\.[0-9]+)?$/)' fichier.csv
+---Vérifier que la date est au bon format (YYYY-MM-DD) : awk -F',' '!($4 ~ /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/)' fichier.csv
+---Vérifier qu’il n’y a pas de caractères parasites (tabulations, ;, |) : grep -nP "[\t;|]" fichier.csv
+---Vérifier que le fichier n’a pas de doublons (idempotence) : cut -d',' -f1 fichier.csv | sort | uniq -d
+---Vérifier que le fichier n’est pas vide : test -s fichier.csv && echo "OK" || echo "Fichier vide"
+--- Vérifier que le séparateur est bien la virgule : head -n 5 fichier.csv | grep -v ","
+------------verifier l'encodage du fichier : file -i fichier.csv
+
+
+
+“Je vais vérifier les logs pour confirmer”
+“Je pense que le problème vient de…”
+“Je préfère valider avant de corriger”
+
+
+“Le système devient lent sans raison” : SHOW PROCESSLIST;  et top pour linux
+
+generer directment dans le fichier results en entreprise pour tester ton code en locale
+robot --outputdir results tests/
+
+
+------------les info pour lancer jenkins en local automatiquement
+https://chatgpt.com/c/69348245-bdf0-8326-b016-fae278ff4533
+------ou les etapes-----
+--Installer ngrok
+--Dans un terminal, colle l’authtoken : ngrok authtoken TON_AUTHTOKEN_ICI     tu le trouve sur ton compte ngrok
+--Lance ngrok et ecrit :  ngrok http 8080            Garde ce terminal ouvert : si tu le fermes, l’URL disparaît.
+--il te donnera un url comme exemple : https://anastacia-overabusive-mattie.ngrok-free.dev
+--Dans ton job Jenkins cocher :  GitHub hook trigger for GITScm polling
+---Aller sur GitHub dans ton repo et créer le webhook  Va sur ton dépôt GitHub → Settings puis Menu à gauche → Webhooks puis Clique : Add webhook
+Et remplis EXACTEMENT :
+Payload URL : https://anastacia-overabusive-mattie.ngrok-free.dev/github-webhook/
+Content type : application/json
+et puis a chaque push jenkins se lance automatiquement
+
+nb; un seul authotoken pour toute les webhooks de chaque repositories sur git
+
+
+Payload URL :
+https://anastacia-overabusive-mattie.ngrok-free.dev/github-webhook/
+
+
+nb :ou trouver authotoken ; https://dashboard.ngrok.com/get-started/your-authtoken
+
+pou jira automatique   https://chatgpt.com/c/69348245-bdf0-8326-b016-fae278ff4533
+
+

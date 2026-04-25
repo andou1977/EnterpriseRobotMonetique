@@ -1,0 +1,81 @@
+SOURCE C:/Users/GENIUS/IdeaProjects/MysqlExo/bankdatabase.sql;
+----mise ajour
+update transaction set description='description 300' where id=3;
+
+
+
+-----faire la somme d un champ----------
+select  SUM(amount) from transactions
+
+------counter le nombre de description
+select description, count(*) As total from transaction group by description;
+
+--------compter le nombre de doublon
+select account_id, count(*) As nb
+from transaction
+GROUP BY account_id
+HAVING COUNT(*)>1;
+
+
+------afficher le nombre de doublon
+
+SELECT *
+FROM transaction
+WHERE account_id IN (
+  SELECT account_id
+  FROM transaction
+  GROUP BY account_id
+  HAVING COUNT(*) > 1
+);
+
+---------Trouver les transactions supérieures à 100€ faites aujourd’hui
+select * from transaction where amount>100 and date=curdate();
+
+-----------------------------------jointure------------------------
+Une jointure sert à relier des informations qui sont dans plusieurs tables.
+Parce qu’en base de données on ne met pas tout dans une seule table.
+
+
+-----afficher la balance et la description d un compte
+select a.balance,transaction.description
+from account a
+join transaction on a.id=transaction.id;
+
+
+----Lister les clients ayant plus d’un compte.
+SELECT
+    c.first_name,
+    c.last_name,
+    COUNT(a.id) AS nb_accounts
+FROM Customer c
+         JOIN Account a ON a.customer_id = c.id
+GROUP BY c.id, c.first_name, c.last_name
+HAVING COUNT(a.id) > 1;
+
+
+-----cibler un seul----
+select a.balance,c.number,c.expiration_date,c.is_blocked
+from account a
+join card c on a.id=c.id
+where a.customer_id=3;
+
+
+-----limit-----
+select  * from customer limit 4;
+
+------Order----
+select  * from customer Order BY first_name desc;
+
+
+------temps moyen d une transaction------------
+select AVG(TIMESTAMPDIFF(SECOND,start_time,end_time))
+from transaction
+
+
+-----------transaction lent > 2 secondes----------------
+SELECT * FROM TRANSACTION
+WHERE TIMESTAMPDIFF(SECOND, start_time, end_time) > 2;
+
+--------------------------Taux de succès des paiements------------------------------
+SELECT COUNT(CASE WHEN status = 'SUCCESS' THEN 1 END) * 100.0 / COUNT(*) AS success_rate
+FROM PAYMENT;

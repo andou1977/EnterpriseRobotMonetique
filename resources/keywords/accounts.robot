@@ -4,7 +4,6 @@ Resource   ../variables/global_variables.robot
 Resource   ../variables/account_variables.robot
 
 
-
 *** Keywords ***
 tcheck data
      Connect To Database   ${pysql}   ${db_name}   ${db_user}   ${db_pass}   ${db_host}   ${db_port}

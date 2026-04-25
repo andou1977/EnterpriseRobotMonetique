@@ -43,13 +43,11 @@ fixed.txt
    END
 
 
-
 hello
      ${content}=    Get File    ${filecsv}
      ${count}=      Get Count     ${content}    FAILED
      Should Be Equal As Integers   ${count}    4
      Log To Console    quantité = ${count}
-
 
 
 

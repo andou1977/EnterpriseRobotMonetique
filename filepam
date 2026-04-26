@@ -52,3 +52,132 @@ nb :ou trouver authotoken ; https://dashboard.ngrok.com/get-started/your-authtok
 pou jira automatique   https://chatgpt.com/c/69348245-bdf0-8326-b016-fae278ff4533
 
 
+
+
+
+--------------------------------------------------------------------------------
+1----a installer
+Plugin à installer : Pygburn, SoundCake, CSV, XML, log, Excel
+Langage serveur : Python
+Robot Framework : Readme, plugin, script
+
+A installer ou doit
+Créer un venv de Python
+Pour le script et l’installer (Readme, plugin, etc.)
+
+1. Python -m venv venv
+2. SOURCE venv/bin/activate
+3. pip install -r requirements.txt
+
+2-------Demander accès
+ACCG: A Demander
+
+1. Code source
+- GitHub / Bitbucket / Artifacts
+- Droit de lecture + ecriture
+
+2. Environnement de matériel
+- Environnement DEV / QA
+- URL des APIs - Credentials (login, mdp)
+
+3. Base de données
+- ACCG ou base de données
+- Droits (selon dev / test / DBA etc)
+
+4. Accès Serveur Linux
+- Accès SSH / chemin logs
+
+5.Documentation API (indépendante)
+- Swagger / type API
+- API doc interne
+
+6. outils de tests
+- JIRA
+- outils de test
+- Postman / Robot framework / IDE
+
+- repo / API - DB - logs -tickets
+
+
+
+3-----connexion au serveur linux
+1. SSH qa-users 04-10-10-1.5
+2. Sois entrer mot de passe / ou pas
+3. vérifier chemin : PWD
+4.entrer dans le chemin Ex: Cd /var/log/payments
+5. LS
+
+4---Jour 1 et 2
+JOUR 1 à dire
+je vais cloner le projet et commencé à regarder la structure
+
+JOUR 2
+Hier j’ai vu la structure du projet. Aujourd’hui je comprends les tests et les fichiers et commence à regarder un ticket
+
+JOUR 3
+Aujourd’hui j’ai commencé à travailler sur le ticket
+
+5---- touts les jours
+MATIN
+- Allumer le PC
+- Projet enregistrement
+- Vérifier que tout est OK (test environnement)
+
+daily à dire
+- Hier j’ai travaillé sur X, aujourd’hui je vais travailler sur Y, pas de blocage ou je bloque sur Z
+
+- Quand le ticket est validé, analyser le ticket et corriger le bug
+
+- Analyser le test avant pour voir s’il y a un test existant, si oui lancer le test pour voir ce que cela fait
+
+- Si pas de problème, OK, si bug, corriger le problème et vérifier que tout est bon
+
+- Analyser et vérifier
+1. test
+2. log
+3. base de données
+
+6------Après test
+-----Cas ou c'est OK
+--commentaire
+Test effectué via xxxx
+
+Résultat
+status Succès retourné (selon le ticket)
+paiement créer par ID
+
+Vérification
+DB: transaction présente et confirme (selon le ticket)
+Logs: aucun ERROR détecté(selon le ticket)
+Batch: paiement présent dans le fichier du jour (selon le ticket)
+
+Conclusion
+comportement  confirme au besoin(selon le ticket)
+
+Automatisation
+test couvert avec ROBOT framework
+pui passer le ticket à OK
+
+------Cas BUG
+---Cas où il y a bug
+Test effectué via **
+
+Résultat Attendu
+transaction  crée en base et présent dans le batch (selon le ticket)
+
+Résultat obtenu
+API retournée succès mais aucune Aumuler en base(selon le ticket)
+
+Vérification
+DB: aucune transaction insérée (selon le ticket)
+Logs: nullPointerException dans transaction (selon le ticket)
+Batch: Parainé absent (selon le ticket)
+
+Conclusion
+Comportement incorrect → BUG (selon le ticket)
+
+Action
+Création du ticket BUG - 245 et vérifier le lien du ticket Bug
+Avec IMAGE
+
+

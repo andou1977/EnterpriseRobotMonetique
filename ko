@@ -1,0 +1,174 @@
+Oui. Ce fichier Tarification/Conversion CRE TI CB.robot est un test de conversion de fichier CRE sur une machine Linux via SSH.
+Rôle global du fichier
+Il fait ce flow :
+Connexion SSH→ nettoyage anciens fichiers→ dépôt du fichier CRE en entrée→ copie vers le répertoire applicatif→ lancement du script de tarification/conversion→ vérification du fichier résultat→ récupération du fichier converti en local→ récupération des logs→ fermeture connexion SSH
+
+1. *** Settings ***
+Documentation       Robot Framework connexion à une machine Linux
+Le test est fait sur une machine Linux distante.
+Library             OperatingSystemLibrary             DateTimeLibrary             SSHLibraryLibrary             ProcessLibrary             String
+À comprendre :
+OperatingSystem → manipuler fichiers/dossiersDateTime        → générer une dateSSHLibrary      → connexion SSH + commandes LinuxProcess         → lancer des commandes/processString          → manipuler des textes
+La seule vraie librairie externe ici est :
+pip install robotframework-sshlibrary
+Les autres sont intégrées à Robot Framework.
+Resource            ../Ressources/Commun/Com_Var.resourceResource            ../Ressources/SSH/SSH_Var.resourceResource            ../Ressources/SSH/SSH_Key.resource
+Ces fichiers contiennent les variables et keywords utilisés dans ce test.
+Exemples probables :
+${SSH_RepDepot}${SSH_RepRecup}${FicCreIn}${FicCreOut}Connexion SSHSupprime fichier serveurEnvoi fichier vers serveurRecup fichier du serveurDisplay Log
+Donc si ces resources ne sont pas trouvés, les keywords seront rouges.
+
+2. Suite Setup
+Suite Setup         Connexion SSH
+Avant le test, Robot lance le keyword :
+Connexion SSH
+Ce keyword est probablement dans :
+../Ressources/SSH/SSH_Key.resource
+Il ouvre la connexion à la machine Linux.
+
+3. Suite Teardown
+Suite Teardown      Close All Connections
+Après le test, Robot ferme toutes les connexions SSH.
+Close All Connections vient de SSHLibrary.
+
+4. Test Case principal
+Test Conversion Cre Ti Cb
+Il n’y a qu’un seul test case dans ce fichier.
+Donc ce fichier teste un scénario complet de conversion CRE TI CB.
+
+5. Étapes du test ligne par ligne
+Étape A — se placer à la racine Linux
+Write    cd /.
+Le test envoie la commande Linux cd /. sur le serveur.
+
+Étape B — vérifier les dossiers temporaires
+SSHLibrary.Directory Should Exist    ${SSH_RepDepot}SSHLibrary.Directory Should Exist    ${SSH_RepRecup}
+Il vérifie que les répertoires existent :
+${SSH_RepDepot} → dossier dépôt temporaire${SSH_RepRecup} → dossier récupération temporaire
+Si un dossier n’existe pas, le test échoue.
+
+Étape C — supprimer les anciens fichiers
+Supprime fichier serveur    ${SSH_RepDepot}${FicCreIn}Supprime fichier serveur    ${SSH_RepRecup}${FicCreOut}Supprime fichier serveur    ${SSH_RepCreIn}${FicCreIn}Supprime fichier serveur    ${SSH_RepCreOut}${FicCreOut}
+Ici on nettoie avant de commencer.
+Traduction :
+supprimer ancien fichier d’entrée dans depotsupprimer ancien fichier de sortie dans recupsupprimer ancien fichier d’entrée dans répertoire applicatifsupprimer ancien fichier de sortie dans répertoire applicatif
+Important :
+👉 Supprime fichier serveur est un keyword custom, pas une librairie native.
+
+Étape D — envoyer le fichier d’entrée sur le serveur
+Envoi fichier vers serveur    ${LocRepCre}${FicCreIn}    ${SSH_RepDepot}${FicCreIn}
+Il prend un fichier local :
+${LocRepCre}${FicCreIn}
+et l’envoie sur le serveur dans :
+${SSH_RepDepot}${FicCreIn}
+Donc ici :
+FicCreIn = fichier CRE source
+
+Étape E — donner les droits
+Write    cd ${SSH_RepDepot}Write    chmod 777 ${FicCreIn}
+Il va dans le dossier de dépôt et donne tous les droits au fichier.
+
+Étape F — copier le fichier vers le répertoire d’entrée applicatif
+Write    cd ${SSH_RepCreIn}Write    cp ${SSH_RepDepot}${FicCreIn} .
+Le fichier est copié depuis le dossier temporaire vers le vrai répertoire d’entrée du traitement.
+Le . veut dire : copier ici, dans le dossier courant.
+
+Étape G — aller dans le répertoire du script
+Write    cd ${SSH_RepScriptTarif}
+Il se positionne là où se trouve le script de tarification/conversion.
+
+Étape H — construire la commande à lancer
+${SSH_ScriptCmd}    Set Variable    ${SSH_SCRIPT_tarification} ${FicCreIn}
+Il crée une commande comme :
+script_tarification.sh nom_fichier_entree
+Donc la conversion est lancée par :
+${SSH_SCRIPT_tarification}
+avec le fichier :
+${FicCreIn}
+
+Étape I — lancer le script
+Write    ${SSH_ScriptCmd}Sleep    50${output}    Read Until PromptLog    ${output}
+Ici :
+Write              → envoie la commande au serveurSleep 50           → attend 50 secondesRead Until Prompt  → lit le résultat jusqu’au prompt LinuxLog                → écrit la sortie dans le rapport Robot
+Donc le test attend que le script produise le fichier converti.
+
+Étape J — vérifier le fichier résultat
+Write    cd ${SSH_RepCreOut}Display Log    ll -altr    ${FicCreOut}
+Il va dans le dossier de sortie et affiche le fichier attendu.
+Ici le fichier attendu est :
+${FicCreOut}
+Attention : Display Log affiche probablement le résultat, mais selon son implémentation, il ne fait peut-être pas un vrai Should Exist.
+
+Étape K — copier le fichier résultat vers le dossier de récupération
+Write    cp ${FicCreOut} ${SSH_RepRecup}Write    cd ${SSH_RepRecup}Write    chmod 777 ${FicCreOut}
+Le fichier converti est copié vers un dossier temporaire pour pouvoir être récupéré en local.
+
+Étape L — récupérer le fichier converti en local
+Recup fichier du serveur    ${SSH_RepRecup}${FicCreOut}    ${LocRepCreTraites}${FicCreOut}
+Il récupère le fichier distant :
+${SSH_RepRecup}${FicCreOut}
+vers le PC local :
+${LocRepCreTraites}${FicCreOut}
+
+6. Partie récupération des logs
+Étape M — aller dans le dossier logs
+Write    cd ${SSH_RepLogs}
+
+Étape N — construire le nom du premier log
+${Date_YYYYMMDD}    Get Current Date    result_format=%d%m%y${ficlog1}    Set Variable    tarification.sh_${Date_YYYYMMDD}.log
+Il génère un nom de log basé sur la date du jour.
+Exemple :
+tarification.sh_290426.log
+
+Étape O — copier le log vers le dossier temporaire
+Write    cp ${ficlog1} ${SSH_RepRecup}Write    cd ${SSH_RepRecup}Sleep    4
+
+Étape P — lire la dernière ligne du log
+${output}    Execute Command    tail -n 1 ${SSH_RepRecup}${ficlog1}Log    ${output}
+Il lit la dernière ligne du fichier log.
+
+Étape Q — extraire une version depuis la ligne
+${position}    Evaluate    "${output}".find("]",32)${version}    Get Substring    ${output}    32    ${position}
+Il cherche un ] après la position 32, puis extrait un texte entre position 32 et ce ].
+Ce texte devient :
+${version}
+
+Étape R — construire le deuxième fichier log
+${ficlog2}    Set Variable    ${ficlog1}_${version}_desc
+Exemple possible :
+tarification.sh_290426.log_RCTE_desc
+
+Étape S — récupérer les logs
+Write    cp ${ficlog2} ${SSH_RepRecup}Write    chmod 777 ${ficlog1}Write    chmod 777 ${ficlog2}Recup fichier du serveur    ${SSH_RepRecup}${ficlog1}    ${LocRepCreTraites}${ficlog1}Recup fichier du serveur    ${SSH_RepRecup}${ficlog2}    ${LocRepCreTraites}${ficlog2}
+Il récupère les deux logs en local.
+
+Ce que tu dois comprendre pour un ticket
+Si un ticket dit :
+Modifier le fichier CRE d’entrée
+Tu vas regarder :
+${FicCreIn}${LocRepCre}
+Probablement dans :
+Com_Var.resourceSSH_Var.resource
+
+Si un ticket dit :
+Le fichier converti n’est pas récupéré
+Tu regardes :
+${FicCreOut}${SSH_RepCreOut}${SSH_RepRecup}${LocRepCreTraites}Recup fichier du serveur
+
+Si un ticket dit :
+Le script de conversion a changé
+Tu regardes :
+${SSH_SCRIPT_tarification}${SSH_RepScriptTarif}${SSH_ScriptCmd}
+
+Si un ticket dit :
+Le test échoue car le traitement prend plus de temps
+Tu regardes :
+Sleep    50Read Until Prompt
+Mais tu ne remplaces pas directement par un gros Sleep sans réfléchir. Il faut idéalement vérifier une condition réelle.
+
+Résumé simple
+Ce fichier fait :
+1. Connexion SSH2. Nettoyage3. Envoi fichier CRE source4. Lancement script tarification/conversion5. Vérification fichier converti6. Récupération fichier converti7. Récupération logs8. Fermeture SSH
+Pour toi, en tant que testeur auto, les zones importantes sont :
+${FicCreIn}              fichier d’entrée${FicCreOut}             fichier attendu en sortie${SSH_SCRIPT_tarification} script lancé${SSH_RepCreIn}          dossier entrée serveur${SSH_RepCreOut}         dossier sortie serveur${LocRepCreTraites}      dossier local de récupération
+Donc oui : si tu reçois un ticket sur “convertisseur CRE TI CB”, c’est ce fichier que tu dois ouvrir en priorité.

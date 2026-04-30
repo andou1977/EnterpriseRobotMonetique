@@ -193,7 +193,67 @@ ce que tu modifie : Conversion CRE TI CB.robot  et éventuellement : Com_Var.res
 
 
 
+------je n ai pas encore de databse ni acces
 
+Le convertisseur transforme les données vers un fichier CRE final.
+Ce fichier Excel te dit :
+où chaque donnée doit se trouver
+quel format elle doit avoir
+comment elle doit être alimentée
+ce fichier est très utile pour automatiser la partie convertisseur CRE CB / VISA / Mastercard.
+
+
+ExtractionMontantsCRE.py
+ExtractionMontantsCRE = extraction des montants dans les fichiers CRE
+- lire un fichier CRE
+- extraire les montants
+- vérifier les valeurs financières
+
+
+Tarification/Conversion CRE TI CB.robot
+Il automatise ce flow :
+CRE en entrée
+ dépôt sur serveur Linux
+ lancement du script tarification.sh
+ génération du CRE converti
+ récupération du fichier converti
+ récupération des logs
+
+Les fichiers variables liés au convertisseur
+
+---et dans le fichier que tu m as donnees il ya
+de champs CRE comme : champ CRE
+libellé
+longueur
+position début
+position fin
+format
+règle d’alimentation
+source
+
+Les champs liés aux montants / numero :
+NUISOA      Numéro de carte              positions 45-63
+ZSIRET      SIRET                         positions 72-86
+MTBRUT      Montant brut                  positions 87-102
+CDDEV       Devise montant brut           positions 103-105
+NBDEC       Nombre décimales              position 106
+MTCOMP      Montant compensé              positions 291-306
+MTNT        Montant net                   positions 369-384
+MTBREUR     Montant brut en euro          positions 385-400
+MTTTCITR    Commission commerçant         positions 414-425
+MTCOMINT    Commission interchange CB     positions 426-437
+IDREM       Identifiant de remise         positions 477-501
+MTINTVMC    Commission interchange V/MC   positions 502-514
+MTRVMC      Commission réseau V/MC        positions 515-527
+MTBQVMC     Commission banque V/MC        positions 528-540
+
+Ce que je peux faire avec ce fichier, je pense pour écrire tes tests Robot :
+
+1. lancer le convertisseur
+2. récupérer le CRE généré
+3. lire une ligne du fichier CRE
+4. extraire les champs selon les positions du mapping
+5. vérifier les valeurs attendues
 
 
 

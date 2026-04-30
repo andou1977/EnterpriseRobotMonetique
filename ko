@@ -1,174 +1,209 @@
-Oui. Ce fichier Tarification/Conversion CRE TI CB.robot est un test de conversion de fichier CRE sur une machine Linux via SSH.
-Rôle global du fichier
-Il fait ce flow :
-Connexion SSH→ nettoyage anciens fichiers→ dépôt du fichier CRE en entrée→ copie vers le répertoire applicatif→ lancement du script de tarification/conversion→ vérification du fichier résultat→ récupération du fichier converti en local→ récupération des logs→ fermeture connexion SSH
+Tarification/Conversion CRE TI CB.robot
+Il automatise ce flow :
+CRE en entrée
+→ dépôt sur serveur Linux
+→ lancement du script tarification.sh
+→ génération du CRE converti
+→ récupération du fichier converti
+→ récupération des logs
 
-1. *** Settings ***
-Documentation       Robot Framework connexion à une machine Linux
-Le test est fait sur une machine Linux distante.
-Library             OperatingSystemLibrary             DateTimeLibrary             SSHLibraryLibrary             ProcessLibrary             String
-À comprendre :
-OperatingSystem → manipuler fichiers/dossiersDateTime        → générer une dateSSHLibrary      → connexion SSH + commandes LinuxProcess         → lancer des commandes/processString          → manipuler des textes
-La seule vraie librairie externe ici est :
-pip install robotframework-sshlibrary
-Les autres sont intégrées à Robot Framework.
-Resource            ../Ressources/Commun/Com_Var.resourceResource            ../Ressources/SSH/SSH_Var.resourceResource            ../Ressources/SSH/SSH_Key.resource
-Ces fichiers contiennent les variables et keywords utilisés dans ce test.
-Exemples probables :
-${SSH_RepDepot}${SSH_RepRecup}${FicCreIn}${FicCreOut}Connexion SSHSupprime fichier serveurEnvoi fichier vers serveurRecup fichier du serveurDisplay Log
-Donc si ces resources ne sont pas trouvés, les keywords seront rouges.
+Les fichiers variables liés au convertisseur
+À connaître absolument :
+-Ressources/Commun/Com_Var.resource
 
-2. Suite Setup
-Suite Setup         Connexion SSH
-Avant le test, Robot lance le keyword :
-Connexion SSH
-Ce keyword est probablement dans :
-../Ressources/SSH/SSH_Key.resource
-Il ouvre la connexion à la machine Linux.
+Variables SSH : Ressources/SSH/SSH_Var.resource
 
-3. Suite Teardown
-Suite Teardown      Close All Connections
-Après le test, Robot ferme toutes les connexions SSH.
-Close All Connections vient de SSHLibrary.
+Les fichiers CRE utilisés comme modèles:
+Ressources/Fichiers/Modeles/CRE MBA/
 
-4. Test Case principal
-Test Conversion Cre Ti Cb
-Il n’y a qu’un seul test case dans ce fichier.
-Donc ce fichier teste un scénario complet de conversion CRE TI CB.
+Les keywords importants : Ressources/Commun/Com_Key.resource
 
-5. Étapes du test ligne par ligne
-Étape A — se placer à la racine Linux
-Write    cd /.
-Le test envoie la commande Linux cd /. sur le serveur.
+Les fichiers de test liés au convertisseur / CRE
+convertisseur direct CRE TI CB.
+NR EP/01-NR Tink/09_NR_cre_mba_SET.robot
+NR EP/01-NR Tink/10_NR_cre_mba_SET_with_Scheme_and_Interchange_Positif.robot
+NR EP/01-NR Tink/11_NR_cre_mba_SET_with_same_file.robot
 
-Étape B — vérifier les dossiers temporaires
-SSHLibrary.Directory Should Exist    ${SSH_RepDepot}SSHLibrary.Directory Should Exist    ${SSH_RepRecup}
-Il vérifie que les répertoires existent :
-${SSH_RepDepot} → dossier dépôt temporaire${SSH_RepRecup} → dossier récupération temporaire
-Si un dossier n’existe pas, le test échoue.
+Les librairies Python liées
+libraries/ExtractionSiretCRE.py
+libraries/ExtractionMontantsCRE.py
+libraries/CfonbConverter.py
 
-Étape C — supprimer les anciens fichiers
-Supprime fichier serveur    ${SSH_RepDepot}${FicCreIn}Supprime fichier serveur    ${SSH_RepRecup}${FicCreOut}Supprime fichier serveur    ${SSH_RepCreIn}${FicCreIn}Supprime fichier serveur    ${SSH_RepCreOut}${FicCreOut}
-Ici on nettoie avant de commencer.
-Traduction :
-supprimer ancien fichier d’entrée dans depotsupprimer ancien fichier de sortie dans recupsupprimer ancien fichier d’entrée dans répertoire applicatifsupprimer ancien fichier de sortie dans répertoire applicatif
 Important :
-👉 Supprime fichier serveur est un keyword custom, pas une librairie native.
+ExtractionSiretCRE.py      → lit les SIRET dans les CRE
+ExtractionMontantsCRE.py   → extrait les montants CRE
+CfonbConverter.py          → convertit/traite les fichiers CFONB, pas directement CRE
 
-Étape D — envoyer le fichier d’entrée sur le serveur
-Envoi fichier vers serveur    ${LocRepCre}${FicCreIn}    ${SSH_RepDepot}${FicCreIn}
-Il prend un fichier local :
-${LocRepCre}${FicCreIn}
-et l’envoie sur le serveur dans :
-${SSH_RepDepot}${FicCreIn}
-Donc ici :
-FicCreIn = fichier CRE source
+Pour automatiser la partie convertisseur, tu dois regarder dans cet ordre :
+1. Tarification/Conversion CRE TI CB.robot
+2. Ressources/SSH/SSH_Var.resource
+3. Ressources/Commun/Com_Var.resource
+4. Ressources/Commun/Com_Key.resource
+5. Ressources/Fichiers/Modeles/CRE MBA/
+6. NR EP/01-NR Tink/09/10/11 CRE_MBA_SET
 
-Étape E — donner les droits
-Write    cd ${SSH_RepDepot}Write    chmod 777 ${FicCreIn}
-Il va dans le dossier de dépôt et donne tous les droits au fichier.
+Les fichiers Python (TRÈS importants)
+ExtractionMontantsCRE.py
+ExtractionMontantsCRE = extraction des montants dans les fichiers CRE
+ce fichier sert à :
+- lire un fichier CRE
+- extraire les montants
+- vérifier les valeurs financières
+Donc ici tu as :
+✔️ montants
+✔️ chiffres financiers
+✔️ validation des valeurs
 
-Étape F — copier le fichier vers le répertoire d’entrée applicatif
-Write    cd ${SSH_RepCreIn}Write    cp ${SSH_RepDepot}${FicCreIn} .
-Le fichier est copié depuis le dossier temporaire vers le vrai répertoire d’entrée du traitement.
-Le . veut dire : copier ici, dans le dossier courant.
+---pour Siret
 
-Étape G — aller dans le répertoire du script
-Write    cd ${SSH_RepScriptTarif}
-Il se positionne là où se trouve le script de tarification/conversion.
+ExtractionSiretCRE.py
+- extraire les SIRET
+- vérifier identifiants
 
-Étape H — construire la commande à lancer
-${SSH_ScriptCmd}    Set Variable    ${SSH_SCRIPT_tarification} ${FicCreIn}
-Il crée une commande comme :
-script_tarification.sh nom_fichier_entree
-Donc la conversion est lancée par :
-${SSH_SCRIPT_tarification}
-avec le fichier :
-${FicCreIn}
 
-Étape I — lancer le script
-Write    ${SSH_ScriptCmd}Sleep    50${output}    Read Until PromptLog    ${output}
-Ici :
-Write              → envoie la commande au serveurSleep 50           → attend 50 secondesRead Until Prompt  → lit le résultat jusqu’au prompt LinuxLog                → écrit la sortie dans le rapport Robot
-Donc le test attend que le script produise le fichier converti.
+---fondbancaire
+CfonbConverter.py
+CFONB = format bancaire
+- convertir fichiers bancaires
+- transformer formats
 
-Étape J — vérifier le fichier résultat
-Write    cd ${SSH_RepCreOut}Display Log    ll -altr    ${FicCreOut}
-Il va dans le dossier de sortie et affiche le fichier attendu.
-Ici le fichier attendu est :
-${FicCreOut}
-Attention : Display Log affiche probablement le résultat, mais selon son implémentation, il ne fait peut-être pas un vrai Should Exist.
 
-Étape K — copier le fichier résultat vers le dossier de récupération
-Write    cp ${FicCreOut} ${SSH_RepRecup}Write    cd ${SSH_RepRecup}Write    chmod 777 ${FicCreOut}
-Le fichier converti est copié vers un dossier temporaire pour pouvoir être récupéré en local.
 
-Étape L — récupérer le fichier converti en local
-Recup fichier du serveur    ${SSH_RepRecup}${FicCreOut}    ${LocRepCreTraites}${FicCreOut}
-Il récupère le fichier distant :
-${SSH_RepRecup}${FicCreOut}
-vers le PC local :
-${LocRepCreTraites}${FicCreOut}
+----qui a rapport avec montant---
+fichier : ExtractionMontantsCRE.py
+ExtractionMontantsCRE = extraction des montants dans les fichiers CRE
 
-6. Partie récupération des logs
-Étape M — aller dans le dossier logs
-Write    cd ${SSH_RepLogs}
+ce fichier sert à :
+- lire un fichier CRE
+- extraire les montants
+- vérifier les valeurs financières
 
-Étape N — construire le nom du premier log
-${Date_YYYYMMDD}    Get Current Date    result_format=%d%m%y${ficlog1}    Set Variable    tarification.sh_${Date_YYYYMMDD}.log
-Il génère un nom de log basé sur la date du jour.
-Exemple :
-tarification.sh_290426.log
+----pour siret
+nom du fichier : ExtractionSiretCRE.py
+SIRET = identifiant entreprise
 
-Étape O — copier le log vers le dossier temporaire
-Write    cp ${ficlog1} ${SSH_RepRecup}Write    cd ${SSH_RepRecup}Sleep    4
+- extraire les SIRET
+- vérifier identifiants
 
-Étape P — lire la dernière ligne du log
-${output}    Execute Command    tail -n 1 ${SSH_RepRecup}${ficlog1}Log    ${output}
-Il lit la dernière ligne du fichier log.
+----convertir --
+CfonbConverter.py
+CFONB = format bancaire
+role :
+- convertir fichiers bancaires
+- transformer formats
 
-Étape Q — extraire une version depuis la ligne
-${position}    Evaluate    "${output}".find("]",32)${version}    Get Substring    ${output}    32    ${position}
-Il cherche un ] après la position 32, puis extrait un texte entre position 32 et ce ].
-Ce texte devient :
-${version}
+Dans les fichiers CRE (modèles)
+Ressources/Fichiers/Modeles/CRE MBA/
 
-Étape R — construire le deuxième fichier log
-${ficlog2}    Set Variable    ${ficlog1}_${version}_desc
-Exemple possible :
-tarification.sh_290426.log_RCTE_desc
 
-Étape S — récupérer les logs
-Write    cp ${ficlog2} ${SSH_RepRecup}Write    chmod 777 ${ficlog1}Write    chmod 777 ${ficlog2}Recup fichier du serveur    ${SSH_RepRecup}${ficlog1}    ${LocRepCreTraites}${ficlog1}Recup fichier du serveur    ${SSH_RepRecup}${ficlog2}    ${LocRepCreTraites}${ficlog2}
-Il récupère les deux logs en local.
+-------------------important pour ma prochaine
+--ExtractionMontantsCRE.py
+Il sait faire ça :
+lire les fichiers CRE
+extraire les montants
+calculer les totaux
+retourner les valeurs financières
 
-Ce que tu dois comprendre pour un ticket
-Si un ticket dit :
-Modifier le fichier CRE d’entrée
-Tu vas regarder :
-${FicCreIn}${LocRepCre}
-Probablement dans :
-Com_Var.resourceSSH_Var.resource
 
-Si un ticket dit :
-Le fichier converti n’est pas récupéré
-Tu regardes :
-${FicCreOut}${SSH_RepCreOut}${SSH_RepRecup}${LocRepCreTraites}Recup fichier du serveur
+Il lit les lignes CRE et extrait des positions précises :
+sens = line[133:136]
+tx_brut = line[86:102]
+tx_comm = line[425:437]
+idRemise = line[476:501]
 
-Si un ticket dit :
-Le script de conversion a changé
-Tu regardes :
-${SSH_SCRIPT_tarification}${SSH_RepScriptTarif}${SSH_ScriptCmd}
+fichier important : Tarification/Conversion CRE TI CB.robot
+sens = line[133:136]
+tx_brut = line[86:102]
+tx_comm = line[425:437]
+idRemise = line[476:501]
+Donc il extrait :
+FAC / AVO
+montant brut
+commission
+id remise
 
-Si un ticket dit :
-Le test échoue car le traitement prend plus de temps
-Tu regardes :
-Sleep    50Read Until Prompt
-Mais tu ne remplaces pas directement par un gros Sleep sans réfléchir. Il faut idéalement vérifier une condition réelle.
+puis il retourne:
+idRemise100
+totalREME100
+totalCOME100
+idRemise102
+totalREME102
+totalCOME102
+C’est exactement ce qu’il te faut pour vérifier des valeurs financières.
 
-Résumé simple
-Ce fichier fait :
-1. Connexion SSH2. Nettoyage3. Envoi fichier CRE source4. Lancement script tarification/conversion5. Vérification fichier converti6. Récupération fichier converti7. Récupération logs8. Fermeture SSH
-Pour toi, en tant que testeur auto, les zones importantes sont :
-${FicCreIn}              fichier d’entrée${FicCreOut}             fichier attendu en sortie${SSH_SCRIPT_tarification} script lancé${SSH_RepCreIn}          dossier entrée serveur${SSH_RepCreOut}         dossier sortie serveur${LocRepCreTraites}      dossier local de récupération
-Donc oui : si tu reçois un ticket sur “convertisseur CRE TI CB”, c’est ce fichier que tu dois ouvrir en priorité.
+
+----A faire
+Exemple concret : lire CRE → extraire montants → vérifier valeurs
+
+Donc si tu veux automatiser la vérification des montants, il faudra probablement ajouter :
+Library    ../../libraries/ExtractionMontantsCRE.py
+
+Donc oui : pour automatiser la partie convertisseur, tu vas probablement compléter le .robot en utilisant les librairies Python existantes pour vérifier les montants après conversion.
+
+
+Ma cpomprehension doit etre ainsi:
+Conversion CRE TI CB.robot
+= orchestre le convertisseur
+
+tarification.sh
+= fait la conversion réelle
+
+ExtractionMontantsCRE.py
+= peut vérifier les montants après conversion
+
+ExtractionSiretCRE.py
+= peut vérifier les SIRET / identifiants
+
+Com_Var.resource
+= contient noms de fichiers et chemins locaux
+
+SSH_Var.resource
+= contient chemins serveur et script à lancer
+
+
+----Les fichiers concernés exactement
+Fichier principal à modifier
+Tarification/Conversion CRE TI CB.robot
+C’est le fichier qui fait déjà :
+envoyer CRE → lancer tarification.sh → récupérer fichier converti → récupérer logs
+
+Fichier Python à utiliser pour les montants
+libraries/ExtractionMontantsCRE.py
+Ce fichier sait déjà :
+lire un CRE
+extraire les montants
+calculer les totaux
+retourner les résultats
+Il retourne notamment :
+idRemise100
+totalREME100
+totalCOME100
+idRemise102
+totalREME102
+totalCOME102
+
+
+
+Fichiers de variables à connaître : Ressources/Commun/Com_Var.resource , Ressources/SSH/SSH_Var.resource
+
+
+Ce que tu ne dois pas modifier : libraries/ExtractionMontantsCRE.py, SSH_Key.resource    sauf si le ticket dit que la règle d’extraction est fausse.
+
+ce que tu modifie : Conversion CRE TI CB.robot  et éventuellement : Com_Var.resource
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

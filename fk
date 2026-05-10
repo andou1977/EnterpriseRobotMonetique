@@ -1,0 +1,278 @@
+-------------------------
+
+*** Settings ***
+Documentation       Test automatisé CONVERTISSEUR CRE_MBA pour CB.
+...                 Crée le fichier CRE_MBA, le dépose dans FileIn,
+...                 lance le batch tarification.sh, récupère le FileOut,
+...                 puis vérifie les commissions avec EPDATAR.MERCHANT_FEE.
+
+Library             OperatingSystem
+Library             RequestsLibrary
+Library             Collections
+Library             SSHLibrary
+Library             Process
+Library             String
+
+Library             ZipDirectory.py
+Library             CustomFileLibrary.py
+Library             CsvComparator.py
+Library             CfonbConverter.py
+Library             Excel_Creation.py
+Library             ControleCreMbaCommissions.py
+
+Resource            shared/global_vars.resource
+Resource            ${CURDIR}/../Ressources NRT/NRT_Var.resource
+Resource            ${CURDIR}/../Ressources NRT/NRT_Key.resource
+
+Suite Setup         Initialisation Suite    CONVERTISSEUR_CRE_MBA_CB
+Test Setup          Vérifier Erreur Critique Avant Test
+Test Teardown       Capturer Erreur
+
+
+*** Variables ***
+${SSH_REP_FILEIN_TARIFICATION_CB_CRE}      /VAR/epbpmr/data/BatchTarificationCB/FileIn/CRE/
+${SSH_REP_FILEOUT_TARIFICATION_CB_CRE}     /VAR/epbpmr/data/BatchTarificationCB/FileOut/CRE
+${REP_BATCH_TARIFICATION_CB}               /USR/epbpmr/scripts/java/batch-tarification
+${SCRIPT_TARIFICATION_CB}                  tarification.sh
+${PATTERN_CRE_MBA_CB}                      cre_mba_*
+
+
+*** Test Cases ***
+01_Deposer_Fichier_CRE_MBA_Dans_FileIn_Et_Lancer_Batch
+    [Documentation]
+    ...    1. Génère un fichier CRE_MBA depuis le modèle cre_mba_YYYYMMDDHHMISS
+    ...    2. Dépose le fichier dans le FileIn Linux
+    ...    3. Lance le batch tarification.sh
+    ...    4. Récupère le fichier de sortie
+    ...    5. Vérifie les montants et commissions
+
+    Add Line To Recap    01) Dépôt du fichier CRE_MBA dans FileIn et lancement du batch tarification
+
+    Connexion SSH
+
+    ${REP_MODELE_CRE_MBA_CB}=    Set Variable    ${REPMODELE}\\CRE MBA\\nonreg
+
+    ${FICHIER_CRE_MBA_CB}=    Créer Fichier CRE Et VIR
+    ...    ${REP_MODELE_CRE_MBA_CB}
+    ...    ${PATTERN_CRE_MBA_CB}
+    ...    ${REP_CRE}
+
+    Set Suite Variable    ${FICHIER_CRE_MBA_CB}
+
+    OperatingSystem.File Should Exist
+    ...    ${REP_CRE}\\${FICHIER_CRE_MBA_CB}
+
+    Execute Command
+    ...    rm -f ${SSH_REP_FILEIN_TARIFICATION_CB_CRE}/${FICHIER_CRE_MBA_CB}
+
+    Envoi fichier vers serveur
+    ...    ${REP_CRE}
+    ...    ${SSH_REP_FILEIN_TARIFICATION_CB_CRE}
+    ...    ${FICHIER_CRE_MBA_CB}
+
+    Attendre Que Le Fichier Soit Présent
+    ...    ${SSH_REP_FILEIN_TARIFICATION_CB_CRE}
+    ...    ${FICHIER_CRE_MBA_CB}
+
+    ${RESULTAT_BATCH}=    Execute Command
+    ...    cd ${REP_BATCH_TARIFICATION_CB} && ./${SCRIPT_TARIFICATION_CB} ${FICHIER_CRE_MBA_CB}
+    ...    return_stdout=True
+    ...    return_stderr=True
+    ...    return_rc=True
+
+    Log To Console    ${RESULTAT_BATCH.stdout}
+    Log To Console    ${RESULTAT_BATCH.stderr}
+
+    Should Be Equal As Integers
+    ...    ${RESULTAT_BATCH.rc}
+    ...    0
+
+    Add Subline To Recap
+    ...    Fichier ${FICHIER_CRE_MBA_CB} envoyé dans FileIn et batch lancé avec succès
+    ...    use_tabs=true
+
+
+    Add Line To Recap    02) Récupération du fichier CRE_MBA avec commissions depuis FileOut
+
+    Attendre Que Le Fichier Soit Présent
+    ...    ${SSH_REP_FILEOUT_TARIFICATION_CB_CRE}
+    ...    ${FICHIER_CRE_MBA_CB}
+
+    Verifier Et Creer Repertoire
+    ...    ${REP_CRE}\\FileOut
+
+    Recup dernier fichier du serveur
+    ...    ${SSH_REP_FILEOUT_TARIFICATION_CB_CRE}
+    ...    ${FICHIER_CRE_MBA_CB}
+    ...    ${REP_CRE}\\FileOut\\${FICHIER_CRE_MBA_CB}
+
+    OperatingSystem.File Should Exist
+    ...    ${REP_CRE}\\FileOut\\${FICHIER_CRE_MBA_CB}
+
+    Add Subline To Recap
+    ...    Fichier ${FICHIER_CRE_MBA_CB} récupéré depuis FileOut avec succès
+    ...    use_tabs=true
+
+
+    Add Line To Recap    03) Vérification du fichier CRE_MBA de sortie
+
+    Connection Base EPDATA
+
+    ${REGLES_MERCHANT_FEE}=    Query
+    ...    SELECT SIRET, CHARGE_RATE, MINIMUM_CHARGE, FIXED_CHARGE
+    ...    FROM EPDATAR.MERCHANT_FEE
+    ...    WHERE SCHEME = 'S'
+    ...    ORDER BY PRIORITY
+
+    ${RESULTAT_CONTROLE}=    Verifier Fichier Cre Mba Tarifie
+    ...    ${REP_CRE}\\${FICHIER_CRE_MBA_CB}
+    ...    ${REP_CRE}\\FileOut\\${FICHIER_CRE_MBA_CB}
+    ...    ${REGLES_MERCHANT_FEE}
+
+    Log To Console    Nombre de lignes : ${RESULTAT_CONTROLE}[nombre_lignes]
+    Log To Console    Total brut entrée : ${RESULTAT_CONTROLE}[total_brut_entree]
+    Log To Console    Total brut sortie : ${RESULTAT_CONTROLE}[total_brut_sortie]
+    Log To Console    Total commission fichier : ${RESULTAT_CONTROLE}[total_commission_fichier]
+    Log To Console    Total commission attendue : ${RESULTAT_CONTROLE}[total_commission_attendue]
+
+    FOR    ${DETAIL}    IN    @{RESULTAT_CONTROLE}[details]
+        Log To Console    ${DETAIL}
+    END
+
+    Add Subline To Recap
+    ...    Lignes=${RESULTAT_CONTROLE}[nombre_lignes], Brut entrée=${RESULTAT_CONTROLE}[total_brut_entree], Brut sortie=${RESULTAT_CONTROLE}[total_brut_sortie], Commission fichier=${RESULTAT_CONTROLE}[total_commission_fichier], Commission attendue=${RESULTAT_CONTROLE}[total_commission_attendue]
+    ...    use_tabs=true
+
+
+
+  -------------------------------------------------------
+
+  from decimal import Decimal, ROUND_HALF_UP
+
+
+class ControleCreMbaCommissions:
+    """
+    Contrôle du fichier CRE_MBA après traitement tarification CB.
+
+    Positions selon le mapping CRE CB :
+    - SIRET : positions 72 à 86
+    - Montant brut : positions 87 à 102
+    - Commission commerçant MTTTCITR : positions 414 à 425
+
+    En Python, les index commencent à 0 :
+    - 72-86 devient line[71:86]
+    - 87-102 devient line[86:102]
+    - 414-425 devient line[413:425]
+
+    Règle commission :
+    - CHARGE_RATE = a
+    - FIXED_CHARGE = b
+    - MINIMUM_CHARGE = c
+    - montant_brut = x
+
+    commission attendue = max((x * a / 100) + b, c)
+    """
+
+    def _read_lines(self, file_path):
+        with open(file_path, "r", encoding="utf-8") as file:
+            return [line.rstrip("\n") for line in file if line.strip()]
+
+    def _to_amount(self, value):
+        value = value.strip()
+
+        if not value:
+            return Decimal("0")
+
+        return Decimal(value) / Decimal("100")
+
+    def _round_centimes(self, amount):
+        return amount.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
+
+    def _find_fee_rule(self, siret, merchant_fee_rows):
+        for row in merchant_fee_rows:
+            row_siret = str(row[0]).strip()
+
+            if row_siret == siret:
+                return {
+                    "charge_rate": Decimal(str(row[1])),
+                    "minimum_charge": Decimal(str(row[2])),
+                    "fixed_charge": Decimal(str(row[3])),
+                }
+
+        raise AssertionError(f"Aucune règle MERCHANT_FEE trouvée pour le SIRET {siret}")
+
+    def verifier_fichier_cre_mba_tarifie(self, input_file_path, output_file_path, merchant_fee_rows):
+        input_lines = self._read_lines(input_file_path)
+        output_lines = self._read_lines(output_file_path)
+
+        if len(input_lines) != len(output_lines):
+            raise AssertionError(
+                f"Nombre de lignes différent : entrée={len(input_lines)}, sortie={len(output_lines)}"
+            )
+
+        total_brut_entree = Decimal("0")
+        total_brut_sortie = Decimal("0")
+        total_commission_fichier = Decimal("0")
+        total_commission_attendue = Decimal("0")
+
+        details = []
+
+        for index, input_line in enumerate(input_lines, start=1):
+            output_line = output_lines[index - 1]
+
+            siret = output_line[71:86].strip()
+
+            montant_brut_entree = self._to_amount(input_line[86:102])
+            montant_brut_sortie = self._to_amount(output_line[86:102])
+            commission_fichier = self._to_amount(output_line[413:425])
+
+            if montant_brut_entree != montant_brut_sortie:
+                raise AssertionError(
+                    f"Montant brut différent ligne {index} : "
+                    f"entrée={montant_brut_entree}, sortie={montant_brut_sortie}"
+                )
+
+            fee_rule = self._find_fee_rule(siret, merchant_fee_rows)
+
+            charge_rate = fee_rule["charge_rate"]
+            minimum_charge = fee_rule["minimum_charge"]
+            fixed_charge = fee_rule["fixed_charge"]
+
+            commission_calculee = (montant_brut_sortie * charge_rate / Decimal("100")) + fixed_charge
+            commission_attendue = max(commission_calculee, minimum_charge)
+
+            commission_attendue = self._round_centimes(commission_attendue)
+            commission_fichier = self._round_centimes(commission_fichier)
+
+            if commission_fichier != commission_attendue:
+                raise AssertionError(
+                    f"Commission incorrecte ligne {index}, SIRET={siret} : "
+                    f"fichier={commission_fichier}, attendue={commission_attendue}, "
+                    f"brut={montant_brut_sortie}, "
+                    f"CHARGE_RATE={charge_rate}, "
+                    f"FIXED_CHARGE={fixed_charge}, "
+                    f"MINIMUM_CHARGE={minimum_charge}"
+                )
+
+            total_brut_entree += montant_brut_entree
+            total_brut_sortie += montant_brut_sortie
+            total_commission_fichier += commission_fichier
+            total_commission_attendue += commission_attendue
+
+            details.append(
+                f"Ligne {index} | "
+                f"SIRET={siret} | "
+                f"Brut entrée={montant_brut_entree} | "
+                f"Brut sortie={montant_brut_sortie} | "
+                f"Commission fichier={commission_fichier} | "
+                f"Commission attendue={commission_attendue}"
+            )
+
+        return {
+            "nombre_lignes": len(input_lines),
+            "total_brut_entree": str(total_brut_entree),
+            "total_brut_sortie": str(total_brut_sortie),
+            "total_commission_fichier": str(total_commission_fichier),
+            "total_commission_attendue": str(total_commission_attendue),
+            "details": details,
+        }
